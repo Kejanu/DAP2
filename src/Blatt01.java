@@ -4,6 +4,7 @@ public class Blatt01 {
 
         //n ← length[A]
         int n = array.length;
+        //Kevin stinkt
 
         // for i ← n downto 1 do || downto runterzählen
         for (int i = n; i > 0; --i) {
