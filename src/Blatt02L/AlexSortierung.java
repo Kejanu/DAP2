@@ -1,4 +1,4 @@
-package Blatt02;
+package Blatt02L;
 
 public class AlexSortierung {
 }
