@@ -83,6 +83,7 @@ public class AlexSortierung {
                 }
             }
             tmsecs=tend-tstart;
+            System.out.println("TEST");
             System.out.println("Runtime InsertionSort: " + tmsecs );
 
         }
