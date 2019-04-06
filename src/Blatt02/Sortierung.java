@@ -11,6 +11,39 @@ public class Sortierung {
         }
     }
 
+    public static void mergeSort(int[] array) {
+        int[] tmpArray = new int[array.length];
+        mergeSort(array, tmpArray, 0, array.length-1);
+        assert isSorted(array);
+    }
+
+    public static void mergeSort(int[] array, int lIndex, int hIndex) {
+        if (lIndex == hIndex)
+            return;
+
+        int mIndex = (lIndex + hIndex) / 2;
+
+        mergeSort(array, lIndex, mIndex);
+        mergeSort(array, mIndex+1, hIndex);
+        merge(array, lIndex, mIndex+1, hIndex);
+
+    }
+
+
+//    public static void mergeSort(int[] array, int[] tmpArray, int left, int right) {
+//        if (left < right) {
+//            int middle = (right + left) / 2;
+//            mergeSort(array, tmpArray, left, middle);
+//            mergeSort(array, tmpArray, middle+1, right);
+//
+//            merge(array, left, middle, right);
+//        }
+//    }
+//
+//    private static void merge(int[] array, int left, int middle, int right) {
+//
+//    }
+
     private static boolean parameterIsInteger(String param) {
         try {
             Integer.parseInt(param);
