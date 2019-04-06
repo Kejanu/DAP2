@@ -1,3 +1,5 @@
+package Blatt01;
+
 public class Blatt01 {
 
     private static void bearbeiteArray(int[] array) {
