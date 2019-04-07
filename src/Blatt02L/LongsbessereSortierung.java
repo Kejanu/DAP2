@@ -44,6 +44,7 @@ public class LongsbessereSortierung {
 
         printArray(array);
         LongsbessereSortierung lol = new LongsbessereSortierung();
+        //habs nicht getestet
     switch(args[2]){
         case"insert":
             lol.insertionSort(array);
