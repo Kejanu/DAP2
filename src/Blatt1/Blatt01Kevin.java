@@ -1,4 +1,6 @@
-public class Blatt01 {
+package Blatt1;
+
+public class Blatt01Kevin {
 
     private static void bearbeiteArray(int[] array) {
 

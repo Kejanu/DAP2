@@ -1,3 +1,4 @@
+package Blatt02L;
 import java.util.Random;
 
 public class LongsbessereSortierung {
