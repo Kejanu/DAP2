@@ -1,3 +1,5 @@
+package Blatt1L;
+
 public class LongJavaPraktikumAufg1 {
     public int Euclid(int a, int b) {
         if(a <0 || b < 0) {
