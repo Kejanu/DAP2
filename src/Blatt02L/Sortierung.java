@@ -4,6 +4,8 @@ import java.util.Random;
 
 public class Sortierung {
 
+    private final static String PROPER_USAGE_MESSAGE = "Proper usage: arraylength [insert|merge [auf|ab|rand]]";
+
     private static void fillArrayWithRandom(int[] array) {
         Random random = new Random();
         for (int i = 0; i < array.length; ++i) {
@@ -13,33 +15,43 @@ public class Sortierung {
 
     public static void mergeSort(int[] array) {
         int[] tmpArray = new int[array.length];
-        mergeSort(array, tmpArray, 0, array.length-1);
-        printArray(array);
+        mergeSort(array, tmpArray, 0, array.length - 1);
         assert isSorted(array);
     }
 
-    public static void mergeSort(int[] array, int[]tmpArray, int left, int right) {
+
+    public static void mergeSort(int[] array, int[] tmpArray, int left, int right) {
         if (left < right) {
             int q = (left + right) / 2;
-
             mergeSort(array, tmpArray, left, q);
-            mergeSort(array, tmpArray, q+1, right);
-
+            mergeSort(array, tmpArray, q + 1, right);
             merge(array, tmpArray, left, q, right);
         }
     }
 
-    private static void merge(int[] array, int[] tmpArray, int left, int q, int right) {
-        int[] tmp = new int[array.length + tmpArray.length];
+    public static void merge(int[] array, int[] tmpArray, int lIndex, int mIndex, int hIndex) {
+        for (int i = lIndex; i <= hIndex; ++i)
+            tmpArray[i] = array[i];
 
-        for (int i = 0; i < array.length; ++i) {
-            tmp[i] = array[i];
-        }
+        int i = lIndex, j = mIndex + 1, k = lIndex;
 
-        for (int i = 0; i < tmpArray.length; i++) {
-            tmp[i+array.length] = tmpArray[i];
+        while (i <= mIndex && j <= hIndex) {
+            if (tmpArray[i] <= tmpArray[j]) {
+                array[k] = tmpArray[i];
+                ++i;
+            }
+            else {
+                array[k] = tmpArray[j];
+                ++j;
+            }
+            ++k;
         }
-        array = tmp;
+        // Copy rest of left side of tmpArray to array
+        while (i <= mIndex) {
+            array[k] = tmpArray[i];
+            ++k;
+            ++i;
+        }
     }
 
 
@@ -54,26 +66,19 @@ public class Sortierung {
     }
 
     public static void main(String[] args) {
-        if (args.length == 0) {
-            System.out.println("Proper usage: arraylength typeOfContent");
+        if (args.length == 0 || !parameterIsInteger(args[0])) {
+            System.out.println(PROPER_USAGE_MESSAGE);
             System.exit(1);
         }
 
-        int[] arr = null;
+        int[] arr = new int[Integer.valueOf(args[0])];
 
-        if (parameterIsInteger(args[0])) {
-            arr = new int[Integer.valueOf(args[0])];
-        }
-        else {
-            System.out.println("Proper usage: arraylength typeOfContent");
-            System.exit(2);
-        }
-
-        if (args.length == 1) {
+        // Initialize array with Integers
+        if (args.length <= 2) {
             fillArrayWithRandom(arr);
         }
         else {
-            switch (args[1]) {
+            switch (args[2]) {
                 case "rand":
                     fillArrayWithRandom(arr);
                     break;
@@ -89,8 +94,8 @@ public class Sortierung {
                     break;
 
                 default:
-                    System.out.println("Proper usage: arraylength typeOfContent(rand, auf, ab)");
-                    System.exit(2);
+                    System.out.println(PROPER_USAGE_MESSAGE);
+                    System.exit(1);
             }
         }
 
@@ -98,8 +103,18 @@ public class Sortierung {
         long tStart, tEnd;
         tStart = System.currentTimeMillis();
 
-        //insertionSort(arr);
-        mergeSort(arr);
+        // Which Sort-Algorith should be used
+        if (args.length <= 1 || args[1].equals("merge")) {
+            mergeSort(arr);
+        }
+        else if(args[1].equals("insert")) {
+            insertionSort(arr);
+            assert isSorted(arr);
+        }
+        else {
+            System.out.println(PROPER_USAGE_MESSAGE);
+            System.exit(1);
+        }
 
         tEnd = System.currentTimeMillis();
         System.out.println("Time used: " + (tEnd - tStart));
