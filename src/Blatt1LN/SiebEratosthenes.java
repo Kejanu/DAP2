@@ -1,4 +1,4 @@
-package Blatt1L;
+package Blatt1LN;
 
 public class SiebEratosthenes {
     public static void main(String[] args) {
