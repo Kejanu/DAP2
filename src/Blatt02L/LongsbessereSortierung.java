@@ -13,7 +13,8 @@ public class LongsbessereSortierung {
     public static void main(String[] args) {
 
         // Calcualte duration of Program
-        /*long tStart, tEnd;
+
+        long tStart, tEnd;
         tStart = System.currentTimeMillis();
 
         int[] array = new int[Integer.valueOf(args[0])];
@@ -42,18 +43,27 @@ public class LongsbessereSortierung {
         System.out.println(tEnd - tStart);
 
         printArray(array);
-*/
+        LongsbessereSortierung lol = new LongsbessereSortierung();
+    switch(args[2]){
+        case"insert":
+            lol.insertionSort(array);
+        case "merge":
+            lol.mergeSort(array);
+    }
+    for(int i = 0; i < array.length; i++) {
+            System.out.println(array[i]);
+     }
 //        int[] array = new int[]{5, 4, 3, 2, 1};
 //        insertionSort(array);
 //        printArray(array);
 //        System.out.println(isSorted(array));
-        LongsbessereSortierung lol = new LongsbessereSortierung();
-        int[] array = {1,4,2,3,9,4,2,1,6};
+//        LongsbessereSortierung lol = new LongsbessereSortierung();
+     /*   int[] array2 = {1,4,2,3,9,4,2,1,6};
         lol.mergeSort(array);
         for(int i = 0; i < array.length; i++) {
             System.out.println(array[i]);
         }
-
+*/
 
 
     }
@@ -146,6 +156,4 @@ public class LongsbessereSortierung {
         }
 
     }
-
-
 }
