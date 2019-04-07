@@ -4,30 +4,39 @@ public class SiebEratosthenes {
     public static void main(String[] args) {
         //test
         SiebEratosthenes test = new SiebEratosthenes();
-        boolean[] b = test.siebdesEratosthenes(500);
-        for(int i = 0; i < b.length; i++) {
+        int b = test.siebdesEratosthenes(100);
+       /* for(int i = 0; i < b.length; i++) {
             if(b[i] == true) {
                 System.out.println(i);
             }
-        }
+
+
+        }*/
+       System.out.println(b);
 
     }
     //wie zum Teufel kriege ich das -o rein
-    public boolean[] siebdesEratosthenes(int n) {
+    public int siebdesEratosthenes(int n) {
 
-        boolean[] isPrime = new boolean[n];
+        boolean[] isPrime = new boolean[n+1];
         //0 ist keine Primzahl
         isPrime[0] = false;
         isPrime[1] = false;
         //alles auf true setzen
-        for (int i = 2; i < n; i++) {
+        for (int i = 2; i <= n; i++) {
             isPrime[i] = true;
         }
         //primzahl bestimmen
         isPrime = primzahl(isPrime);
 
         //array zurückgeben
-        return isPrime;
+        int counter = 0;
+        for(int j = 0;j <=n;j++ ) {
+            if(isPrime[j]){
+                counter++;
+            }
+        }
+        return counter;
     }
 
     static boolean[] primzahl(boolean[]isPrime) {
