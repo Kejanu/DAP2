@@ -55,9 +55,9 @@ public class AlexSortierung {
 
                 case "ab":{
                     int j=0;
-                    for(int i=array.length-1; i>=0;--j){
+                    for(int i=array.length-1; i>=0;--i){
                         array[i]=j;
-                        --j;
+                        ++j;
                     }
                     break;
                 }
@@ -83,7 +83,7 @@ public class AlexSortierung {
                 }
             }
             tmsecs=tend-tstart;
-            System.out.println("TEST");
+            System.out.println();
             System.out.println("Runtime InsertionSort: " + tmsecs );
 
         }
