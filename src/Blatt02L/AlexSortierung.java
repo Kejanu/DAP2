@@ -18,17 +18,17 @@ public class AlexSortierung {
         System.out.println(isSorted(b));
         */
 
-        int a = 0;
+        int a = 0; //Falls Eingabe korrekt, Anzahl der zu sortierenden Zahlen
         try {
             a = Integer.parseInt(args[0]);
         } catch (Exception e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException();  //Eingabe nicht in Zahl umwandelbar, d.h. falsche Eingabe
         }
 
         Random rng = new Random();
 
         int[] array = new int[a];
-        switch (args[2]) {
+        switch (args[2]) {  //Befüllt Array je nach Eingabe zufällig, auf- oder absteigend
             case "rand": {
                 for (int i = 0; i < array.length; i++) {
                     array[i] = rng.nextInt();
@@ -60,11 +60,11 @@ public class AlexSortierung {
             }
 
             default:
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException();  //Eingabe nicht korrekt (keiner der festgelegten Strings)
         }
         long tstart, tend, tmsecs;
 
-        switch (args[1]){
+        switch (args[1]){  //Je nach Eingabe unterschiedliches Sortierverfahren inkl. Laufzeitmessung
 
             case "insert":{
                 tstart = System.currentTimeMillis();
@@ -85,19 +85,19 @@ public class AlexSortierung {
                 break;
             }
             default:{
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException();   //Eingabe nicht korrekt (keiner der festgelegten Strings)
             }
         }
 
 
 
-        if (isSorted(array)) {
+        if (isSorted(array)) { //Prüfung des Sortieralgorithmus
             System.out.println("Feld ist sortiert!");
         } else {
             System.out.println("Feld ist NICHT sortiert!");
         }
 
-        if (a <= 100) {
+        if (a <= 100) { //Ausgabe, falls <= 100 Elemente
             System.out.println("");
             for (int i = 0; i < array.length; i++) {
                 System.out.print(array[i] + " ");
@@ -164,14 +164,14 @@ public class AlexSortierung {
 
     public static void merge(int[] array, int[] tmpArray, int left, int q, int right) { //nur Arrays, die die Bedingung erfüllen eingeben
 
-        int a = left;
-        int b = q + 1;
-        int c = left;
+        int a = left; //Index linker Teil
+        int b = q + 1; //Index rechter Teil
+        int c = left; //Index für zusammengefügte Liste
 
 
-        while (a <= q || b <= right) {
+        while (a <= q || b <= right) { //solange nicht beide Teillisten vollständig durchlaufen wurden
 
-            if (a <= q && b <= right) {
+            if (a <= q && b <= right) { //Da beide Listen sortiert , können die Inhalte an a und b verglichen werden und aufsteigend in tmp eingfügt werden
                 if (array[a] < array[b]) {
                     tmpArray[c] = array[a];
                     ++a;
@@ -192,7 +192,7 @@ public class AlexSortierung {
 
         c = left;
 
-        while (c <= right) {
+        while (c <= right) { //übertragen der Werte aus tmp in array
             array[c] = tmpArray[c];
             ++c;
         }

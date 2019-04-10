@@ -5,9 +5,62 @@ public class Blatt01KAlex {
 
 
         public static void main(String[] args){
-            //System.out.println(euclid(264,846));
-            System.out.println(prime(40,true));
 
+            if(args.length<2){
+                System.out.println("Falsche Eingabe! Korrekte Eingaben: [ Euclid | Value1 | Value2 ] [ Eratosthenes | Value | [   | -o ] ]");
+                throw new IllegalArgumentException();
+            }
+
+           if(args[0].equals("Euclid")){
+
+               if(args.length!=3){
+                   System.out.println("Falsche Eingabe! Korrekte Eingaben: [ Euclid | Value1 | Value2 ] [ Eratosthenes | Value | [   | -o ] ]");
+                   throw new IllegalArgumentException();
+               }
+
+               int v1=0;
+               int v2=0;
+               try{
+                   v1=Integer.parseInt(args[1]);
+                   v2=Integer.parseInt(args[2]);
+               }
+               catch (Exception e){
+                   System.out.println("Falsche Eingabe! Korrekte Eingaben: [ Euclid | Value1 | Value2 ] [ Eratosthenes | Value | [   | -o ] ]");
+                   throw new IllegalArgumentException();
+               }
+
+               int result= euclid(v1, v2);
+               System.out.println("Ergebnis: " + result);
+           }
+           else if(args[0].equals("Eratosthenes")) {
+
+               if (args.length > 3) {
+                   System.out.println("Falsche Eingabe! Korrekte Eingaben: [ Euclid | Value1 | Value2 ] [ Eratosthenes | Value | [   | -o ] ]");
+                   throw new IllegalArgumentException();
+               }
+
+               int v = 0;
+               try {
+                   v = Integer.parseInt(args[1]);
+               } catch (Exception e) {
+                   System.out.println("Falsche Eingabe! Korrekte Eingaben: [ Euclid | Value1 | Value2 ] [ Eratosthenes | Value | [   | -o ] ]");
+                   throw new IllegalArgumentException();
+               }
+
+               if (args.length == 2) {
+                   System.out.println("Anzahl: " + prime(v, false));
+               } else if (args[2].equals("-o")) {
+                   System.out.println("Anzahl: " + prime(v, true));
+               } else if (args[2].equals("")) {
+                   System.out.println("Anzahl: " + prime(v, false));
+               } else {
+                   System.out.println("Falsche Eingabe! Korrekte Eingaben: [ Euclid | Value1 | Value2 ] [ Eratosthenes | Value | [   | -o ] ]");
+                   throw new IllegalArgumentException();
+               }
+           }else{
+               System.out.println("Falsche Eingabe! Korrekte Eingaben: [ Euclid | Value1 | Value2 ] [ Eratosthenes | Value | [   | -o ] ]");
+               throw new IllegalArgumentException();
+           }
         }
 
 
@@ -54,7 +107,7 @@ public class Blatt01KAlex {
                 if(isPrime[i]){
                     count++;
                     if(output){
-                        System.out.print(" " + i);
+                        System.out.print(i + " ");
 
                     }
                 }
