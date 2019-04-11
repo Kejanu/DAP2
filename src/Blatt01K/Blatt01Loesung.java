@@ -1,10 +1,17 @@
 package Blatt01K;
 
-import java.util.Arrays;
-
-public class Blatt01KBetterThanLiv {
+public class Blatt01Loesung {
     public static void main(String[] args) {
-        if (args[0].equals("Euclid")) {
+        // more than 3 arguments
+        if (args.length > 3) {
+            System.out.println("Too many arguments. Euclid Integer1 Integer2 or Eratosthenes Integer -o");
+            System.exit(1);
+        }
+
+        if (args.length == 0) {
+            System.out.println("Invalid first argument: Euclid Integer1 Integer2 or Eratosthenes Integer -o");
+        }
+        else if (args[0].equals("Euclid")) {
             doEuclid(args);
         }
         else if (args[0].equals("Eratosthenes")) {
@@ -17,7 +24,7 @@ public class Blatt01KBetterThanLiv {
 
     private static void doEratosthenes(String[] args) {
         // Basic input validation
-        if (args.length < 2 || !parameterIsInteger(args[1])) {
+        if (args.length < 2 || !parameterIsInteger(args[1]) || (args.length == 3 && !args[2].equals("-o"))) {
             System.out.println("Invalid arguments. Optional in (). Syntax: Eratosthenes Integer1 (-o)");
             System.exit(1);
         }
@@ -29,21 +36,21 @@ public class Blatt01KBetterThanLiv {
         }
 
         // 0 and 1 arent primenumbers => only 2 and above true
-        boolean[] isPrime = new boolean[upperBound];
+        boolean[] isPrime = new boolean[upperBound+1];
         for (int i = 2; i < isPrime.length; ++i)
             isPrime[i] = true;
 
         // Siebs des Eratosthenes Logik
-        for (int i = 2; i < upperBound; ++i) {
+        for (int i = 2; i < isPrime.length; ++i) {
             if (isPrime[i]) {
-                for (int j = i * 2; j < upperBound; j = j + i) {
+                for (int j = i * 2; j < isPrime.length; j = j + i) {
                     isPrime[j] = false;
                 }
             }
         }
 
         int countOfPrimenumbers = 0;
-        boolean printNumbers = args.length >= 3 && args[2].equals("-o");
+        boolean printNumbers = args[2].equals("-o");
 
         for (int i = 2; i < isPrime.length; ++i) {
             if (isPrime[i]) {
@@ -63,7 +70,16 @@ public class Blatt01KBetterThanLiv {
             System.exit(1);
         }
 
-        int result = euclid(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+        int a = Integer.parseInt(args[1]);
+        int b = Integer.parseInt(args[2]);
+        // Check Integers
+
+        if (a < 0 || b < 0) {
+            System.out.println("Parameters must be positive integers");
+            System.exit(1);
+        }
+
+        int result = euclid(a, b);
         System.out.println(result);
     }
 
@@ -83,4 +99,6 @@ public class Blatt01KBetterThanLiv {
             return false;
         }
     }
+
+    // 8 Punkte für jeden
 }
