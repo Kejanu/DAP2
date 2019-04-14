@@ -14,9 +14,9 @@ public class Aufgabe2LN {
         }
         else if(args[0].equals("SucheElement")) {
 
-            //sucht größtes Element in einem Intervall
+            //sucht größtes Element in einem Intervall (bzw. bis arr.length, da i = arr.length)
             //2.2soll ergebnis 40
-            int w = SucheElement(arr,3);
+            int w = SucheElement(arr,arr.length-1);
             System.out.println(w);
         }
         else {
