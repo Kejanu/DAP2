@@ -1,5 +1,6 @@
 package Blatt02L;
 
+import java.security.MessageDigest;
 import java.util.Random;
 
 public class AlexSortierung {
@@ -18,50 +19,58 @@ public class AlexSortierung {
         System.out.println(isSorted(b));
         */
 
+        final String MESSAGE= " ";
+
+        if(args.length> 3 || args.length<1){
+            System.out.println(MESSAGE);
+        }
+
+
         int a = 0; //Falls Eingabe korrekt, Anzahl der zu sortierenden Zahlen
         try {
             a = Integer.parseInt(args[0]);
         } catch (Exception e) {
-            throw new IllegalArgumentException();  //Eingabe nicht in Zahl umwandelbar, d.h. falsche Eingabe
+            System.out.println(MESSAGE);  //Eingabe nicht in Zahl umwandelbar, d.h. falsche Eingabe
+            return;
         }
 
         Random rng = new Random();
 
         int[] array = new int[a];
-        switch (args[2]) {  //Befüllt Array je nach Eingabe zufällig, auf- oder absteigend
-            case "rand": {
-                for (int i = 0; i < array.length; i++) {
-                    array[i] = rng.nextInt();
-                }
-                break;
-            }
 
-            case "": {
-                for (int i = 0; i < array.length; i++) {
-                    array[i] = rng.nextInt();
-                }
-                break;
-            }
 
-            case "auf": {
-                for (int i = 0; i < array.length; i++) {
-                    array[i] = i;
-                }
-                break;
-            }
+        if(args.length==2) {
 
-            case "ab": {
-                int j = 0;
-                for (int i = array.length - 1; i >= 0; --i) {
-                    array[i] = j;
-                    ++j;
-                }
-                break;
-            }
 
-            default:
-                throw new IllegalArgumentException();  //Eingabe nicht korrekt (keiner der festgelegten Strings)
+            switch (args[1]) {  //Befüllt Array je nach Eingabe zufällig, auf- oder absteigend
+                case "rand": {
+                    for (int i = 0; i < array.length; i++) {
+                        array[i] = rng.nextInt();
+                    }
+                    break;
+                }
+                case "auf": {
+                    for (int i = 0; i < array.length; i++) {
+                        array[i] = i;
+                    }
+                    break;
+                }
+
+                case "ab": {
+                    int j = 0;
+                    for (int i = array.length - 1; i >= 0; --i) {
+                        array[i] = j;
+                        ++j;
+                    }
+                    break;
+                }
+
+                default:
+                    throw new IllegalArgumentException();  //Eingabe nicht korrekt (keiner der festgelegten Strings)
+            }
         }
+
+
         long tstart, tend, tmsecs;
 
         switch (args[1]){  //Je nach Eingabe unterschiedliches Sortierverfahren inkl. Laufzeitmessung
@@ -78,12 +87,15 @@ public class AlexSortierung {
                 tend = System.currentTimeMillis();
                 break;
             }
+
+            /*
             case "":{
                 tstart = System.currentTimeMillis();
                 mergeSort(array);
                 tend = System.currentTimeMillis();
                 break;
             }
+            */
             default:{
                 throw new IllegalArgumentException();   //Eingabe nicht korrekt (keiner der festgelegten Strings)
             }
