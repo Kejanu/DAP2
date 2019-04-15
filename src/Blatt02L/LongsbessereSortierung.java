@@ -1,74 +1,63 @@
 package Blatt02L;
-import java.util.Random;
+
 
 public class LongsbessereSortierung {
 
+
     private static void fillArrayWithRandom(int[] array) {
-        Random random = new Random();
+        // Den Generator erzeugen (als Seedwert wird die Systemzeit verwendet)
+        java.util.Random numberGenerator = new java.util.Random();
         for (int i = 0; i < array.length; ++i) {
-            array[i] = random.nextInt();
+            // Wann immer man eine Zufallszahl braucht
+            array[i] = numberGenerator.nextInt();
         }
     }
 
+    //Mainmethode
     public static void main(String[] args) {
-
-        // Calcualte duration of Program
-
-        long tStart, tEnd;
+        long tStart, tEnd, msecs;
+        // Beginn der Messung
         tStart = System.currentTimeMillis();
 
-        int[] array = new int[Integer.valueOf(args[0])];
 
-        switch (args[1]) {
-            case "rand":
-                fillArrayWithRandom(array);
-                break;
+        int[] array = new int[Integer.parseInt(args[0])];
 
-            case "auf":
-                for (int i = 0; i < array.length; ++i)
-                    array[i] = i;
-                break;
-
-            case "ab":
-                for (int i = 0; i < array.length; ++i)
-                    array[i] = array.length - i;
-                break;
-
-            default:
-                fillArrayWithRandom(array);
+        if (args[1].equals("rand") || args[1].equals("")) {
+            fillArrayWithRandom(array);
+            insertionSort(array);
+        }
+        else if(args[1].equals("auf")){
+            for(int i = 0; i < array.length; i++){
+                array[i] = i;
+            }
+            insertionSort(array);
+        }
+        else if(args[1].equals("ab")){
+            for(int i = array.length; i > 0; i--){
+                array[i] = i;
+            }
+            insertionSort(array);
+        }
+        else{
+            System.out.println("Invalid argument. Syntax: array.length [rand|auf|ab]");
+            System.exit(1);
         }
 
+        boolean sorted = isSorted(array);
+
+        if(sorted)
+            System.out.println("Feld ist sortiert!");
+        else
+            System.out.println("Feld ist nicht sortiert!");
+
+        // Ende der Messung
         tEnd = System.currentTimeMillis();
-
-        System.out.println(tEnd - tStart);
-
-        printArray(array);
-        LongsbessereSortierung lol = new LongsbessereSortierung();
-        //habs nicht getestet
-    switch(args[2]){
-        case"insert":
-            lol.insertionSort(array);
-        case "merge":
-            lol.mergeSort(array);
-    }
-    for(int i = 0; i < array.length; i++) {
-            System.out.println(array[i]);
-     }
-//        int[] array = new int[]{5, 4, 3, 2, 1};
-//        insertionSort(array);
-//        printArray(array);
-//        System.out.println(isSorted(array));
-//        LongsbessereSortierung lol = new LongsbessereSortierung();
-     /*   int[] array2 = {1,4,2,3,9,4,2,1,6};
-        lol.mergeSort(array);
-        for(int i = 0; i < array.length; i++) {
-            System.out.println(array[i]);
-        }
-*/
-
+        // Die vergangene Zeit ist die Differenz von tStart und tEnd
+        msecs = tEnd - tStart;
+        System.out.println("Laufzeit betrug: "+msecs);
 
     }
-
+    //Kevin's implementierung Insertionsort/isSorted/printarray
     public static void insertionSort(int[] array) {
         for (int j = 1; j < array.length; ++j) {
             int key = array[j];
@@ -95,6 +84,8 @@ public class LongsbessereSortierung {
             System.out.print(i + " ");
         System.out.print("\n");
     }
+
+    //mergesort
     public static void mergeSort(int[] array) {
         int[] tmpArray = new int[array.length];
         mergeSort(array, tmpArray, 0, array.length-1);
