@@ -1,4 +1,4 @@
-package Blatt1LN;
+package Blatt01K.Long;
 
 public class SiebEratosthenes {
     public static void main(String[] args) {

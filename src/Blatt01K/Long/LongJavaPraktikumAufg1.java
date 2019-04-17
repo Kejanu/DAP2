@@ -1,4 +1,4 @@
-package Blatt1LN;
+package Blatt01K.Long;
 
 public class LongJavaPraktikumAufg1 {
     public int Euclid(int a, int b) {

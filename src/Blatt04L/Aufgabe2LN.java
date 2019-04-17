@@ -1,4 +1,4 @@
-package Dap2Uebung2;
+package Blatt04L;
 
 public class Aufgabe2LN {
     public static void main(String[] args) {
