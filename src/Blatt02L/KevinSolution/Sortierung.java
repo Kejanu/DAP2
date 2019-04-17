@@ -16,8 +16,8 @@ public class Sortierung {
             return;
         }
 
-        if (!parameterIsInt(args[0])) {
-            System.out.println("You didn't provide an integer as your first argument. " + PROPER_USAGE_MESSAGE);
+        if (!parameterIsInt(args[0]) || Integer.parseInt(args[0]) < 0) {
+            System.out.println("You didn't provide a positive integer as your first argument. " + PROPER_USAGE_MESSAGE);
             return;
         }
 
