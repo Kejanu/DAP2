@@ -20,24 +20,24 @@ public class SortAlgorithms {
         for (int i = lIndex; i <= hIndex; ++i)
             tmpArray[i] = array[i];
 
-        int i = lIndex, j = mIndex + 1, k = lIndex;
+        int a = lIndex, b = mIndex + 1, c = lIndex;
 
-        while (i <= mIndex && j <= hIndex) {
-            if (tmpArray[i] <= tmpArray[j]) {
-                array[k] = tmpArray[i];
-                ++i;
+        while (a <= mIndex && b <= hIndex) {
+            if (tmpArray[a] <= tmpArray[b]) {
+                array[c] = tmpArray[a];
+                ++a;
             }
             else {
-                array[k] = tmpArray[j];
-                ++j;
+                array[c] = tmpArray[b];
+                ++b;
             }
-            ++k;
+            ++c;
         }
         // Copy rest of left side of tmpArray to array
-        while (i <= mIndex) {
-            array[k] = tmpArray[i];
-            ++k;
-            ++i;
+        while (a <= mIndex) {
+            array[c] = tmpArray[a];
+            ++c;
+            ++a;
         }
     }
 
