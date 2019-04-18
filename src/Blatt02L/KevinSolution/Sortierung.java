@@ -1,5 +1,8 @@
 package Blatt02L.KevinSolution;
 
+import Templates.ArrayHelper;
+import Templates.SortAlgorithms;
+
 public class Sortierung {
 
     private final static String PROPER_USAGE_MESSAGE = "Proper usage: arraylength [insert|merge [auf|ab|rand]]";
