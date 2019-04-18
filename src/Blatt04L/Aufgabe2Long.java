@@ -1,6 +1,6 @@
 package Blatt04L;
 
-public class Aufgabe2LN {
+public class Aufgabe2Long {
     public static void main(String[] args) {
         //Initialisierung array
         int[] arr = {29,11,40,9,2,5,3,2,0,2,30};
