@@ -11,6 +11,7 @@ public class SortierungTest {
     @Test
     public void testMain1Arguments() {
         Sortierung.main(printArguments(new String[]{"Test"}));
+        Sortierung.main(printArguments(new String[]{"merge"}));
         Sortierung.main(printArguments(new String[]{"10"}));
         Sortierung.main(printArguments(new String[]{"-10"}));
     }

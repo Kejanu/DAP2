@@ -44,7 +44,7 @@ public class Sortierung {
 
                 default:
                     System.out.println("Your third argument isn't chosen correctly. " + PROPER_USAGE_MESSAGE);
-                    System.exit(1);
+                    return;
             }
         }
 
