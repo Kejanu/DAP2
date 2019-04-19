@@ -13,7 +13,14 @@ public class Point {
         this.corrdinates = values;
     }
 
+    @Override
+    public String toString() {
+        return "Point x: " + corrdinates[0] + " y: " + corrdinates[1];
+    }
+
     public double get(int i) {
+        if (i < 0 || i >= this.corrdinates.length)
+            throw new IllegalArgumentException();
         return corrdinates[i];
     }
 

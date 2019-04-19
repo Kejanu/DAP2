@@ -45,6 +45,4 @@ public abstract class Simplex {
             throw new IllegalArgumentException();
         }
     }
-
-    publ
 }

@@ -16,7 +16,7 @@ public abstract class Simplex {
         this.points = points;
         // src, srcStart, dest, destStart, length
         //System.arraycopy(points, 0, this.points, 0, points.length);
-        this.d = dimension;
+        this.dimension = dimension;
     }
 
     public double perimeter() {
