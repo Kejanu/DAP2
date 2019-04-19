@@ -2,8 +2,8 @@ package Blatt04L.Kevin;
 
 public class Triangle extends Simplex {
 
-    public Triangle(int d, Point... points) {
-        super(d, points);
+    public Triangle(int dimension, Point... points) {
+        super(dimension, points);
     }
 
     @Override

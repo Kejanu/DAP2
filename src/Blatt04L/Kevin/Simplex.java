@@ -2,21 +2,21 @@ package Blatt04L.Kevin;
 
 public abstract class Simplex {
     Point[] points;
-    int d;
+    int dimension;
 
-    public Simplex(int d, Point... points) {
+    public Simplex(int dimension, Point... points) {
         // Do we even check this? Not in Aufgabenstellung ZULUL
-        if (d+1 != points.length)
+        if (dimension+1 != points.length)
             throw new IllegalArgumentException();
 
         for (Point p : points)
-            if (p.dim() != d)
+            if (p.dim() != dimension)
                 throw new IllegalArgumentException();
 
-        points = new Point[d+1];
+        this.points = points;
         // src, srcStart, dest, destStart, length
-        System.arraycopy(points, 0, this.points, 0, points.length);
-        this.d = d;
+        //System.arraycopy(points, 0, this.points, 0, points.length);
+        this.d = dimension;
     }
 
     public double perimeter() {
@@ -37,7 +37,7 @@ public abstract class Simplex {
         return points;
     }
 
-    public int getD() {
-        return d;
+    public int getDimension() {
+        return dimension;
     }
 }

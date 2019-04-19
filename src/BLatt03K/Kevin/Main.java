@@ -3,6 +3,7 @@ package BLatt03K.Kevin;
 import Templates.ArrayHelper;
 import Templates.SortAlgorithms;
 import Templates.InputValidation;
+import Templates.SearchAlogrithms;
 
 public class Main {
 
@@ -21,16 +22,23 @@ public class Main {
         float enteredTime = Float.parseFloat(args[0]);
 
         int arrayLength = 500;
+        int[] arr;
 
-        long tStart, tEnd;
+        long tStart, tEnd, tResult;
         do {
-            int[] arr = new int[arrayLength *= 2];
+            arr = new int[arrayLength *= 2];
             ArrayHelper.fillIntArrayWithDescending(arr);
 
             tStart = System.currentTimeMillis();
             SortAlgorithms.bubbleSort(arr);
             tEnd = System.currentTimeMillis();
-        } while ((tEnd - tStart) < enteredTime);
+            tResult = tEnd - tStart;
+            System.out.println("Current ArrayLength: " + arr.length + "\tTime used: " + tResult);
+        } while (tResult < enteredTime);
+
+        System.out.println("Searching for " + (arr.length - 1) + " from: " + arr.length / 2 + " to " + arr.length);
+        int i = SearchAlogrithms.binarySearch(arr, arrayLength-1, arrayLength / 2, arr.length);
+        System.out.println("Found index: " + i + "  Value is: " + arr[i]);
     }
 
     private static void calculateTimeFor50000() {
