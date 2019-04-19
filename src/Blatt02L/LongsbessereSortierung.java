@@ -19,29 +19,45 @@ public class LongsbessereSortierung {
         // Beginn der Messung
         tStart = System.currentTimeMillis();
 
-
+        if(!parameterIsInteger(args[0]) || Integer.parseInt(args[0]) <= 0){
+            System.out.println("Uncorrect format. Syntax: Integer [rand|auf|ab]");
+            System.exit(1);
+        }
         int[] array = new int[Integer.parseInt(args[0])];
 
-        if (args[1].equals("rand") || args[1].equals("")) {
+        //fillmethod
+        if (args[2].equals("rand") || args[1].equals("")) {
             fillArrayWithRandom(array);
             insertionSort(array);
         }
-        else if(args[1].equals("auf")){
+        else if(args[2].equals("auf")){
             for(int i = 0; i < array.length; i++){
                 array[i] = i;
             }
             insertionSort(array);
         }
-        else if(args[1].equals("ab")){
+        else if(args[2].equals("ab")){
             for(int i = array.length; i > 0; i--){
                 array[i] = i;
             }
             insertionSort(array);
         }
         else{
-            System.out.println("Invalid argument. Syntax: array.length [rand|auf|ab]");
+            System.out.println("Invalid argument. Syntax: length [rand|auf|ab]");
             System.exit(1);
         }
+
+        //sortmethod
+        if(args[1].equals("insert")){
+
+        }
+        else if(args[1].equals("merge")){
+
+        }
+        else{
+            System.out.println("Learn to spell");
+        }
+
 
         boolean sorted = isSorted(array);
 
@@ -144,8 +160,19 @@ public class LongsbessereSortierung {
         //neuauffüllen des Arrays
        for(int i=0; i<grenze;i++){
             array[backwards] = tmpArray[backwards];
+            assert array[backwards] >= array[grenze-i]: "Nicht sortier REEEEE";
             backwards--;
         }
 
+    }
+    //Kevin's integer ueberpruefung von blatt 1
+    private static boolean parameterIsInteger(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        }
+        catch (NumberFormatException nfe) {
+            return false;
+        }
     }
 }
