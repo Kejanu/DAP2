@@ -1,4 +1,4 @@
-package Blatt04L.Kevin;
+package Blatt04L.KevinSolution;
 
 public class Point {
     private double[] corrdinates;
