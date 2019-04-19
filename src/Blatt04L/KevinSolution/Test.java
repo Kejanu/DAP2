@@ -1,4 +1,4 @@
-package Blatt04L.Kevin;
+package Blatt04L.KevinSolution;
 
 public class Test {
     public static void main(String[] args) {

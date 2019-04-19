@@ -1,4 +1,4 @@
-package BLatt03K.Kevin;
+package Blatt03K.KevinSolution;
 
 import Templates.ArrayHelper;
 import Templates.SortAlgorithms;
