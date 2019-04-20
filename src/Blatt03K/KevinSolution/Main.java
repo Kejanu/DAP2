@@ -22,44 +22,37 @@ public class Main {
         long maxTime = (long) (Float.parseFloat(args[0]) * 1000);
 
         int arrayLength = 500;
-        int[] arr;
+        long timeUsed;
 
-        long tStart, tEnd, tResult;
         do {
-            arr = new int[arrayLength *= 2];
-            ArrayHelper.fillIntArrayWithDescending(arr);
+            timeUsed = getTimeOfBubbleSortForArrayDescendingWithSpecifiedLength(arrayLength *= 2);
+        } while (timeUsed < maxTime);
 
-            tStart = System.currentTimeMillis();
-            SortAlgorithms.bubbleSort(arr);
-            tEnd = System.currentTimeMillis();
-            tResult = tEnd - tStart;
-            System.out.println("Current ArrayLength: " + arr.length + "\tTime used: " + tResult);
-        } while (tResult < maxTime);
-
-        int result = findFittingLengthWithBinarySearch(arr, maxTime, arr.length / 2, arr.length);
+        System.out.println("\nStarting binary search...");
+        int result = findFittingLengthWithBinarySearch(maxTime, arrayLength / 2, arrayLength);
         System.out.println("Fitting length would be: " + result);
     }
 
-    public static int findFittingLengthWithBinarySearch(int[] arr, long maxTime, int left, int right) {
+    public static int findFittingLengthWithBinarySearch(long maxTime, int left, int right) {
         if (left == right)
             return left;
 
         int q = (left + right) / 2;
 
-        long timeUsed = getTimeOfBubbleSortForArrayWithSpecifiedLength(q);
+        long timeUsed = getTimeOfBubbleSortForArrayDescendingWithSpecifiedLength(q);
 
         if (timeUsed > maxTime + 100) {
-            return findFittingLengthWithBinarySearch(arr, maxTime, left, q);
+            return findFittingLengthWithBinarySearch(maxTime, left, q);
         }
         else if (timeUsed < maxTime - 100) {
-            return findFittingLengthWithBinarySearch(arr, maxTime, q + 1, right);
+            return findFittingLengthWithBinarySearch(maxTime, q + 1, right);
         }
         else {
             return q;
         }
     }
 
-    public static long getTimeOfBubbleSortForArrayWithSpecifiedLength(int length) {
+    public static long getTimeOfBubbleSortForArrayDescendingWithSpecifiedLength(int length) {
         int[] arr = new int[length];
         ArrayHelper.fillIntArrayWithDescending(arr);
         long tStart, tEnd, tResult;
