@@ -13,13 +13,14 @@ public class Main {
 
         if (args.length == 0) {
             calculateTimeFor50000();
+            return;
         }
 
         if (!InputValidation.parameterIsFloat(args[0])) {
             System.out.println("Error: Your input is no float-number. " + PROPER_USAGE_MESSAGE);
         }
 
-        float enteredTime = Float.parseFloat(args[0]);
+        long maxTime = (long) (Float.parseFloat(args[0]) * 1000);
 
         int arrayLength = 500;
         int[] arr;
@@ -34,10 +35,21 @@ public class Main {
             tEnd = System.currentTimeMillis();
             tResult = tEnd - tStart;
             System.out.println("Current ArrayLength: " + arr.length + "\tTime used: " + tResult);
-        } while (tResult < enteredTime);
+        } while (tResult < maxTime);
 
         System.out.println("Searching for " + (arr.length - 1) + " from: " + arr.length / 2 + " to " + arr.length);
-        int i = SearchAlogrithms.binarySearch(arr, arrayLength-1, arrayLength / 2, arr.length);
+
+        int i;
+        try {
+            i = SearchAlogrithms.binarySearchWithTimeManagement(arr, arrayLength-1, arrayLength / 2, arr.length,
+                                                                    20L, maxTime);
+        }
+        catch (Exception ex) {
+            System.out.println("Well there was a exception");
+            System.out.println("Arraylength: " + arr.length);
+            return;
+        }
+
         System.out.println("Found index: " + i + "  Value is: " + arr[i]);
     }
 
@@ -51,7 +63,7 @@ public class Main {
         SortAlgorithms.bubbleSort(arr);
         tEnd = System.currentTimeMillis();
 
-        ArrayHelper.printIntArray(arr);
+        //ArrayHelper.printIntArray(arr);
 
         tResult = tEnd - tStart;
         System.out.println(tResult);
