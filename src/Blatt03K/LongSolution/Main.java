@@ -1,5 +1,7 @@
 package Blatt03K.LongSolution;
 import Templates.InputValidation;
+import Templates.SearchAlgorithms;
+import Templates.SortAlgorithms;
 
 public class Main {
     //warum habt ihr sie alle Main genannt
@@ -20,7 +22,9 @@ public class Main {
         long tStart, tEnd, msecs;
 
         if(args[0].equals("BubbleSort")){
+
             int[] array = new int[50000];
+            fillArrayDescending(array);
             // Beginn der Messung
             tStart = System.currentTimeMillis();
             bubbleSort(array);
@@ -48,15 +52,16 @@ public class Main {
         long tStart, tEnd, msecs;
         float convertedmsecs;
         int[] arraySearch = new int[fieldSize];
+        time = time*1000;
         fillArrayDescending(arraySearch);
 
         //Ermittlung vom Intervall das zu untersuchen ist
         while(true) {
             tStart = System.currentTimeMillis();
-            bubbleSort(arraySearch);
+            SortAlgorithms.bubbleSort(arraySearch);
             tEnd = System.currentTimeMillis();
             msecs = tEnd - tStart;
-            convertedmsecs = msecs / 1000.0f;
+            convertedmsecs = msecs;
             if (convertedmsecs < time) {
                 arraySearch = new int[arraySearch.length*2];
                 fillArrayDescending(arraySearch);
@@ -69,58 +74,56 @@ public class Main {
         System.out.println("Bubblesort time before binarySearch: "+ convertedmsecs);
 
         //binäre Suche wird gestartet
+        int solution;
         if(arraySearch.length == 1000) {
-            int solution = binarySearch(time, convertedmsecs, arraySearch, 0, arraySearch.length);
-            //ergebnis yay
-            System.out.println("Das Ergebnis: Das Array hat die Länge: " + solution);
+            solution = binarySearch(time, convertedmsecs, 0, arraySearch.length);
         }
         else{
-            int solution = binarySearch(time, convertedmsecs, arraySearch, arraySearch.length / 2, arraySearch.length);
-            //ergebnis yay
-            System.out.println("Das Ergebnis: Das Array hat die Länge: " + solution);
+            solution = binarySearch(time, convertedmsecs, arraySearch.length / 2, arraySearch.length);
         }
+        System.out.println("Das Ergebnis: Das Array hat die Länge: " + solution);
 
 
     }
 
     //Suche nachder Länge für die gilt systemtime-toleranzgrenze <= timeInput <= systemtime +toleranzgrenze
-    public static int binarySearch( float time, float systemTime, int[] array, int left, int right){
-        float tolerantlimit = 0.1f;
-
-        if (systemTime-tolerantlimit <= time && time <= systemTime+tolerantlimit) {
+    public static int binarySearch( float timeInput, float systemTime, int left, int right){
+        float tolerantlimit = 100f;
+        if(left == right)
             return left;
-        }
         int q = (left + right) / 2;
         //laufzeitmessung von bubblesort
-        systemTime = binarySearchHelper(q,systemTime);
+        systemTime = binarySearchHelper(q);
+        if (timeInput-tolerantlimit < systemTime && systemTime < timeInput+tolerantlimit) {
+            return q;
+        }
 
-        //pimmel
-
-        if (time <= systemTime) {
-            return binarySearch(time, systemTime, array, left, q-1);
+        if (timeInput < systemTime) {
+            return binarySearch(timeInput, systemTime, left, q);
         }
         else {
-            return binarySearch(time, systemTime, array, q+1, right);
-
+            return binarySearch(timeInput, systemTime, q+1, right);
         }
-
     }
 
-    public static float binarySearchHelper(int arraylength, float systemTime){
+    public static float binarySearchHelper(int arraylength){
 
         long tStart, tEnd, msecs;
         float convertedmsecs;
         //length has been cutted for binarySearch purposes
         int[] arraySearchHelper = new int[arraylength];
+        fillArrayDescending(arraySearchHelper);
 
         //System.out.println("arraylength in binarySearch time: "+arraylength);
 
-        fillArrayDescending(arraySearchHelper);
+
+
         tStart = System.currentTimeMillis();
-        bubbleSort(arraySearchHelper);
+        SortAlgorithms.bubbleSort(arraySearchHelper);
         tEnd = System.currentTimeMillis();
+
         msecs = tEnd - tStart;
-        convertedmsecs = msecs / 1000.0f;
+        convertedmsecs = msecs;
         System.out.println("Bubblesort in binarySearch systemtime: " + convertedmsecs);
         System.out.println("arraylength in binarySearch time: "+arraySearchHelper.length);
         return convertedmsecs;
@@ -129,8 +132,10 @@ public class Main {
 
 
     public static void fillArrayDescending(int[] array){
+        int counter = 0;
         for(int i= array.length-1; i >0; i--){
-            array[i] = i;
+            array[counter] = i;
+            counter++;
         }
     }
 }
