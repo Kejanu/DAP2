@@ -25,6 +25,7 @@ public class Main {
         long timeUsed;
 
         do {
+            System.gc();
             timeUsed = getTimeOfBubbleSortForArrayDescendingWithSpecifiedLength(arrayLength *= 2);
         } while (timeUsed < maxTime);
 
@@ -53,6 +54,7 @@ public class Main {
     }
 
     public static long getTimeOfBubbleSortForArrayDescendingWithSpecifiedLength(int length) {
+        System.gc();
         int[] arr = new int[length];
         ArrayHelper.fillIntArrayWithDescending(arr);
         long tStart, tEnd, tResult;
@@ -61,7 +63,7 @@ public class Main {
         SortAlgorithms.bubbleSort(arr);
         tEnd = System.currentTimeMillis();
         tResult = tEnd - tStart;
-        System.out.println("Current array length: " + arr.length + "\tTime used: " + tResult);
+        System.out.println("Current array length: " + arr.length + "\tTime used: " + tResult / 1000.0f);
         return tResult;
     }
 
