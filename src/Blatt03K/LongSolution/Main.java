@@ -93,10 +93,8 @@ public class Main {
         int q = (left + right) / 2;
         //laufzeitmessung von bubblesort
         systemTime = binarySearchHelper(q,systemTime);
-        //pimmel
-        System.out.println("Bubblesort in binarySearch systemtime: " + systemTime);
-        System.out.println("Bubblesort in binarySearch timeInput: " + time);
 
+        //pimmel
 
         if (time <= systemTime) {
             return binarySearch(time, systemTime, array, left, q-1);
@@ -123,7 +121,7 @@ public class Main {
         tEnd = System.currentTimeMillis();
         msecs = tEnd - tStart;
         convertedmsecs = msecs / 1000.0f;
-        System.out.println("Bubblesort in binarySearch systemtime: " + systemTime);
+        System.out.println("Bubblesort in binarySearch systemtime: " + convertedmsecs);
         System.out.println("arraylength in binarySearch time: "+arraySearchHelper.length);
         return convertedmsecs;
     }
