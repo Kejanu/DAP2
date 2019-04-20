@@ -1,4 +1,4 @@
-package Templates;
+package SimpleTests;
 
 public class TestMerge {
     public static void main(String[] args) {

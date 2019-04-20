@@ -1,6 +1,7 @@
 package Blatt04L.KevinSolution;
 import java.util.Random;
 import java.util.stream.IntStream;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Application {
 
@@ -29,9 +30,11 @@ public class Application {
             }
         }
         else {
-            Random r = new Random();
+            // Returns a pseudorandom double value between the specified origin (inclusive) and bound (exclusive).
+            // https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/ThreadLocalRandom.html
             points = IntStream.range(0, 3)
-                    .mapToObj(i -> new Point(2, r.nextInt(2001) - 1000, r.nextInt(2001) - 1000))
+                    .mapToObj(i -> new Point(2, ThreadLocalRandom.current().nextDouble(-1000, 1000),
+                            ThreadLocalRandom.current().nextDouble(-1000, 1000)))
                     .toArray(Point[]::new);
         }
 
