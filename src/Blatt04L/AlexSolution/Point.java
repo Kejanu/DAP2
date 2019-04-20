@@ -5,11 +5,11 @@ public class Point {
     private int dimension;
     private double[] coordinates;
 
-    public Point(int dim, double... values){
+    public Point(int dim, double... values) {
 
-        if(dim>0) {
+        if (dim > 0) {
             dimension = dim;
-        }else{
+        } else {
             throw new IllegalArgumentException();
         }
 
@@ -21,24 +21,36 @@ public class Point {
             }
         }else
             */
-        if(values.length != dimension){
+        if (values.length != dimension) {
             throw new IllegalArgumentException();
-        }else{
-            coordinates=values;
+        } else {
+            coordinates = values;
         }
     }
 
-    public int dim(){
+    public int dim() {
         return dimension;
     }
 
-    public double get(int i){
-        if(i>=0 && i<coordinates.length){
+    public double get(int i) {
+        if (i >= 0 && i < coordinates.length) {
             return coordinates[i];
-        }else{
+        } else {
             throw new IllegalArgumentException();
         }
     }
+
+    public void printPoint(){
+
+        for(int i=0; i<coordinates.length; i++){
+            System.out.print(coordinates[i] + " ");
+        }
+        System.out.println();
+    }
+
+
+
+
 
 
 }

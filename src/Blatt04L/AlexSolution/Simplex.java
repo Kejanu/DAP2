@@ -2,8 +2,8 @@ package Blatt04L.AlexSolution;
 
 public abstract class Simplex {
 
-    private int dimension;
-    private Point[] points;
+     int dimension;
+     Point[] points;
 
     public Simplex(int dim, Point...p){
 
@@ -14,28 +14,11 @@ public abstract class Simplex {
             throw new IllegalArgumentException();
         }
 
-        /*
-        if(p.length-1 != dimension){
-            throw new IllegalArgumentException();
-        }
-
-        for (Point value : p){
-            if(value.dim() != dimension){
-                throw new IllegalArgumentException();
-            }
-        }
-
         points=p;
 
-        */
-
-
-
-
-
-
-
-
+        if(!validate()){
+            throw new IllegalArgumentException();
+        }
     }
 
     public Point get(int i){
@@ -45,4 +28,22 @@ public abstract class Simplex {
             throw new IllegalArgumentException();
         }
     }
+
+    public abstract boolean validate();
+
+    public double perimeter(){
+        double result=0;
+        EuclidDistance ed= new EuclidDistance();
+
+        for(int i=0; i<points.length; i++){
+
+            for (int j=0; j<points.length; j++){
+
+                result= result + ed.distance(get(i),get(j));
+            }
+        }
+
+        return result/2;
+    }
+
 }
