@@ -3,7 +3,6 @@ package Blatt03K.KevinSolution;
 import Templates.ArrayHelper;
 import Templates.SortAlgorithms;
 import Templates.InputValidation;
-import Templates.SearchAlogrithms;
 
 public class Main {
 
@@ -37,20 +36,40 @@ public class Main {
             System.out.println("Current ArrayLength: " + arr.length + "\tTime used: " + tResult);
         } while (tResult < maxTime);
 
-        System.out.println("Searching for " + (arr.length - 1) + " from: " + arr.length / 2 + " to " + arr.length);
+        int result = findFittingLengthWithBinarySearch(arr, maxTime, arr.length / 2, arr.length);
+        System.out.println("Fitting length would be: " + result);
+    }
 
-        int i;
-        try {
-            i = SearchAlogrithms.binarySearchWithTimeManagement(arr, arrayLength-1, arrayLength / 2, arr.length,
-                                                                    20L, maxTime);
-        }
-        catch (Exception ex) {
-            System.out.println("Well there was a exception");
-            System.out.println("Arraylength: " + arr.length);
-            return;
-        }
+    public static int findFittingLengthWithBinarySearch(int[] arr, long maxTime, int left, int right) {
+        if (left == right)
+            return left;
 
-        System.out.println("Found index: " + i + "  Value is: " + arr[i]);
+        int q = (left + right) / 2;
+
+        long timeUsed = getTimeOfBubbleSortForArrayWithSpecifiedLength(q);
+
+        if (timeUsed > maxTime + 100) {
+            return findFittingLengthWithBinarySearch(arr, maxTime, left, q);
+        }
+        else if (timeUsed < maxTime - 100) {
+            return findFittingLengthWithBinarySearch(arr, maxTime, q + 1, right);
+        }
+        else {
+            return q;
+        }
+    }
+
+    public static long getTimeOfBubbleSortForArrayWithSpecifiedLength(int length) {
+        int[] arr = new int[length];
+        ArrayHelper.fillIntArrayWithDescending(arr);
+        long tStart, tEnd, tResult;
+
+        tStart = System.currentTimeMillis();
+        SortAlgorithms.bubbleSort(arr);
+        tEnd = System.currentTimeMillis();
+        tResult = tEnd - tStart;
+        System.out.println("Current array length: " + arr.length + "\tTime used: " + tResult);
+        return tResult;
     }
 
     private static void calculateTimeFor50000() {

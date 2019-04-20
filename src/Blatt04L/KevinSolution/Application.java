@@ -1,5 +1,4 @@
 package Blatt04L.KevinSolution;
-import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.concurrent.ThreadLocalRandom;
 
