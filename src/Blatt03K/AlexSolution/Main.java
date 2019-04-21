@@ -4,6 +4,8 @@ import java.util.Random;
 
 public class Main {
 
+
+
     public  Main(){}
 
 
@@ -34,7 +36,7 @@ public class Main {
 
         //3.2
 
-        //todo Zeitmessung funktioniert nicht richtig
+
 
         if(args.length!= 1){
             System.out.println(MESSAGE);
@@ -51,28 +53,59 @@ public class Main {
         arraySize=500;
         result=0;
 
+        System.out.println("Boundary: " + boundary + " sec");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println("BubbleSort");
+
 
         while(result<= boundary) {
 
-            arraySize = arraySize*2;
+            arraySize = arraySize * 2;
             array = new int[arraySize];
             fillDescending(array);
 
-            tStart=System.currentTimeMillis();
+            tStart = System.currentTimeMillis();
             bubbleSort(array);
-            tEnd=System.currentTimeMillis();
+            tEnd = System.currentTimeMillis();
 
-            result= (float) (tEnd-tStart)/1000;
+            result = (float) (tEnd - tStart) / 1000;
 
-            System.out.println(" ");
-            System.out.println("BubbleSort");
+            System.out.println("Size: " + arraySize + ", Time: " + result + " sec");
             System.out.println("Sorted: " + isSorted(array));
-            System.out.print("Size: " + arraySize + ", Time: " + result + "sec");
-            if(!(result<=boundary)){
-                System.out.println(" (Termination)");
-            }
-            System.out.println(" ");
 
+            if (!(result <= boundary)) {
+                System.out.println("(Termination)");
+            }
+            System.out.println("-------------------------------------------------------------------------------------");
+        }
+        System.out.println(" ");
+
+
+        //Binary Search
+
+        System.out.println("Binary Search");
+
+        if(arraySize==1000){
+            binarySearchExtended(0,1000,boundary);
+        }else{
+            binarySearchExtended(arraySize/2 , arraySize, boundary);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            /*
 
             //BinarySearch
 
@@ -103,6 +136,8 @@ public class Main {
             System.out.println("Total Time: " + (e-s)/1000.0);
             System.out.println("--------------------------------------------------");
 
+            */
+
 
 
 
@@ -119,7 +154,7 @@ public class Main {
 
 
 
-    }
+
 
     public static void bubbleSort(int[] arr){
         int n=arr.length;
@@ -150,37 +185,51 @@ public class Main {
         return true;
     }
 
-    public static int binarySearchExtended(int[] arr, int search, int left, int right, float maxTime){
+    public static void binarySearchExtended(int left, int right, float maxTime){
 
 
 
         long tStart, tEnd;
-        float difference;
-        int result;
+        float seconds;
+
+        int[] testArray= new  int[(left+right)/2];
+        fillDescending(testArray);
 
         tStart=System.currentTimeMillis();
+        bubbleSort(testArray);
+        tEnd= System.currentTimeMillis();
+
+        seconds= (float) (tEnd-tStart)/1000;
+
+        System.out.println("-------------------------------------------------------------------------------------");
 
 
-        if(left==right){
-            result= left;
+
+
+        if(Math.abs(maxTime-seconds) < 0.1 || right == left){
+            System.out.println("Final size: " + testArray.length + " Time: " + seconds);
+
         }else{
-            int middle=(left+right)/2;
-            if(search<=arr[middle]){
-                result= binarySearchExtended(arr,search,left,middle, maxTime);
+            System.out.println("Size :" + testArray.length + " , Time needed to apply BubbleSort: " + seconds + " sec" );
+            //int middle=(left+right)/2;
+            if(seconds> maxTime){
+                binarySearchExtended(left,testArray.length, maxTime);
             }else{
-                result= binarySearchExtended(arr,search,middle+1,right, maxTime);
+                binarySearchExtended(testArray.length+1,right, maxTime);
             }
         }
 
-        tEnd=System.currentTimeMillis();
 
+
+
+        /*
         difference=(float) (tEnd-tStart)/1000;
 
         if(result== -1){
             return -1;
         }
 
-        //todo Abweichen oder Überschreiten?
+
         if(difference  >maxTime-0.1 //&& ((tEnd-tStart)/1000.0 < maxTime+0.1)
                  ){
             System.out.println("-----------------------------------------");
@@ -194,6 +243,8 @@ public class Main {
         System.out.println("Left: " + left + ", Right: " + right);
         System.out.println("Time: " + difference);
         return result;
+
+        */
 
     }
 }
