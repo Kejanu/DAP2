@@ -15,8 +15,14 @@ public class Main {
             return;
         }
 
+        if (args.length > 1) {
+            System.out.println("Error: You provided too many arguments. " + PROPER_USAGE_MESSAGE);
+            return;
+        }
+
         if (!InputValidation.parameterIsFloat(args[0])) {
             System.out.println("Error: Your input is no float-number. " + PROPER_USAGE_MESSAGE);
+            return;
         }
 
         long maxTime = (long) (Float.parseFloat(args[0]) * 1000);
@@ -61,6 +67,7 @@ public class Main {
 
         tStart = System.currentTimeMillis();
         SortAlgorithms.bubbleSort(arr);
+        assert ArrayHelper.intArrayIsSorted(arr);
         tEnd = System.currentTimeMillis();
         tResult = tEnd - tStart;
         System.out.println("Current array length: " + arr.length + "\tTime used: " + tResult / 1000.0f);
