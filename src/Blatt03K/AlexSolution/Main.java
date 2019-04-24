@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
 
         long tStart, tEnd;
-        final String MESSAGE = "No boundary provided";
+        final String MESSAGE = "No proper boundary provided.";
         float boundary, result;
         int arraySize;
         int[] array;
@@ -30,18 +30,26 @@ public class Main {
         //3.2
 
 
+        //Prüfung der Eingabeargumente
         if (args.length != 1) {
-            System.out.println(MESSAGE);
+            System.out.println(MESSAGE + " Too many/few arguments provided. Proper number of arguments is 1.");
             return;
         }
 
         try {
             boundary = Float.parseFloat(args[0]);
         } catch (Exception e) {
-            System.out.println(MESSAGE);
+            System.out.println(MESSAGE + " The boundary you provided is not a valid float.");
             return;
         }
 
+        if(boundary<0){
+            System.out.println(MESSAGE + " Your boundary must be positive." );
+            return;
+        }
+
+
+        //erste Durchlaeufe von BubbleSort
         arraySize = 500;
         result = 0;
 
@@ -53,25 +61,32 @@ public class Main {
 
         while (result <= boundary) {
 
+            //Vorbereitung des Arrays
             arraySize = arraySize * 2;
             array = new int[arraySize];
             fillDescending(array);
 
+            //Zeitmessung
             tStart = System.currentTimeMillis();
             bubbleSort(array);
             tEnd = System.currentTimeMillis();
 
             result = (float) (tEnd - tStart) / 1000;
 
+            //Ausgabe
             System.out.println("Size: " + arraySize + ", Time: " + result + " sec");
             System.out.println("Sorted: " + isSorted(array));
 
+            //Zusätzliche Ausgabe, falls Grenze ueberschritten
             if (!(result <= boundary)) {
                 System.out.println("(Termination)");
             }
+
             System.out.println("-------------------------------------------------------------------------------------");
         }
         System.out.println(" ");
+
+
 
         //Binary Search
         System.out.println("Binary Search");
@@ -119,9 +134,11 @@ public class Main {
         long tStart, tEnd;
         float seconds;
 
+        //Array anlegen
         int[] testArray = new int[(left + right) / 2];
         fillDescending(testArray);
 
+        //Zeitmessung
         tStart = System.currentTimeMillis();
         bubbleSort(testArray);
         tEnd = System.currentTimeMillis();
@@ -130,9 +147,9 @@ public class Main {
 
         System.out.println("-------------------------------------------------------------------------------------");
 
-
+        //Binaere Suche
         if (Math.abs(maxTime - seconds) < 0.1 || right == left) {
-            System.out.println("Final size: " + testArray.length + " Time: " + seconds);
+            System.out.println("Final size: " + testArray.length + " Time: " + seconds + " sec");
 
         } else {
             System.out.println("Size :" + testArray.length + " , Time needed to apply BubbleSort: " + seconds + " sec");
