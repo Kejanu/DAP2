@@ -27,8 +27,8 @@ public class Main {
             System.out.println("Time needed to sort 50000 Elements in msecs: "+msecs);
         }
         else if(args[0].equals("Geometrische_Suche") || args[0].equals("Binäre_Suche")) {
-            if(!InputValidation.parameterIsFloat(args[1])){
-                System.out.println("Parameter war kein Float");
+            if(!InputValidation.parameterIsFloat(args[1]) ||Float.parseFloat(args[1]) >0){
+                System.out.println("Parameter war kein positiver Float");
                 return;
             }
             geometricalSearch(Float.parseFloat(args[1]),1000);
@@ -43,25 +43,20 @@ public class Main {
     //fieldSize is 1k
     public static void geometricalSearch(float time, int fieldSize){
         long tStart, tEnd, msecs;
-        float convertedmsecs;
+        float convertedmsecs = 0f;
         int[] arraySearch = new int[fieldSize];
         time = time*1000;
 
         ArrayHelper.fillIntArrayWithDescending(arraySearch);
         //Ermittlung vom Intervall das zu untersuchen ist
-        while(true) {
+        while(convertedmsecs < time) {
             tStart = System.currentTimeMillis();
             SortAlgorithms.bubbleSort(arraySearch);
             tEnd = System.currentTimeMillis();
             msecs = tEnd - tStart;
             convertedmsecs = msecs;
-            if (convertedmsecs < time) {
-                arraySearch = new int[arraySearch.length*2];
-                ArrayHelper.fillIntArrayWithDescending(arraySearch);
-            }
-            else{
-                break;
-            }
+            arraySearch = new int[arraySearch.length*2];
+            ArrayHelper.fillIntArrayWithDescending(arraySearch);
         }
         System.out.println("Array length before binarySearch: "+ arraySearch.length);
         System.out.println("Bubblesort time before binarySearch: "+ convertedmsecs);
