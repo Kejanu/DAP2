@@ -1,5 +1,9 @@
 package Blatt04L.KevinSolution;
 
+import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Point {
     private double[] corrdinates;
     // d = dimension
@@ -15,13 +19,25 @@ public class Point {
 
     @Override
     public String toString() {
-        return "Point x = " + corrdinates[0] + ", y = " + corrdinates[1];
+        DecimalFormat dc = new DecimalFormat("###.###############");
+        dc.setMinimumFractionDigits(15);
+
+        return "Point x = " + dc.format(corrdinates[0]) + ", y = " + dc.format(corrdinates[1]);
     }
 
     public double get(int i) {
         if (i < 0 || i >= this.corrdinates.length)
             throw new IllegalArgumentException();
         return corrdinates[i];
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Point point = (Point) o;
+        return d == point.d && Arrays.equals(corrdinates, point.corrdinates);
     }
 
     public double getX() {

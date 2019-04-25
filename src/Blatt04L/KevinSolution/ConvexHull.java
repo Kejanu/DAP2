@@ -1,5 +1,6 @@
 package Blatt04L.KevinSolution;
 
+import java.sql.SQLOutput;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,17 +10,53 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ConvexHull {
 
     public static void main(String[] args) {
-        Point[] rndPoints = IntStream.range(0, 1001)
-                                     .mapToObj(i -> new Point(2, ThreadLocalRandom.current().nextDouble(10, 100),
-                                                                    ThreadLocalRandom.current().nextDouble(10, 100)))
-                                     .map(ConvexHull::getValidPoint)
-                                     //.peek(System.out::println)
-                                     .toArray(Point[]::new);
+//        Point[] rndPoints = IntStream.range(0, 4)
+//                                     .mapToObj(i -> new Point(2, ThreadLocalRandom.current().nextInt(10, 100),
+//                                                                    ThreadLocalRandom.current().nextInt(10, 100)))
+//                                     .map(ConvexHull::getValidPoint)
+//                                     //.peek(System.out::println)
+//                                     .toArray(Point[]::new);
+
+        Point[] rndPoints = new Point[]{
+                new Point(2, 80, 10),
+                new Point(2, 50, 20),
+                new Point(2, 40, 30),
+                new Point(2, 30, 50),
+                new Point(2, 20, 40),
+        };
+
+        makePointsUnique(rndPoints);
 
         LinkedList<Point> ll = (LinkedList<Point>) simpleConvex(rndPoints);
 
-        for (Iterator it = ll.iterator(); it.hasNext();) {
-            System.out.println(it.next() + " connected to " + it.next());
+        if (ll.size() % 2 != 0) {
+            System.out.println("Something went wrong");
+            return;
+        }
+
+        Point p1;
+        Iterator it = ll.iterator();
+        p1 = (Point) it.next();
+
+        while (it.hasNext()) {
+            System.out.println(p1 + "\tconnected to\t" + (p1 = (Point) it.next()));
+        }
+
+        new Visualization(rndPoints, ll, 1000, 1000);
+    }
+
+    private static void makePointsUnique(Point[] arr) {
+        for (int i = 0; i < arr.length; ++i) {
+            for (int j = 0; j < arr.length; ++j) {
+                if (i != j && arr[i].equals(arr[j])) {
+                    System.out.println("A point that is not unique has been found. BIG YIKES");
+                    arr[i] = getValidPoint(new Point(arr[j].dim(),
+                            ThreadLocalRandom.current().nextDouble(10, 100),
+                            ThreadLocalRandom.current().nextDouble(10, 100)));
+                    --i;
+                    break;
+                }
+            }
         }
     }
 
