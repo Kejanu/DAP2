@@ -1,6 +1,5 @@
 package Blatt03K.AlexSolution;
 
-import java.util.Random;
 
 public class Main {
 
@@ -70,13 +69,14 @@ public class Main {
             System.gc();
             tStart = System.currentTimeMillis();
             bubbleSort(array);
+            assert isSorted(array);
             tEnd = System.currentTimeMillis();
 
             result = (float) (tEnd - tStart) / 1000;
 
             //Ausgabe
             System.out.println("Size: " + arraySize + ", Time: " + result + " sec");
-            System.out.println("Sorted: " + isSorted(array));
+            //System.out.println("Sorted: " + isSorted(array));
 
             //Zusätzliche Ausgabe, falls Grenze ueberschritten
             if (!(result <= boundary)) {
@@ -143,6 +143,7 @@ public class Main {
         System.gc();
         tStart = System.currentTimeMillis();
         bubbleSort(testArray);
+        assert isSorted(testArray);
         tEnd = System.currentTimeMillis();
 
         seconds = (float) (tEnd - tStart) / 1000;
