@@ -15,14 +15,15 @@ public class Main {
 
         /*
 
-        int[] testArray = new int[5000];
+        int[] testArray = new int[50000];
         fillDescending(testArray);
+        System.gc();
         tStart=System.currentTimeMillis();
         bubbleSort(testArray);
         tEnd=System.currentTimeMillis();
         System.out.println(tEnd-tStart);
         System.out.println(isSorted(testArray));
-        //Result 82ms = 0,082sec
+        //Result 3328ms = 3,328sec
 
         */
 
@@ -37,7 +38,7 @@ public class Main {
 
         try {
             boundary = Float.parseFloat(args[0]);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             System.out.println(MESSAGE + " The boundary you provided is not a valid float.");
             return;
         }
@@ -97,6 +98,11 @@ public class Main {
         } else {
             binarySearchExtended(arraySize / 2, arraySize, boundary);
         }
+
+
+
+
+
     }
 
 
@@ -127,6 +133,7 @@ public class Main {
             }
         }
         return true;
+
     }
 
     public static void binarySearchExtended(int left, int right, float maxTime) {
