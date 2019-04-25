@@ -6,7 +6,7 @@ import Templates.InputValidation;
 
 public class Main {
 
-    private static final String PROPER_USAGE_MESSAGE = "Proper Usage: Time(float)";
+    private static final String PROPER_USAGE_MESSAGE = "Proper Usage: Time(positive-float)";
 
     public static void main(String[] args) {
 
@@ -26,6 +26,10 @@ public class Main {
         }
 
         long maxTime = (long) (Float.parseFloat(args[0]) * 1000);
+
+        if (maxTime < 0) {
+            System.out.println("Error: Your input is not a positive number. " + PROPER_USAGE_MESSAGE);
+        }
 
         int arrayLength = 500;
         long timeUsed;

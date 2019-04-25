@@ -6,6 +6,7 @@ class MainTest {
     void main() {
         Main.main(printArguments());
         Main.main(printArguments("0.3"));
+        Main.main(printArguments("-0.3"));
         Main.main(printArguments("test"));
         Main.main(printArguments("0.3" , "0.4"));
     }
