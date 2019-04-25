@@ -1,5 +1,6 @@
 import Blatt03K.KevinSolution.Main;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 class MainTest {
 
     @Test

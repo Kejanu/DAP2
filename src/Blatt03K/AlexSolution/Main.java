@@ -67,6 +67,7 @@ public class Main {
             fillDescending(array);
 
             //Zeitmessung
+            System.gc();
             tStart = System.currentTimeMillis();
             bubbleSort(array);
             tEnd = System.currentTimeMillis();
@@ -139,6 +140,7 @@ public class Main {
         fillDescending(testArray);
 
         //Zeitmessung
+        System.gc();
         tStart = System.currentTimeMillis();
         bubbleSort(testArray);
         tEnd = System.currentTimeMillis();
