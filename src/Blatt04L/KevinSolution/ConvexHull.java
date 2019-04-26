@@ -1,5 +1,7 @@
 package Blatt04L.KevinSolution;
 
+import Templates.ConvexVisualization;
+
 import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -11,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ConvexHull {
 
     public static void main(String[] args) {
-        Point[] rndPoints = IntStream.range(0, 1001)
+        Point[] rndPoints = IntStream.range(0, 30)
          .mapToObj(i -> new Point(2, ThreadLocalRandom.current().nextDouble(10, 100),
                                         ThreadLocalRandom.current().nextDouble(10, 100)))
          .map(ConvexHull::getValidPoint)
@@ -50,7 +52,7 @@ public class ConvexHull {
             System.out.println(p1 + "\tconnected to\t" + (p1 = it.next()));
         }
 
-        new Visualization(rndPoints, ll, 1000, 1000);
+        new ConvexVisualization(rndPoints, ll, 1000, 1000);
     }
 
     private static void makePointsUnique(Point[] arr) {

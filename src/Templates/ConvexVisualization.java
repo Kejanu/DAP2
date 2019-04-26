@@ -1,22 +1,22 @@
-package Blatt04L.KevinSolution;
+package Templates;
+
+import Blatt04L.KevinSolution.Point;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.stream.Collectors;
 
-public class Visualization extends JFrame {
+public class ConvexVisualization extends JFrame {
 
     Point[] points;
     LinkedList<Point> pointList;
     int width;
 
 
-    public Visualization(Point[] points, LinkedList<Point> pointList, int width, int height) {
+    public ConvexVisualization(Point[] points, LinkedList<Point> pointList, int width, int height) {
         this.points = points;
         this.pointList = pointList;
         this.width = width;
@@ -61,9 +61,5 @@ public class Visualization extends JFrame {
 
     public double betterY(double y) {
         return width - y * 10 + 40;
-    }
-
-    public static void main(String[] args) {
-        //Visualization s = new Visualization(null, null);
     }
 }
