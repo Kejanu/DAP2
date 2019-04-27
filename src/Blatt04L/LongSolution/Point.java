@@ -15,12 +15,12 @@ public class Point {
         this.d = d;
         this.pointValues = values;
     }
+
     public double get(int i){
          if(i < 0 || i >= this.pointValues.length){
              throw new IllegalArgumentException("Axis must within bounds");
          }
          return pointValues[i];
-
     }
     public int dim(){
         return d;
