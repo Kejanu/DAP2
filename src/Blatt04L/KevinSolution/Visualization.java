@@ -1,5 +1,6 @@
 package Blatt04L.KevinSolution;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -8,19 +9,26 @@ import java.awt.geom.Point2D;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
+import Blatt04L.AlexSolution.UniversalPoint;
+
 
 public class Visualization extends JFrame {
 
-    Point[] points;
-    LinkedList<Point> pointList;
+    UniversalPoint[] points;
+    LinkedList<UniversalPoint> pointList;
     int width;
+    int factor;
 
 
-    public Visualization(Point[] points, LinkedList<Point> pointList, int width, int height) {
+    //implement interface UniversalPoint to use this
+
+    public Visualization(UniversalPoint[] points, LinkedList<UniversalPoint> pointList, int width, int height, int factor) {
         this.points = points;
         this.pointList = pointList;
         this.width = width;
+        this.factor=factor;
         createWindow("YEET", width, height);
+
     }
 
     public void createWindow(String title, int width, int height) {
@@ -36,31 +44,31 @@ public class Visualization extends JFrame {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.WHITE);
 
-        for (Point p : this.points) {
+        for (UniversalPoint p : this.points) {
             // -3 cause ellipse expansion
-            g2.fill(new Ellipse2D.Double(betterX(p.getX()) - 3, betterY(p.getY()) - 3, 6, 6));
+            g2.fill(new Ellipse2D.Double(betterX(p.getX(),factor) - 3, betterY(p.getY(),factor) - 3, 6, 6));
         }
 
-        Point p1;
+        UniversalPoint p1;
         Iterator it = pointList.iterator();
-        p1 = (Point) it.next();
+        p1 = (UniversalPoint) it.next();
         g2.setStroke(new BasicStroke(2f));
 
         g2.setColor(new Color(0, 192, 57));
         while (it.hasNext()) {
-            Point p2 = (Point) it.next();
-            Line2D line = new Line2D.Double(betterX(p1.getX()), betterY(p1.getY()), betterX(p2.getX()), betterY(p2.getY()));
+            UniversalPoint p2 = (UniversalPoint) it.next();
+            Line2D line = new Line2D.Double(betterX(p1.getX(),factor), betterY(p1.getY(),factor), betterX(p2.getX(),factor), betterY(p2.getY(),factor));
             p1 = p2;
             g2.draw(line);
         }
     }
 
-    public double betterX(double x) {
-        return x * 10 - 40;
+    public double betterX(double x, int factor) {
+        return x * factor - 0;
     }
 
-    public double betterY(double y) {
-        return width - y * 10 + 40;
+    public double betterY(double y, int factor) {
+        return width - y * factor + 0;
     }
 
     public static void main(String[] args) {
