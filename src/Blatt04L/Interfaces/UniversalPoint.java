@@ -1,4 +1,4 @@
-package Blatt04L.AlexSolution;
+package Blatt04L.Interfaces;
 
 public interface UniversalPoint {
 

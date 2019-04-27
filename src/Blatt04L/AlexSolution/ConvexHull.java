@@ -1,5 +1,6 @@
 package Blatt04L.AlexSolution;
 
+import Blatt04L.Interfaces.UniversalPoint;
 import Blatt04L.KevinSolution.Visualization;
 
 import java.util.Iterator;
