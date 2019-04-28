@@ -1,5 +1,7 @@
 package Blatt04L.AlexSolution;
 
+import Blatt04L.Interfaces.UniversalPoint;
+
 public class Point implements UniversalPoint {
 
     private int dimension;

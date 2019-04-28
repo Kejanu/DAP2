@@ -1,9 +1,7 @@
 package Blatt04L.KevinSolution;
 
-import Blatt04L.AlexSolution.UniversalPoint;
+import Blatt04L.Interfaces.UniversalPoint;
 
-import java.sql.SQLOutput;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;

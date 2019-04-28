@@ -1,10 +1,9 @@
 package Blatt04L.KevinSolution;
 
-import Blatt04L.AlexSolution.UniversalPoint;
+import Blatt04L.Interfaces.UniversalPoint;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
-import java.util.Objects;
 
 public class Point implements UniversalPoint {
     private double[] corrdinates;

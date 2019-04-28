@@ -5,11 +5,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.stream.Collectors;
-import Blatt04L.AlexSolution.UniversalPoint;
+
+import Blatt04L.Interfaces.UniversalPoint;
 
 
 public class Visualization extends JFrame {
@@ -64,11 +63,11 @@ public class Visualization extends JFrame {
     }
 
     public double betterX(double x, int factor) {
-        return x * factor - 0;
+        return x * factor - 40;
     }
 
     public double betterY(double y, int factor) {
-        return width - y * factor + 0;
+        return width - y * factor + 40;
     }
 
     public static void main(String[] args) {
