@@ -6,6 +6,7 @@ import java.util.List;
 
 public class ConvexHull {
     public static void main(String[] args) {
+        //--test
         double[] p1values = {0, 0};
         Point p1 = new Point(2, p1values);
         double[] p2values = {1, 0};
