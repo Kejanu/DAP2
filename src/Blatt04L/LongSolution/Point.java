@@ -2,8 +2,8 @@ package Blatt04L.LongSolution;
 
 public class Point {
 
-    int d; //dimension
-    double[] pointValues;
+    private int d; //dimension
+    private double[] pointValues;
 
     public Point(int d, double... values){
         if(d < 0){
