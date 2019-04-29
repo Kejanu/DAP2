@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import Blatt04L.Interfaces.UniversalPoint;
 
 
-public class Visualization extends JFrame {
+public class ConvexVisualization extends JFrame {
 
     UniversalPoint[] points;
     LinkedList<UniversalPoint> pointList;
@@ -21,7 +21,7 @@ public class Visualization extends JFrame {
 
     //implement interface UniversalPoint to use this
 
-    public Visualization(UniversalPoint[] points, LinkedList<UniversalPoint> pointList, int width, int height, int factor) {
+    public ConvexVisualization(UniversalPoint[] points, LinkedList<UniversalPoint> pointList, int width, int height, int factor) {
         this.points = points;
         this.pointList = pointList;
         this.width = width;

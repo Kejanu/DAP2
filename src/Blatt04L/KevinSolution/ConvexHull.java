@@ -42,7 +42,7 @@ public class ConvexHull {
             return;
         }
 
-        Point p1, p2;
+        Point p1;
         Iterator<UniversalPoint> it = ll.iterator();
         p1 = (Point) it.next();
 
@@ -50,7 +50,7 @@ public class ConvexHull {
             System.out.println(p1 + "\tconnected to\t" + (p1 = (Point) it.next()));
         }
 
-        new Visualization(rndPoints, ll, 1000, 1000,10);
+        new Blatt04L.KevinSolution.ConvexVisualization(rndPoints, ll, 1000, 1000,10);
     }
 
     private static void makePointsUnique(Point[] arr) {

@@ -1,7 +1,7 @@
 package Blatt04L.AlexSolution;
 
 import Blatt04L.Interfaces.UniversalPoint;
-import Blatt04L.KevinSolution.Visualization;
+import Blatt04L.KevinSolution.ConvexVisualization;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -12,7 +12,7 @@ public class ConvexHull {
     public static void main(String[] args){
         Point[] rndPoints= generatePoints(1000, 10, 100);
         LinkedList<UniversalPoint> hullPoints= simpleConvexHull(rndPoints);
-        new Visualization(rndPoints,hullPoints,600,600,6);
+        new ConvexVisualization(rndPoints,hullPoints,600,600,6);
     }
 
     public static LinkedList<UniversalPoint> simpleConvexHull(Point[] rndPoints){
