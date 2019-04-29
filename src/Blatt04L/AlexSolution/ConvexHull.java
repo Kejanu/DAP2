@@ -1,7 +1,6 @@
 package Blatt04L.AlexSolution;
 
-import Blatt04L.Interfaces.UniversalPoint;
-import Blatt04L.KevinSolution.ConvexVisualization;
+import Templates.ConvexVisualization;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -11,13 +10,13 @@ public class ConvexHull {
 
     public static void main(String[] args) {
         Point[] rndPoints = generatePoints(1000, 10, 100);
-        LinkedList<UniversalPoint> hullPoints = simpleConvexHull(rndPoints);
+        LinkedList<Point> hullPoints = simpleConvexHull(rndPoints);
         new ConvexVisualization(rndPoints, hullPoints, 600, 600, 6);
     }
 
-    public static LinkedList<UniversalPoint> simpleConvexHull(Point[] rndPoints) {
+    public static LinkedList<Point> simpleConvexHull(Point[] rndPoints) {
 
-        LinkedList<UniversalPoint> hullPoints = new LinkedList<>();
+        LinkedList<Point> hullPoints = new LinkedList<>();
 
         //first pair of points (O(n^3))
         for (int i = 0; i < rndPoints.length; i++) {
@@ -46,7 +45,7 @@ public class ConvexHull {
             for (int i = 0; i < rndPoints.length; i++) {
                 if (!reference.equals(rndPoints[i])) {
 
-                    Iterator<UniversalPoint> it = hullPoints.iterator();
+                    Iterator<Point> it = hullPoints.iterator();
                     if (hullPoints.size() > 2 && it.hasNext()) {
                         it.next();
                     }

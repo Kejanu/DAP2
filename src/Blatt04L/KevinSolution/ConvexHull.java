@@ -1,6 +1,7 @@
 package Blatt04L.KevinSolution;
 
 import Blatt04L.Interfaces.UniversalPoint;
+import Templates.ConvexVisualization;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -35,7 +36,7 @@ public class ConvexHull {
 
         makePointsUnique(rndPoints);
 
-        LinkedList<UniversalPoint> ll = (LinkedList<UniversalPoint>) simpleConvex(rndPoints);
+        LinkedList<Point> ll = (LinkedList<Point>) simpleConvex(rndPoints);
 
         if (ll == null) {
             System.out.println("List is null fml");
@@ -43,14 +44,14 @@ public class ConvexHull {
         }
 
         Point p1;
-        Iterator<UniversalPoint> it = ll.iterator();
-        p1 = (Point) it.next();
+        Iterator<Point> it = ll.iterator();
+        p1 = it.next();
 
         while (it.hasNext()) {
             System.out.println(p1 + "\tconnected to\t" + (p1 = (Point) it.next()));
         }
 
-        new Blatt04L.KevinSolution.ConvexVisualization(rndPoints, ll, 1000, 1000,10);
+        new ConvexVisualization(rndPoints ,ll, 1000, 1000,10);
     }
 
     private static void makePointsUnique(Point[] arr) {
@@ -87,9 +88,9 @@ public class ConvexHull {
         return p;
     }
 
-    public static List<UniversalPoint> simpleConvex(Point[] points) {
+    public static List<Point> simpleConvex(Point[] points) {
         // That points are in dimension = 2 has been checked before
-        LinkedList<UniversalPoint> ll = new LinkedList<>();
+        LinkedList<Point> ll = new LinkedList<>();
 
         int i = 0;
         while (ll.isEmpty()) {
@@ -107,7 +108,7 @@ public class ConvexHull {
             ++i;
         }
 
-        Point last = (Point) ll.getLast();
+        Point last = ll.getLast();
         int k = 0;
         while (!ll.getFirst().equals(ll.getLast()) || ll.size() == 1) {
             Point p = points[k];

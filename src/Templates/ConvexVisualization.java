@@ -1,4 +1,4 @@
-package Blatt04L.KevinSolution;
+package Templates;
 
 
 import javax.swing.*;
@@ -14,14 +14,14 @@ import Blatt04L.Interfaces.UniversalPoint;
 public class ConvexVisualization extends JFrame {
 
     UniversalPoint[] points;
-    LinkedList<UniversalPoint> pointList;
+    LinkedList<? extends UniversalPoint> pointList;
     int width;
     int factor;
 
 
     //implement interface UniversalPoint to use this
 
-    public ConvexVisualization(UniversalPoint[] points, LinkedList<UniversalPoint> pointList, int width, int height, int factor) {
+    public ConvexVisualization(UniversalPoint[] points ,LinkedList<? extends UniversalPoint> pointList, int width, int height, int factor) {
         this.points = points;
         this.pointList = pointList;
         this.width = width;
