@@ -54,6 +54,9 @@ public class ConvexHull {
         //Hinzufügen der Eckknoten in eine doppelt verkettete Liste
         //some code.. Kevin HELP
 
+        // Ab hier ab dem zweiten hinzugefügten Punkt starten
+        // Du brauchst neue Schleife, dass ist korrekt
+
 
         System.out.println("Hallo");
         return Liste;
