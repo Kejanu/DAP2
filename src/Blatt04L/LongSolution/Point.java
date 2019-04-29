@@ -1,6 +1,9 @@
 package Blatt04L.LongSolution;
 
-public class Point {
+import Blatt04L.Interfaces.UniversalPoint;
+
+
+public class Point implements UniversalPoint {
 
     private int d; //dimension
     private double[] pointValues;
@@ -26,4 +29,11 @@ public class Point {
         return d;
     }
 
+    //visualisationPurposes/Interface
+    public double getX(){
+        return this.pointValues[0];
+    }
+    public double getY(){
+        return this.pointValues[1];
+    }
 }

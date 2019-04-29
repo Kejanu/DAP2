@@ -1,6 +1,6 @@
 package Blatt04L.LongSolution;
 
-public abstract class Simplex {
+public abstract class Simplex{
 
     int d; //dimension
     Point[] points;
@@ -25,11 +25,12 @@ public abstract class Simplex {
         double sum = 0;
         double tempsum = 0;
         double testFromSubtraction;
+        EuclidDistance edistance = new EuclidDistance();
 
         //O(n^(3)) btw.
         for(int i = 0; i <= d; i++){
             for(int k=0; k<=d;k++) {
-                for (int j = 0; j < d; j++) {
+               /* for (int j = 0; j < d; j++) {
                     System.out.println("Point A:" + this.points[i].get(j) + "," + "Point B: " + this.points[k].get(j));
                     testFromSubtraction = Math.pow(points[i].get(j) - this.points[k].get(j), 2);
                     tempsum = tempsum + testFromSubtraction;
@@ -39,6 +40,9 @@ public abstract class Simplex {
                 System.out.println("tempsum: " + tempsum);
                 sum = sum + tempsum;
                 tempsum = 0;
+
+                */
+                sum = sum + edistance.distance(this.points[i], this.points[k]);
                 System.out.println("Zwischen Summe Punkte des" + i + "ten Summe:" + sum);
             }
         }
