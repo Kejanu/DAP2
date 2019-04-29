@@ -1,9 +1,7 @@
 package Blatt04L.KevinSolution;
 
-import Templates.ConvexVisualization;
+import Blatt04L.Interfaces.UniversalPoint;
 
-import java.sql.SQLOutput;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ConvexHull {
 
     public static void main(String[] args) {
-        Point[] rndPoints = IntStream.range(0, 30)
+        Point[] rndPoints = IntStream.range(0, 1001)
          .mapToObj(i -> new Point(2, ThreadLocalRandom.current().nextDouble(10, 100),
                                         ThreadLocalRandom.current().nextDouble(10, 100)))
          .map(ConvexHull::getValidPoint)
@@ -37,7 +35,7 @@ public class ConvexHull {
 
         makePointsUnique(rndPoints);
 
-        LinkedList<Point> ll = (LinkedList<Point>) simpleConvex(rndPoints);
+        LinkedList<UniversalPoint> ll = (LinkedList<UniversalPoint>) simpleConvex(rndPoints);
 
         if (ll == null) {
             System.out.println("List is null fml");
@@ -45,14 +43,14 @@ public class ConvexHull {
         }
 
         Point p1, p2;
-        Iterator<Point> it = ll.iterator();
-        p1 = it.next();
+        Iterator<UniversalPoint> it = ll.iterator();
+        p1 = (Point) it.next();
 
         while (it.hasNext()) {
-            System.out.println(p1 + "\tconnected to\t" + (p1 = it.next()));
+            System.out.println(p1 + "\tconnected to\t" + (p1 = (Point) it.next()));
         }
 
-        new ConvexVisualization(rndPoints, ll, 1000, 1000);
+        new Visualization(rndPoints, ll, 1000, 1000,10);
     }
 
     private static void makePointsUnique(Point[] arr) {
@@ -89,9 +87,9 @@ public class ConvexHull {
         return p;
     }
 
-    public static List<Point> simpleConvex(Point[] points) {
+    public static List<UniversalPoint> simpleConvex(Point[] points) {
         // That points are in dimension = 2 has been checked before
-        LinkedList<Point> ll = new LinkedList<>();
+        LinkedList<UniversalPoint> ll = new LinkedList<>();
 
         int i = 0;
         while (ll.isEmpty()) {
@@ -109,7 +107,7 @@ public class ConvexHull {
             ++i;
         }
 
-        Point last = ll.getLast();
+        Point last = (Point) ll.getLast();
         int k = 0;
         while (!ll.getFirst().equals(ll.getLast()) || ll.size() == 1) {
             Point p = points[k];
@@ -123,7 +121,7 @@ public class ConvexHull {
                 if (ll.getLast().equals(ll.getFirst())) {
                     return ll;
                 }
-                last = ll.getLast();
+                last = (Point) ll.getLast();
                 k = 0;
             }
             if (k >= points.length)

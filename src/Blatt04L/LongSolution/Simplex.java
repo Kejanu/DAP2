@@ -16,13 +16,16 @@ public abstract class Simplex {
         }
         this.points = points;
     }
+
     public Point[] get(){
         return points;
     }
+
     public double perimeter(){
         double sum = 0;
         double tempsum = 0;
         double testFromSubtraction;
+
         //O(n^(3)) btw.
         for(int i = 0; i <= d; i++){
             for(int k=0; k<=d;k++) {
@@ -39,11 +42,8 @@ public abstract class Simplex {
                 System.out.println("Zwischen Summe Punkte des" + i + "ten Summe:" + sum);
             }
         }
-
         System.out.println(sum);
         return sum/2.0;
-
     }
     public abstract boolean validate();
-
 }
