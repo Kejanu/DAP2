@@ -2,32 +2,37 @@ package Heimuebung;
 
 public class Blatt04 {
     public static void main(String[] args) {
-        //int[] numbers = new int[]{3, -2, -1, 1, 3, 1, -2, 3};
-        int[] numbers1 = new int[]{};
-        int[] numbers2 = new int[]{1};
-        int[] numbers3 = new int[]{1, 2};
-        int[] numbers4 = new int[]{4, 3, 2, 1};
-        int[] numbers5 = new int[]{3, -2, -1, 1, 3, 1, -2, 3};
-
-        System.out.println(longestAscendingOrder(numbers1, 0, 0));
-        System.out.println(longestAscendingOrder(numbers2, 0, 0));
-        System.out.println(longestAscendingOrder(numbers3, 0, 0));
-        System.out.println(longestAscendingOrder(numbers4, 0, 0));
-        System.out.println(longestAscendingOrder(numbers5, 0, 0));
+//        int[] numbers = new int[]{2, 1, 0, 1, 2, 0, 1, 2};
+        int[] numbers = new int[]{3, -2, -1, 1, 3, 1, -2, 3};
+        System.out.println(findLongestIncreasing(numbers, numbers.length - 1, 0, 0));
     }
 
-    public static int longestAscendingOrder(int[] arr, int index, int length) {
+    // https://stackoverflow.com/questions/35978058/divide-and-conquer-algorithm-for-longest-increasing-consecutive-sequence-in-an-a
+
+    public static int findLongestIncreasing(int[] arr, int index, int currentLength, int maxLength) {
         if (arr.length == 0) return 0;
         if (arr.length == 1) return 1;
+        if (index == 0) {
+            return currentLength > maxLength ? currentLength + 1 : maxLength + 1;
+        }
 
-        if (index + 1 >= arr.length)
-            return length + 1;
-
-        if (arr[index] < arr[index + 1]) {
-            return longestAscendingOrder(arr, index + 1, length + 1);
+        if (arr[index] > arr[index - 1]) {
+            return findLongestIncreasing(arr, index - 1, currentLength + 1, maxLength);
         }
         else {
-            return longestAscendingOrder(arr, index + 1, length);
+            if (currentLength > maxLength) {
+                maxLength = currentLength;
+            }
+            currentLength = 0;
+            return findLongestIncreasing(arr, index - 1, currentLength, maxLength);
         }
+    }
+
+    public static int findNumber(int[] arr, int index, int number) {
+        if (arr.length == 0) return 0;
+        if (arr.length == 1 && arr[index] == number) return 1;
+        if (index == arr.length - 1) return arr[index] == number ? 1 : 0;
+
+        return arr[index] == number ? findNumber(arr, index + 1, number) + 1 : findNumber(arr, index + 1, number);
     }
 }
