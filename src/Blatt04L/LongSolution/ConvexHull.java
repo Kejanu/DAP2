@@ -11,7 +11,7 @@ public class ConvexHull {
 
 
         Point[] points = randomlyGeneratedPointsInTriangleSolvedWithGeometry(1000, 10, 100);
-        //Point[] points = new Point[4];
+
         LinkedList<Point> result = (LinkedList<Point>) simpleConvex(points);
 
         if(result == null){
