@@ -23,8 +23,6 @@ public abstract class Simplex{
 
     public double perimeter(){
         double sum = 0;
-        double tempsum = 0;
-        double testFromSubtraction;
         EuclidDistance edistance = new EuclidDistance();
 
         //O(n^(3)) btw.
