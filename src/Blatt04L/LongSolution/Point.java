@@ -10,10 +10,10 @@ public class Point implements UniversalPoint {
 
     public Point(int d, double... values){
         if(d < 0){
-            throw new IllegalArgumentException("Dimension must be >= 0");
+            throw new IllegalArgumentException("ERROR: Dimension must be >= 0");
         }
         if(values.length != d){
-            throw new IllegalArgumentException("length of arguments must be equal to dimension.");
+            throw new IllegalArgumentException("ERROR: length of arguments must be equal to dimension.");
         }
         this.d = d;
         this.pointValues = values;
@@ -21,7 +21,7 @@ public class Point implements UniversalPoint {
 
     public double get(int i){
          if(i < 0 || i >= this.pointValues.length){
-             throw new IllegalArgumentException("Axis must within bounds.");
+             throw new IllegalArgumentException("ERROR: Axis must within bounds.");
          }
          return pointValues[i];
     }

@@ -41,11 +41,13 @@ public class Application {
 
         Triangle dreieck = new Triangle(2, trianglePoints);
         if(!dreieck.validate()){
-            System.out.println("creating the triangle was not successful. Exiting now. Syntax: " +
-                    "x1 y1 x2 y2 x3 y3");
+            System.out.println("Creating the triangle was not successful.\nSyntax: " +
+                    "x1 y1 x2 y2 x3 y3. Exiting now.");
             return;
         }
-
+        for (Point p : trianglePoints) {
+            System.out.println("Point (X:"+p.getX()+", Y:"+p.getY()+")");
+        }
         //calculate result
         System.out.println("Umfang des Dreiecks: "+dreieck.perimeter());
 
