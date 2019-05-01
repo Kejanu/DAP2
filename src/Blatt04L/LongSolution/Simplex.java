@@ -30,23 +30,10 @@ public abstract class Simplex{
         //O(n^(3)) btw.
         for(int i = 0; i <= d; i++){
             for(int k=0; k<=d;k++) {
-               /* for (int j = 0; j < d; j++) {
-                    System.out.println("Point A:" + this.points[i].get(j) + "," + "Point B: " + this.points[k].get(j));
-                    testFromSubtraction = Math.pow(points[i].get(j) - this.points[k].get(j), 2);
-                    tempsum = tempsum + testFromSubtraction;
-                    //System.out.println("Test von Subtraktion: " + testFromSubtraction);
-                }//
-                tempsum = Math.sqrt(tempsum);
-                System.out.println("tempsum: " + tempsum);
-                sum = sum + tempsum;
-                tempsum = 0;
-
-                */
                 sum = sum + edistance.distance(this.points[i], this.points[k]);
-                System.out.println("Zwischen Summe Punkte des" + i + "ten Summe:" + sum);
             }
+            System.out.println("Zwischen Summe Punkte des " + i + "ten Durchlaufs:" + sum);
         }
-        System.out.println(sum);
         return sum/2.0;
     }
     public abstract boolean validate();

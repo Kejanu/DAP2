@@ -20,7 +20,7 @@ public class Application {
         else if(args.length == 6) {
             for (int i = 0; i < 6; i++) {
                 if (!(InputValidation.parameterIsDouble(args[i]))) {
-                    System.out.println("Parameters must be Double");
+                    System.out.println("Parameters must be Double.");
                     return;
                 } else {
                     inputs[i] = Double.parseDouble(args[i]);
