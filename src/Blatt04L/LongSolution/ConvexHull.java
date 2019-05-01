@@ -95,6 +95,12 @@ public class ConvexHull {
             boolean foundPair = false;
             Point lastPoint = Liste.getLast();
             for(int i = 0; i<points.length; i++){
+                //catching invalid points
+                if(points[i] == null){
+                    System.out.println("Invalid point has been found. Skipping Point..");
+                    continue;
+                }
+
                 if(i!=lastPointIndex && checkIfNotSamePoint(lastPoint, points[i])){
                     if(checkIfNoOneOnLeftSide(lastPoint,points[i],points)){
                         Liste.add(points[i]);
@@ -103,6 +109,7 @@ public class ConvexHull {
                         break;
                     }
                 }
+
             }
             if(!foundPair){
                 return null;
