@@ -55,13 +55,5 @@ public class Application {
         points[2].printPoint();
         System.out.println("Perimeter: " + triangle.perimeter());
 
-
-
-
-        /*
-        Triangle t1= new Triangle(2,new Point(2,10,10), new Point(2,10,100), new Point(2,100,10));
-        System.out.println(t1.enclosed(new Point(2,20,20)));
-        System.out.println(t1.enclosed(new Point(2,2000,2000)));
-        */
     }
 }

@@ -17,7 +17,6 @@ public class ConvexHull {
     public static LinkedList<Point> simpleConvexHull(Point[] rndPoints) {
 
         LinkedList<Point> hullPoints = new LinkedList<>();
-
         //first pair of points (O(n^3))
         for (int i = 0; i < rndPoints.length; i++) {
             for (int j = 0; j < rndPoints.length; j++) {
@@ -27,7 +26,6 @@ public class ConvexHull {
                         hullPoints.add(rndPoints[i]);
                         hullPoints.add(rndPoints[j]);
                     }
-
                     if (!hullPoints.isEmpty()) {
                         break;
                     }
@@ -38,25 +36,21 @@ public class ConvexHull {
             }
         }
 
+        //other Points
         while (!hullPoints.getFirst().equals(hullPoints.getLast())) {
-            //System.out.println(hullPoints.getFirst().equals(hullPoints.getLast()));
-            Point reference = (Point) hullPoints.getLast();
-
+            Point reference = hullPoints.getLast();
             for (int i = 0; i < rndPoints.length; i++) {
                 if (!reference.equals(rndPoints[i])) {
-
                     Iterator<Point> it = hullPoints.iterator();
                     if (hullPoints.size() > 2 && it.hasNext()) {
                         it.next();
                     }
                     boolean toCheck = true;
-
                     while (it.hasNext()) {
                         if (it.next().equals(rndPoints[i])) {
                             toCheck = false;
                         }
                     }
-
                     if (toCheck) {
                         boolean valid = allRight(reference, rndPoints[i], rndPoints);
                         if (valid) {
@@ -64,38 +58,27 @@ public class ConvexHull {
                         }
                     }
                 }
-
                 if (!hullPoints.getLast().equals(reference)) {
-
                     break;
                 }
             }
         }
-
         return hullPoints;
     }
 
     public static boolean allRight(Point a, Point b, Point[] points) {
-
         boolean atLeastOneLeft = false;
-
         for (int i = 0; i < points.length; i++) {
             if (!a.equals(points[i]) && !b.equals(points[i])) {
-
                 if (isLeft(a, b, points[i])) {
                     atLeastOneLeft = true;
                 }
             }
-
         }
-
         return !atLeastOneLeft;
-
-
     }
 
     public static boolean isLeft(Point a, Point b, Point c) {
-
         /*
         To determine which side of the line from A=(x1,y1) to B=(x2,y2) a point P=(x,y) falls on you need to compute
         the value:-
@@ -106,11 +89,8 @@ public class ConvexHull {
         value for d for a point you know is to the left of the line, such as (x1−1,y1) and then compare the sign
         with the point you are interested in.
         */
-
         double d = (c.getX() - a.getX()) * (b.getY() - a.getY()) - (c.getY() - a.getY()) * (b.getX() - a.getX());
         return d < 0;
-
-
     }
 
     public static boolean isColinear(Point a, Point b, Point c) {
@@ -122,35 +102,37 @@ public class ConvexHull {
         for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points.length; j++) {
                 if (!ref.equals(points[i]) && !ref.equals(points[j]) && i != j && isColinear(ref, points[i], points[j])) {
-
-
                     return true;
                 }
             }
         }
-
-
         return false;
-
     }
 
     public static Point[] generatePoints(int n, int lowerBound, int upperBound) {
 
         Triangle t = new Triangle
                 (2, new Point(2, 10, 10), new Point(2, 10, 100), new Point(2, 100, 10));
-
-
         Point[] points = new Point[n];
         for (int i = 0; i < points.length; i++) {
             points[i] = new Point(2, randomNumber(lowerBound, upperBound), randomNumber(lowerBound, upperBound));
+            /*
+            if (isLeft(new Point(2, 10, 100), new Point(2, 100, 10), points[i])) {
+                points[i].setX(-points[i].getX());
+                points[i].setY(-points[i].getY());
+            }
+            */
+
+
 
             while (isLeft(new Point(2, 10, 100), new Point(2, 100, 10), points[i])) {
                 points[i] = new Point(2, randomNumber(lowerBound, upperBound), randomNumber(lowerBound, upperBound));
             }
+
+
         }
 
-
-        //starke Laufzeitverschlechterung
+        //allgemeine Lage (starke Laufzeitverschlechterung)
 
         /*
         for (int i=0; i<points.length; i++){
@@ -163,25 +145,7 @@ public class ConvexHull {
             }
         }
         */
-
-
-        //prevent Points from being colinear
-
-        /*
-        for (int i = 0; i<points.length; i++){
-            for (int j = 0; j<points.length; j++){
-                for (int k = 0; k<points.length; k++){
-                    if(i!=j && j!=k && k!=i){
-                        while (isColinear(points[i], points[k], points[j]))
-                    }
-                }
-            }
-        }
-        */
-
-
         return points;
-
     }
 
     public static double randomNumber(int lowerBound, int upperBound) {
