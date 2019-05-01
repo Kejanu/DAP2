@@ -45,6 +45,11 @@ public class Application {
                     "x1 y1 x2 y2 x3 y3. Exiting now.");
             return;
         }
+        if(!dreieck.checkIfTrianglePossible()){
+            System.out.println("3 unique points could not be found for the triangle. \nSyntax:" +
+                    "x1 y1 x2 y2 x3 y3. Exiting now.");
+            return;
+        }
         for (Point p : trianglePoints) {
             System.out.println("Point (X:"+p.getX()+", Y:"+p.getY()+")");
         }
