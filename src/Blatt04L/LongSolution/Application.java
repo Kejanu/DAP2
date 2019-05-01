@@ -36,11 +36,15 @@ public class Application {
         Point[] trianglePoints = new Point[3];
         for(int i = 0; i < 6; i=i+2){
             double[] fill = {inputs[i], inputs[i+1]};
-            System.out.println("Index für trianglePoints: "+i/2);
+            //System.out.println("Index für trianglePoints: "+i/2);
             trianglePoints[i/2] = new Point(2, fill);
         }
 
         Triangle dreieck = new Triangle(2, trianglePoints);
+        if(!dreieck.validate()){
+            System.out.println("creating the triangle was not successful. Exiting now..");
+            return;
+        }
 
         //calculate result
         System.out.println("Umfang des Dreiecks: "+dreieck.perimeter());

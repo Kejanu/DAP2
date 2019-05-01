@@ -8,33 +8,20 @@ import java.util.List;
 
 public class ConvexHull {
     public static void main(String[] args) {
-        //--test
-    /*    double[] p1values = {0, 0};
-        Point p1 = new Point(2, p1values);
-        double[] p2values = {1, 1};
-        Point p2 = new Point(2, p2values);
-        double[] p3values = {0.5, 0.5};
-        Point p3 = new Point(2, p3values);
-        double[] p4values = {1, 3};
-        Point p4 = new Point(2, p4values);
-        double[] p5values = {2, 0};
-        Point p5 = new Point(2, p5values);
-        Point[] points = new Point[3];
-        points[0] = p1;
-        points[1] = p2;
-        points[2] = p3;
-        points[4] = p3;
-        points[3] = p1;
-        points[2] = p5;*/
 
-
-        Point[] points = randomlyGeneratedPointsInTriangle(1000, 0, 200);
-        //Point[] points = justPoints(10);
+        Point[] points = randomlyGeneratedPointsInTriangleSolvedWithGeometry(1000, 10, 100);
         LinkedList<Point> result = (LinkedList<Point>) simpleConvex(points);
+
         if(result == null){
             System.out.println("didn't work");
             return;
         }
+        //not sure about this
+        /*if(result.size() <= 3){
+            System.out.println("Not enough unique Points to create a ConvexHull");
+            return;
+        }*/
+
         Iterator<Point> it = result.iterator();
         Point current = it.next();
         while(it.hasNext()) {
@@ -43,39 +30,43 @@ public class ConvexHull {
                     " Point: (" + (current=it.next()).get(0)+", "+current.get(1)+")");
 
         }
-        new ConvexVisualization(points, result, 1000, 1000, 8);
 
+        new ConvexVisualization(points, result, 1000, 1000, 8);
     }
 
-    public static Point[] randomlyGeneratedPointsInTriangle(int n, int lowerBound, int upperBound){
-
-        //create Triangle
-        Triangle dreieck = new Triangle(2, new Point(2, 10,10), new Point(2, 10,100), new Point(2, 100,10));
-
+    public static Point[] randomlyGeneratedPointsInTriangleSolvedWithGeometry(int n, int lowerBound, int upperBound) {
+        Triangle dreieck = new Triangle(2, new Point(2, 10,10), new Point(2, 100,10), new Point(2, 10,100));
         //createRandom
         java.util.Random generator = new java.util.Random();
         Point[] points = new Point[n];
-        int i = 0;
-        int counter = 0;
-        while(i < n){
-            Point[] check = new Point[1];
+
+        for(int i=0; i < n; i++) {
+            //randomly generating a point and putting it into points[i]
             Point candidate = new Point(2, lowerBound
                     + (upperBound - lowerBound) * generator.nextDouble(),
                     lowerBound + (upperBound - lowerBound) * generator.nextDouble());
-            check[0] = candidate;
+            points[i] = candidate;
 
-            if(checkIfNoOneOnLeftSide(dreieck.get()[1],dreieck.get()[2], check) &&
-                    checkIfNoOneOnLeftSide(dreieck.get()[2],dreieck.get()[0], check) &&
-                    checkIfNoOneOnLeftSide(dreieck.get()[0],dreieck.get()[1], check)){
-                points[i] = check[0];
-                i++;
-            } else{
-                System.out.println("Failed Attempts: "+ ++counter);
+            // d=(x−x1)(y2−y1)−(y−y1)(x2−x1)
+            double d = (points[i].getX() -  dreieck.get()[1].get(0)) * (dreieck.get()[2].getY() - dreieck.get()[2].getX())
+                    - (points[i].getY() - dreieck.get()[1].getY()) * (dreieck.get()[2].getX() - dreieck.get()[1].getX());
+
+            //point is on wrong side(right Side)
+            if(d > 0) {
+                //f(x)=mx+b
+                double m = -1;
+                double b = 110;
+
+                //calculate mirror
+                //x+y-b*n
+                double mirror = (points[i].getX() + (points[i].getY() - b) * m) / (1 + Math.pow(m, 2));
+                points[i].setX(2 * mirror - points[i].getX()); //mirror on X Point
+                points[i].setY(2 * mirror * m - points[i].getY() + 2 * b); //mirror on Y Point
             }
-
         }
         return points;
     }
+
     public static List<Point> simpleConvex(Point[] points){
 
         LinkedList<Point> Liste = new LinkedList<>();
@@ -160,5 +151,34 @@ public class ConvexHull {
                 }
         }
         return true;
+    }
+
+    public static Point[] randomlyGeneratedPointsInTriangleSolvedWithTotalRandomness(int n, int lowerBound, int upperBound){
+
+        //create Triangle
+        Triangle dreieck = new Triangle(2, new Point(2, 10,10), new Point(2, 10,100), new Point(2, 100,10));
+
+        //createRandom
+        java.util.Random generator = new java.util.Random();
+        Point[] points = new Point[n];
+        int i = 0;
+        int counter = 0;
+        while(i < n){
+            Point[] check = new Point[1];
+            Point candidate = new Point(2, lowerBound
+                    + (upperBound - lowerBound) * generator.nextDouble(),
+                    lowerBound + (upperBound - lowerBound) * generator.nextDouble());
+            check[0] = candidate;
+
+            if(checkIfNoOneOnLeftSide(dreieck.get()[1],dreieck.get()[2], check) &&
+                    checkIfNoOneOnLeftSide(dreieck.get()[2],dreieck.get()[0], check) &&
+                    checkIfNoOneOnLeftSide(dreieck.get()[0],dreieck.get()[1], check)){
+                points[i] = check[0];
+                i++;
+            } else{
+                System.out.println("Failed Attempts: "+ ++counter);
+            }
+        }
+        return points;
     }
 }

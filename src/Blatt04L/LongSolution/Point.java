@@ -36,4 +36,12 @@ public class Point implements UniversalPoint {
     public double getY(){
         return this.pointValues[1];
     }
+
+    //randomGeneratingPurposes
+    public void setX(double d) {
+        this.pointValues[0] = d;
+    }
+    public void setY(double d) {
+        this.pointValues[1] = d;
+    }
 }
