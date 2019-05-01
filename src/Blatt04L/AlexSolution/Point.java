@@ -14,15 +14,6 @@ public class Point implements UniversalPoint {
         } else {
             throw new IllegalArgumentException();
         }
-
-        /*
-        if(values== null){
-            coordinates= new double[dimension];
-            for (int i=0; i<coordinates.length; i++){
-                coordinates[i]=0;
-            }
-        }else
-            */
         if (values.length != dimension) {
             throw new IllegalArgumentException();
         } else {
@@ -43,7 +34,6 @@ public class Point implements UniversalPoint {
     }
 
     public void printPoint(){
-
         for(int i=0; i<coordinates.length; i++){
             System.out.print(coordinates[i] + " ");
         }
@@ -66,9 +56,7 @@ public class Point implements UniversalPoint {
         }
     }
 
-
     public boolean equals(Point p){
-
         if(dimension== p.dim()){
             for(int i=0; i<coordinates.length; i++){
                 if(coordinates[i]!= p.get(i)){
@@ -79,6 +67,14 @@ public class Point implements UniversalPoint {
         }else{
             return false;
         }
+    }
+
+    public void setX(double n){
+        coordinates[0]=n;
+    }
+
+    public void setY(double n){
+        coordinates[0]=n;
     }
 
 
