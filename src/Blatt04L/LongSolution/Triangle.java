@@ -10,8 +10,6 @@ public class Triangle extends Simplex {
             System.out.println("Dimension must be exactly 2 and length must be 3.");
             return false;
         }
-        System.out.println(points[0]);
-        System.out.println(points[1]);
         if ((points[0].getX()==points[1].getX() && points[0].getY()==points[1].getY())
                 || (points[0].getX()==points[2].getX() && points[0].getY()==points[2].getY())
                 || (points[1].getX()==points[2].getX() && points[1].getY()==points[2].getY())) {

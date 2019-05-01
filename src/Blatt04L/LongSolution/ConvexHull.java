@@ -9,11 +9,13 @@ import java.util.List;
 public class ConvexHull {
     public static void main(String[] args) {
 
+
         Point[] points = randomlyGeneratedPointsInTriangleSolvedWithGeometry(1000, 10, 100);
+        //Point[] points = new Point[4];
         LinkedList<Point> result = (LinkedList<Point>) simpleConvex(points);
 
         if(result == null){
-            System.out.println("didn't work");
+            System.out.println("Creating of list failed.");
             return;
         }
         //not sure about this
@@ -21,7 +23,11 @@ public class ConvexHull {
             System.out.println("Not enough unique Points to create a ConvexHull");
             return;
         }*/
-
+        if(result.size() == 0){
+            System.out.println("Only one or no unique points were found. No Convex Hull could be created.\n" +
+                    "Please input at least 2 unique points next time.");
+            return;
+        }
         Iterator<Point> it = result.iterator();
         Point current = it.next();
         while(it.hasNext()) {
@@ -34,7 +40,105 @@ public class ConvexHull {
         new ConvexVisualization(points, result, 1000, 1000, 8);
     }
 
+
+    public static List<Point> simpleConvex(Point[] points){
+
+        LinkedList<Point> Liste = new LinkedList<>();
+        boolean valid;
+        boolean connectionFound = false;
+        int lastPointIndex = 0;
+        Point p1;
+        Point p2;
+
+        //not sure about this one
+       /* if(points.length<=2){
+            return null;
+        }*/
+        //Schleife: punkte p, q bestimmen
+        for(int i = 0; i < points.length; i++){
+            if(points[i] == null){
+                System.out.println("Invalid point has been found. Skipping Point..");
+                continue;
+            }
+            for(int j = 0; j < points.length; j++){
+                if(points[j] == null){
+                    System.out.println("Invalid point has been found. Skipping Point..");
+                    continue;
+                }
+                //wenn p!=q
+                //valid = true
+                if(i != j) {
+                    p1 = points[i];
+                    p2 = points[j];
+                    valid = checkIfNotSamePoint(p1, p2);
+                    if (valid) {
+                        //wenn r links von pq liegt = valid false
+                        valid = checkIfNoOneOnLeftSide(p1, p2, points);
+                    }
+                    //wenn valid = true, pq zu E hinzufügen
+                    if (valid == true) {
+                        Liste.add(p1);
+                        Liste.add(p2);
+                        lastPointIndex = j;
+                        connectionFound = true;
+                        break;
+                    }
+                }
+            }
+            if(connectionFound == true){
+                break;
+            }
+        }
+
+        // Ab hier ab dem zweiten hinzugefügten Punkt starten
+        while(!Liste.isEmpty()&&Liste.getFirst()!=Liste.getLast()){
+            boolean foundPair = false;
+            Point lastPoint = Liste.getLast();
+            for(int i = 0; i<points.length; i++){
+                if(i!=lastPointIndex && checkIfNotSamePoint(lastPoint, points[i])){
+                    if(checkIfNoOneOnLeftSide(lastPoint,points[i],points)){
+                        Liste.add(points[i]);
+                        lastPointIndex = i;
+                        foundPair = true;
+                        break;
+                    }
+                }
+            }
+            if(!foundPair){
+                return null;
+            }
+        }
+        return Liste;
+    }
+
+    public static boolean checkIfNotSamePoint(Point p1, Point p2){
+
+        if (p1.get(0) != p2.get(0) || p1.get(1) != p2.get(1)) {
+            return true;
+        }
+        /*System.out.println("Same Point was found!: "+ "Pwert1: " + p1.get(0) + ", "+ p1.get(1)
+                        +" ist gleich mit Pwert2: " + p2.get(0) +", "+p2.get(1));*/
+        return false;
+    }
+
+    public static boolean checkIfNoOneOnLeftSide(Point p1, Point p2, Point[]P){
+        double d;
+        for(int l =0; l < P.length; l++) {
+                if (p1.equals(P[l]) || p2.equals(P[l])) {
+                    continue;
+                }
+                else{
+                    d = ((P[l].get(0) - p1.get(0)) * (p2.get(1) - p1.get(1))) - ((P[l].get(1) - p1.get(1)) * (p2.get(0) - p1.get(0)));
+                    if(d < 0){
+                        return false;
+                    }
+                }
+        }
+        return true;
+    }
+
     public static Point[] randomlyGeneratedPointsInTriangleSolvedWithGeometry(int n, int lowerBound, int upperBound) {
+
         Triangle dreieck = new Triangle(2, new Point(2, 10,10), new Point(2, 100,10), new Point(2, 10,100));
         //createRandom
         java.util.Random generator = new java.util.Random();
@@ -65,92 +169,6 @@ public class ConvexHull {
             }
         }
         return points;
-    }
-
-    public static List<Point> simpleConvex(Point[] points){
-
-        LinkedList<Point> Liste = new LinkedList<>();
-        boolean valid;
-        boolean connectionFound = false;
-        int lastPointIndex = 0;
-        Point p1;
-        Point p2;
-
-        if(points.length<=2){
-            return null;
-        }
-        //Schleife: punkte p, q bestimmen
-        for(int i = 0; i < points.length; i++){
-            for(int j = 0; j < points.length; j++){
-                //wenn p!=q
-                //valid = true
-                if(i != j) {
-                    p1 = points[i];
-                    p2 = points[j];
-                    valid = checkIfNotSamePoint(p1, p2, points);
-                    if (valid) {
-                        //wenn r links von pq liegt = valid false
-                        valid = checkIfNoOneOnLeftSide(p1, p2, points);
-                    }
-                    //wenn valid = true, pq zu E hinzufügen
-                    if (valid == true) {
-                        Liste.add(p1);
-                        Liste.add(p2);
-                        lastPointIndex = j;
-                        connectionFound = true;
-                        break;
-                    }
-                }
-            }
-            if(connectionFound == true){
-                break;
-            }
-        }
-
-        // Ab hier ab dem zweiten hinzugefügten Punkt starten
-        while(Liste.getFirst()!=Liste.getLast() && !Liste.isEmpty()){
-            boolean foundPair = false;
-            Point lastPoint = Liste.getLast();
-            for(int i = 0; i<points.length; i++){
-                if(i!=lastPointIndex){
-                    if(checkIfNoOneOnLeftSide(lastPoint,points[i],points)){
-                        Liste.add(points[i]);
-                        lastPointIndex = i;
-                        foundPair = true;
-                        break;
-                    }
-                }
-            }
-            if(!foundPair){
-                return null;
-            }
-        }
-        return Liste;
-    }
-
-    public static boolean checkIfNotSamePoint(Point p1, Point p2, Point[] P){
-        if (p1.get(0) != p2.get(0) || p1.get(1) != p2.get(1)) {
-            return true;
-        }
-        System.out.println("Same Point was found!: "+ "Pwert1: " + p1.get(0) + ", "+ p1.get(1)
-                        +" ist gleich mit Pwert2: " + p2.get(0) +", "+p2.get(1));
-        return false;
-    }
-
-    public static boolean checkIfNoOneOnLeftSide(Point p1, Point p2, Point[]P){
-        double d;
-        for(int l =0; l < P.length; l++) {
-                if (p1.equals(P[l]) || p2.equals(P[l])) {
-                    continue;
-                }
-                else{
-                    d = ((P[l].get(0) - p1.get(0)) * (p2.get(1) - p1.get(1))) - ((P[l].get(1) - p1.get(1)) * (p2.get(0) - p1.get(0)));
-                    if(d < 0){
-                        return false;
-                    }
-                }
-        }
-        return true;
     }
 
     public static Point[] randomlyGeneratedPointsInTriangleSolvedWithTotalRandomness(int n, int lowerBound, int upperBound){

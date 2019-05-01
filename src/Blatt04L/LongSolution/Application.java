@@ -20,7 +20,7 @@ public class Application {
         else if(args.length == 6) {
             for (int i = 0; i < 6; i++) {
                 if (!(InputValidation.parameterIsDouble(args[i]))) {
-                    System.out.println("Parameters must be Double.");
+                    System.out.println("All parameters must be double.");
                     return;
                 } else {
                     inputs[i] = Double.parseDouble(args[i]);
@@ -28,7 +28,7 @@ public class Application {
             }
         }
         else{
-            System.out.println("Atleast 6 Parameters must be given or none");
+            System.out.println("Atleast 6 Parameters must be given or none.");
             return;
         }
 
@@ -36,13 +36,13 @@ public class Application {
         Point[] trianglePoints = new Point[3];
         for(int i = 0; i < 6; i=i+2){
             double[] fill = {inputs[i], inputs[i+1]};
-            //System.out.println("Index für trianglePoints: "+i/2);
             trianglePoints[i/2] = new Point(2, fill);
         }
 
         Triangle dreieck = new Triangle(2, trianglePoints);
         if(!dreieck.validate()){
-            System.out.println("creating the triangle was not successful. Exiting now..");
+            System.out.println("creating the triangle was not successful. Exiting now. Syntax: " +
+                    "x1 y1 x2 y2 x3 y3");
             return;
         }
 
