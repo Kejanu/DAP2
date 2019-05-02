@@ -4,15 +4,17 @@ public class Blatt04 {
     public static void main(String[] args) {
         int[] numbers = new int[]{-2, -1, 1, 3, 1, -2, 3};
 
-        printLongest(new int[]{-2, -1, 1, 3, 1, -2, 3});
-        printLongest(new int[]{});
-        printLongest(new int[]{1});
-        printLongest(new int[]{1, 1});
-        printLongest(new int[]{1, 2});
-        printLongest(new int[]{1, 2, 3});
-        printLongest(new int[]{3, 1, 2, 3, 4});
-        printLongest(new int[]{1, 2, 3, 1, 2, 3, 4});
-        printLongest(new int[]{-2, 3, 1, -1, 2, 4, 3});
+        printLongest(new int[]{1, 2, 0, 0, -3, -2, 1, -20, 3, 4, 5, 6});
+
+//        printLongest(new int[]{-2, -1, 1, 3, 1, -2, 3});
+//        printLongest(new int[]{});
+//        printLongest(new int[]{1});
+//        printLongest(new int[]{1, 1});
+//        printLongest(new int[]{1, 2});
+//        printLongest(new int[]{1, 2, 3, 4, 5, 6, 7});
+//        printLongest(new int[]{3, 1, 2, 3, 4});
+//        printLongest(new int[]{1, 2, 3, 1, 2, 3, 4});
+//        printLongest(new int[]{-2, 3, 1, -1, 2, 4, 3});
 
         //System.out.println(findLongestDivideAndConquer(numbers, 0, numbers.length - 1));
         //System.out.println(findLongestDivideAndConquer(numbers1, 0, numbers1.length - 1));
@@ -49,7 +51,7 @@ public class Blatt04 {
                 --walkToLeft;
             }
 
-            return walkToRight - walkToLeft + 1;
+            return Math.max(Math.max(lowerHalf, higherHalf), walkToRight - walkToLeft + 1);
         }
     }
 
