@@ -25,7 +25,6 @@ public abstract class Simplex{
         double sum = 0;
         EuclidDistance edistance = new EuclidDistance();
 
-        //O(n^(3)) btw.
         for(int i = 0; i <= d; i++){
             for(int k=0; k<=d;k++) {
                 sum = sum + edistance.distance(this.points[i], this.points[k]);
