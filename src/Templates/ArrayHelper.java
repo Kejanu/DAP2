@@ -39,4 +39,12 @@ public class ArrayHelper {
         for (int i = 0; i < arr.length; ++i)
             arr[i] = arr.length - 1 - i;
     }
+
+    public static void printTwoIntArrays(int[] a, int[] b){
+        if(a.length == b.length){
+            for (int i = 0; i < a.length; i++){
+                System.out.println(a[i] + " - " + b[i]);
+            }
+        }
+    }
 }
