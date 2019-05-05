@@ -4,10 +4,12 @@ import Templates.ArrayHelper;
 import Templates.InputValidation;
 import Templates.SortAlgorithms;
 
+import java.util.Arrays;
+
 public class Quicksort {
     public static void main(String[] args) {
-        if (!InputValidation.parameterIsInteger(args[0]) || args.length != 1) {
-            System.out.println("Parameter was not Integer. REEEEEEE");
+        if (args.length != 1 || !InputValidation.parameterIsInteger(args[0])) {
+            System.out.println("Parameter was not Integer or more than 1 parameter was inputted. REEEEEEE");
             return;
         }
         long tStart, tEnd, msecs;
@@ -27,10 +29,8 @@ public class Quicksort {
         System.out.println("Quicksort brauchte: " + msecs + " Millisekunden.");
         assert ArrayHelper.intArrayIsSorted(arr);
 
-
         //recopy
         System.arraycopy(cpy, 0, arr, 0, cpy.length);
-        System.arraycopy(arr, 0, cpy, 0, arr.length);
 
         //MergeSortMessung
         tStart = System.currentTimeMillis();
@@ -42,7 +42,6 @@ public class Quicksort {
 
         //recopy
         System.arraycopy(cpy, 0, arr, 0, cpy.length);
-        System.arraycopy(arr, 0, cpy, 0, arr.length);
 
         //InsertionSortMessung
         tStart = System.currentTimeMillis();
@@ -54,7 +53,6 @@ public class Quicksort {
 
         //recopy
         System.arraycopy(cpy, 0, arr, 0, cpy.length);
-        System.arraycopy(arr, 0, cpy, 0, arr.length);
 
         //BubbleSortMessung
         tStart = System.currentTimeMillis();
