@@ -20,36 +20,39 @@ public class Quicksort {
                              .map(e -> ThreadLocalRandom.current().nextInt())
                              .toArray();
 
+        int[] copy = new int[arr.length];
         long tStart, tEnd;
-        System.gc();
-        tStart = System.currentTimeMillis();
-        quicksort(arr, 0, arr.length - 1);
-        tEnd = System.currentTimeMillis();
-        assert ArrayHelper.intArrayIsSorted(arr);
-        System.out.println("Quicksort: Used Time: " + (tEnd - tStart));
 
-        ArrayHelper.fillIntArrayWithRandom(arr);
+        System.arraycopy(arr, 0, copy, 0, copy.length);
         System.gc();
         tStart = System.currentTimeMillis();
-        SortAlgorithms.mergeSort(arr);
+        quicksort(copy, 0, copy.length - 1);
         tEnd = System.currentTimeMillis();
-        assert ArrayHelper.intArrayIsSorted(arr);
+        assert ArrayHelper.intArrayIsSorted(copy);
+        System.out.println("QuickSort: Used Time: " + (tEnd - tStart));
+
+        System.arraycopy(arr, 0, copy, 0, copy.length);
+        System.gc();
+        tStart = System.currentTimeMillis();
+        SortAlgorithms.mergeSort(copy);
+        tEnd = System.currentTimeMillis();
+        assert ArrayHelper.intArrayIsSorted(copy);
         System.out.println("MergeSort: Used Time: " + (tEnd - tStart));
 
-        ArrayHelper.fillIntArrayWithRandom(arr);
+        System.arraycopy(arr, 0, copy, 0, copy.length);
         System.gc();
         tStart = System.currentTimeMillis();
-        SortAlgorithms.insertionSort(arr);
+        SortAlgorithms.insertionSort(copy);
         tEnd = System.currentTimeMillis();
-        assert ArrayHelper.intArrayIsSorted(arr);
+        assert ArrayHelper.intArrayIsSorted(copy);
         System.out.println("InsertionSort: Used Time: " + (tEnd - tStart));
 
-        ArrayHelper.fillIntArrayWithRandom(arr);
+        System.arraycopy(arr, 0, copy, 0, copy.length);
         System.gc();
         tStart = System.currentTimeMillis();
-        SortAlgorithms.bubbleSort(arr);
+        SortAlgorithms.bubbleSort(copy);
         tEnd = System.currentTimeMillis();
-        assert ArrayHelper.intArrayIsSorted(arr);
+        assert ArrayHelper.intArrayIsSorted(copy);
         System.out.println("BubbleSort: Used Time: " + (tEnd - tStart));
     }
 
