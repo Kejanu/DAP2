@@ -1,6 +1,6 @@
 package Templates;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ArrayHelper {
     public static boolean intArrayIsSorted(int[] arr) {
@@ -24,9 +24,8 @@ public class ArrayHelper {
     }
 
     public static void fillIntArrayWithRandom(int[] arr) {
-        Random random = new Random();
         for (int i = 0; i < arr.length; ++i) {
-            arr[i] = random.nextInt();
+            arr[i] = ThreadLocalRandom.current().nextInt();
         }
     }
 
