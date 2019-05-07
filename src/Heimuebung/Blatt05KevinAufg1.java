@@ -2,6 +2,9 @@ package Heimuebung;
 
 import Templates.ArrayHelper;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class Blatt05KevinAufg1 {
     public static void main(String[] args) {
 
@@ -23,15 +26,17 @@ public class Blatt05KevinAufg1 {
 
         int[] result = getPlacesToStayAt(places, 4, 15);
         ArrayHelper.printIntArray(result);
+        System.out.println(Arrays.stream(result).mapToObj(e -> places[e]).collect(Collectors.joining(", ")));
     }
 
     public static int[] getPlacesToStayAt(String[] places, int dailyLength, int totalLength) {
         int[] result = new int[totalLength / dailyLength];
         int index = 0;
 
-        while (totalLength > 0) {
+        while (totalLength > dailyLength) {
             result[index] = dailyLength + dailyLength * index;
             totalLength -= dailyLength;
+            ++index;
         }
         return result;
     }
