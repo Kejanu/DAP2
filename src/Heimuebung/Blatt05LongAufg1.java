@@ -8,9 +8,9 @@ public class Blatt05LongAufg1 {
         //not sure if it works correctly
         int erik = 6;
         //Annahme: 0 < A[i + 1] − A[i] ≤ k //A[i] kilometer ab dortmund
-        int[] raststätten={1,2,3,6,9,11,14,15,16};
+        int[] raststätten={1,2,3,6,9,11,14};
         //l kilometer lange strecke
-        int gesamtStrecke = 19;
+        int gesamtStrecke = 15;
         int[] test = eriksWunderbareReiseNachJerusalem(raststätten,erik,gesamtStrecke);
         System.out.println(Arrays.toString(test));
     }
@@ -34,10 +34,10 @@ public class Blatt05LongAufg1 {
                 restStrecke = gesamtStrecke-(abgefahrendeKilometer);
                 j++;
             }
+            System.out.println("ite Rasttätte: "+(i-1)+" Reststrecke: "+restStrecke);
             i++;
-            System.out.println("Reststrecke: "+restStrecke);
-        }
 
+        }
         //letzter schritt
         if(restStrecke > erik && i == rasttättenInKilometer.length){
             result[j] = i-1;
