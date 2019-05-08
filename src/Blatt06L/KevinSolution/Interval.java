@@ -10,16 +10,16 @@ public class Interval {
         this.end = end;
     }
 
+    @Override
+    public String toString() {
+        return "[" + start + ", " + end + "]";
+    }
+
     public int getStart() {
         return start;
     }
 
     public int getEnd() {
         return end;
-    }
-
-    @Override
-    public String toString() {
-        return "Interval [ start = " + start + ", end = " + end + "]";
     }
 }
