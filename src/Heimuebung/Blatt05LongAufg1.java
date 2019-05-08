@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class Blatt05LongAufg1 {
 
     public static void main(String[] args) {
+        //not sure if it works correctly
         int erik = 6;
         //Annahme: 0 < A[i + 1] − A[i] ≤ k //A[i] kilometer ab dortmund
         int[] raststätten={1,2,3,6,9,11,14,15,16};
