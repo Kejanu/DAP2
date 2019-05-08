@@ -15,16 +15,38 @@ public class Blatt05KevinAufg2 {
         items.add(new Gegenstand("Drachenhaut", 1, 2));
         items.add(new Gegenstand("Long", 6, 4));
 
-        int slots = 10;
-        int maxWeight = 10;
+        int slots = 4;
 
-        ArrayList<Gegenstand> result = inventarOptimization(slots, maxWeight, items);
+        ArrayList<Gegenstand> result = invetarOptimizationLame(slots, items);
+        System.out.println(result.stream().map(Gegenstand::getName).collect(Collectors.joining(", ")));
 
-        System.out.println(result.stream()
-            .map(Gegenstand::getName)
-            .collect(Collectors.joining(", ")));
 
-        System.out.println("Current Weight: " + result.stream().mapToInt(Gegenstand::getGewicht).sum());
+//        int maxWeight = 10;
+//
+//        ArrayList<Gegenstand> result = inventarOptimization(slots, maxWeight, items);
+//
+//        System.out.println(result.stream()
+//            .map(Gegenstand::getName)
+//            .collect(Collectors.joining(", ")));
+//
+//        System.out.println("Current Weight: " + result.stream().mapToInt(Gegenstand::getGewicht).sum());
+    }
+
+    public static ArrayList<Gegenstand> invetarOptimizationLame(int slots, ArrayList<Gegenstand> items) {
+        ArrayList<Gegenstand> result = new ArrayList<>();
+
+        while (slots > 0) {
+            Gegenstand first = items.get(0);
+            for (int i = 1; i < items.size(); ++i) {
+                if (first.getWert() < items.get(i).getWert()) {
+                    first = items.get(i);
+                }
+            }
+            result.add(first);
+            items.remove(first);
+            --slots;
+        }
+        return result;
     }
 
     public static ArrayList<Gegenstand> inventarOptimization(int slots, int maxWeight, ArrayList<Gegenstand> items) {
