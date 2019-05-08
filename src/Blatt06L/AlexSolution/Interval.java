@@ -28,6 +28,10 @@ public class Interval implements Comparable<Interval> {
 
     @Override
     public int compareTo(Interval other){
-        return end-other.getEnd();
+        int result =  end - other.getEnd();
+        if (result == 0){
+            result = start - other.getStart();
+        }
+        return result;
     }
 }
