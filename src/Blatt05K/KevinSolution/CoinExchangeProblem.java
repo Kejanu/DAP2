@@ -9,8 +9,15 @@ public class CoinExchangeProblem {
     private static final String PROPER_USAGE_MESSAGE = "Input: One String [Euro / Alternative], One Positive Integer ";
 
     public static void main(String[] args) {
-        if (!basicInputValidationSuccess(args))
+
+        String[][] acceptedStrings = new String[][] {
+                {"Euro", "Alternative"}
+        };
+
+        if (!InputValidation.validateArgs(args, acceptedStrings, 2, PROPER_USAGE_MESSAGE, true,
+                String.class, int.class)) {
             return;
+        }
 
         int[] format;
         if (args[0].equals("Euro")) {
@@ -29,17 +36,15 @@ public class CoinExchangeProblem {
 
     /*
         Liefert das implementierte Verfahren stets optimale Lösungen mit einer minimalen Anzahl an Münzen?
-        In unseren Mustern JA.
+        Euro-Muster: Ja
+        Alternative-Muster: Nein
 
-        In ALLEN Mustern NEIN
-        Bsp. format = 11, 5, 1
-        changeMoney = 15
-
-        Best outcome   = 5, 5, 5
-        Greedy outcome = 11, 1, 1, 1, 1
+        Bsp. 8
+        Euro = 5, 2, 1
+        Alternative = 5, 2, 1, besser wäre 4, 4
     */
 
-    private static int[] change(int changeMoney, int[] format) {
+private static int[] change(int changeMoney, int[] format) {
         int[] result = new int[format.length];
         int i = 0;
         while (changeMoney > 0) {
@@ -51,38 +56,5 @@ public class CoinExchangeProblem {
             ++i;
         }
         return result;
-    }
-
-    private static boolean basicInputValidationSuccess(String[] args) {
-        if (args.length <= 0) {
-            System.out.println(InputValidation.NO_ARGUMENTS + PROPER_USAGE_MESSAGE);
-            return false;
-        }
-
-        if (args.length < 2) {
-            System.out.println(InputValidation.NOT_ENOUGH_ARGUMENTS + PROPER_USAGE_MESSAGE);
-            return false;
-        }
-
-        if (args.length > 2) {
-            System.out.println(InputValidation.TOO_MANY_ARGUMENTS + PROPER_USAGE_MESSAGE);
-            return false;
-        }
-
-        if (!(args[0].equals("Euro") || args[0].equals("Alternative"))) {
-            System.out.println("Your first argument is not Euro, nor Alternative. Program aborting... " + PROPER_USAGE_MESSAGE);
-            return false;
-        }
-
-        if (!InputValidation.parameterIsInteger(args[1])) {
-            System.out.println("Your second arguments is no Integer. Program aborting... " + PROPER_USAGE_MESSAGE);
-            return false;
-        }
-
-        if (Integer.parseInt(args[1]) < 0) {
-            System.out.println("Your second argument is an Integer, but it is negative. Program aborting... " + PROPER_USAGE_MESSAGE);
-            return false;
-        }
-        return true;
     }
 }
