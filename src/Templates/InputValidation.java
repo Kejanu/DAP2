@@ -46,16 +46,17 @@ public class InputValidation {
             }
 
 
+            // if cceptedString[acceptedStringsUsed] == null, all Strings accepted
             if (classes[i] == String.class) {
-                if (!Arrays.stream(acceptedString[acceptedStringsUsed]).anyMatch(args[i]::equals)) {
-                    System.out.println("Your " + (i + 1) + ". argument is not the same as the possible arguments [" +
-                        Arrays.stream(acceptedString[i]).collect(Collectors.joining(", ")) + "] " + PROPER_USAGE);
-                    ++acceptedStringsUsed;
-                    return false;
+                if (acceptedString[acceptedStringsUsed] != null) {
+                    if (!Arrays.stream(acceptedString[acceptedStringsUsed]).anyMatch(args[i]::equals)) {
+                        System.out.println("Your " + (i + 1) + ". argument is not the same as the possible arguments [" +
+                            Arrays.stream(acceptedString[acceptedStringsUsed]).collect(Collectors.joining(", ")) + "] " + PROPER_USAGE);
+                        return false;
+                    }
                 }
+                ++acceptedStringsUsed;
             }
-
-
         }
 
         return true;
