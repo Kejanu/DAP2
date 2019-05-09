@@ -7,7 +7,7 @@ public class InputValidationTest {
 
     @Test
     public void testValidationOnlyStrings() {
-        String[] args = new String[]{"First"};
+        String[] args = new String[]{"First", "Second"};
         boolean valid = Templates.InputValidation.validateArgs(TestHelper.printArguments(args), PROPER_USAGE,
                 String.class);
         System.out.println(valid);

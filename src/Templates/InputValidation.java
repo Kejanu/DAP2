@@ -8,25 +8,41 @@ public class InputValidation {
     public static final String NOT_ENOUGH_ARGUMENTS = "You didn't provide enough arguments. Program aborting... ";
     public static final String TOO_MANY_ARGUMENTS = "You provided too many arguments. Program aborting... ";
 
+    /**
+     * @param args The Input arguments you typically receive by main
+     * @param PROPER_USAGE The message the user will receive, when validation failes
+     * @param classes The classes to check for e.g. String.class or int.class
+     * @return true, if the validaiton succeeded
+     */
     public static boolean validateArgs(String[] args, final String PROPER_USAGE, Class... classes) {
         return validateArgs(args, null, PROPER_USAGE, classes);
     }
 
+    /**
+     * @param args The Input arguments you typically receive by main
+     * @param validStrs The format the Strings in args have to follow
+     * @param PROPER_USAGE The message the user will receive, when validation failes
+     * @param classes The classes to check for e.g. String.class or int.class
+     * @return true, if the validaiton succeeded
+     */
     public static boolean validateArgs(String[] args, String[][] validStrs, final String PROPER_USAGE, Class... classes) {
         return validateArgs(args, validStrs, PROPER_USAGE, false, classes);
     }
 
+    /**
+     * @param args The Input arguments you typically receive by main
+     * @param validStrs The format the Strings in args have to follow
+     * @param PROPER_USAGE The message the user will receive, when validation failes
+     * @param positiveNum Check if the provdided numbers are positiv
+     * @param classes The classes to check for e.g. String.class or int.class
+     * @return true, if the validaiton succeeded
+     */
     public static boolean validateArgs(
             String[] args,
             String[][] validStrs,
             final String PROPER_USAGE,
             boolean positiveNum,
             Class... classes) {
-
-        if (args.length > classes.length) {
-            throw new IllegalArgumentException("InputValidation: length of args: (" + args.length +
-                    ") is larger than length of classes provided: (" + classes.length + ")" + " Must be equal!");
-        }
 
         int acceptedStringsUsed = 0;
 
@@ -80,20 +96,9 @@ public class InputValidation {
                     return false;
                 }
             }
-
-
-
         }
-
         return true;
     }
-
-
-
-
-
-
-
 
     public static boolean parameterIsFloat(String s) {
         try { Float.parseFloat(s); return true; }
