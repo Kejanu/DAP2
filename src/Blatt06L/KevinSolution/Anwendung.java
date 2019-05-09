@@ -45,7 +45,13 @@ public class Anwendung {
     }
 
     public static void main(String[] args) {
-        if(!basicInputValidationSuccess(args))
+        String[][] acceptedStrings = new String[][] {
+                {"Interval", "Lateness"},
+                null
+        };
+
+        if(!InputValidation.validateArgs(args, acceptedStrings, 2, PROPER_USAGE_MESSAGE,
+                false, String.class, String.class))
             return;
 
         String path = System.getProperty("user.dir") + "/src/Blatt06L/Vorlagen/" + args[1];
@@ -120,7 +126,7 @@ public class Anwendung {
                         .collect(Collectors.toCollection(ArrayList::new));
 
         } catch (IOException | NumberFormatException e) {
-            e.printStackTrace();
+            System.out.println("Your specified path doesnt't belong to a file. Program aborting... " + PROPER_USAGE_MESSAGE);
         }
         return null;
     }
