@@ -23,6 +23,11 @@ public class InputValidation {
             boolean positiveNum,
             Class... classes) {
 
+        if (args.length > classes.length) {
+            throw new IllegalArgumentException("InputValidation: length of args: (" + args.length +
+                    ") is larger than length of classes provided: (" + classes.length + ")" + " Must be equal!");
+        }
+
         int acceptedStringsUsed = 0;
 
         if (args.length <= 0) {
@@ -44,7 +49,7 @@ public class InputValidation {
 
             // if cceptedString[acceptedStringsUsed] == null, all Strings accepted
             if (classes[i] == String.class) {
-                if (validStrs[acceptedStringsUsed] != null && validStrs[acceptedStringsUsed].length > 0) {
+                if (validStrs != null && validStrs[acceptedStringsUsed] != null && validStrs[acceptedStringsUsed].length > 0) {
                     if (!Arrays.stream(validStrs[acceptedStringsUsed]).anyMatch(args[i]::equals)) {
                         System.out.println("Your " + (i + 1) + ". argument is not the same as the possible arguments [" +
                                 Arrays.stream(validStrs[acceptedStringsUsed]).collect(Collectors.joining(", ")) + "] " + PROPER_USAGE);
