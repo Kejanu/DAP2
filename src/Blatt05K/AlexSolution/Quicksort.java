@@ -1,6 +1,7 @@
 package Blatt05K.AlexSolution;
 
 import Templates.ArrayHelper;
+import Templates.SortAlgorithms;
 
 public class Quicksort {
 
@@ -27,20 +28,77 @@ public class Quicksort {
             return;
         }
 
-        int[] quicksortArray= new int[arraySize];
 
-        ArrayHelper.fillIntArrayWithRandom(quicksortArray);
+
+        int[] template= new int[arraySize];
+        ArrayHelper.fillIntArrayWithRandom(template);
 
         long tStart, tEnd;
+
+
+
+        //QuickSort
+        int[] quickSortArray = ArrayHelper.copy(template);
 
         System.gc();
 
         tStart = System.currentTimeMillis();
-        sortWithQuicksort(quicksortArray);
+        sortWithQuicksort(quickSortArray);
         tEnd = System.currentTimeMillis();
 
-        System.out.println("Sorted: " + ArrayHelper.intArrayIsSorted(quicksortArray));
+        assert ArrayHelper.intArrayIsSorted(quickSortArray);
+
+        System.out.println("QuickSort");
         System.out.println("Time: " + (tEnd-tStart) + " ms");
+        System.out.println("");
+
+
+        //MergeSort
+        int[] mergeSortArray = ArrayHelper.copy(template);
+
+        System.gc();
+
+        tStart = System.currentTimeMillis();
+        SortAlgorithms.mergeSort(mergeSortArray);
+        tEnd = System.currentTimeMillis();
+
+        assert ArrayHelper.intArrayIsSorted(mergeSortArray);
+
+        System.out.println("MergeSort");
+        System.out.println("Time: " + (tEnd-tStart) + " ms");
+        System.out.println("");
+
+
+        //InsertionSort
+        int[] insertionSortArray = ArrayHelper.copy(template);
+
+        System.gc();
+
+        tStart = System.currentTimeMillis();
+        SortAlgorithms.insertionSort(insertionSortArray);
+        tEnd = System.currentTimeMillis();
+
+        assert ArrayHelper.intArrayIsSorted(insertionSortArray);
+
+        System.out.println("InsertionSort");
+        System.out.println("Time: " + (tEnd-tStart) + " ms");
+        System.out.println("");
+
+
+        //BubbleSort
+        int[] bubbleSortArray = ArrayHelper.copy(template);
+
+        System.gc();
+
+        tStart = System.currentTimeMillis();
+        SortAlgorithms.bubbleSort(bubbleSortArray);
+        tEnd = System.currentTimeMillis();
+
+        assert ArrayHelper.intArrayIsSorted(bubbleSortArray);
+
+        System.out.println("BubbleSort");
+        System.out.println("Time: " + (tEnd-tStart) + " ms");
+        System.out.println("");
 
     }
 

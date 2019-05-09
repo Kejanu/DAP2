@@ -49,10 +49,10 @@ public class Anwendung {
         //https://moodle.tu-dortmund.de/pluginfile.php/885532/mod_resource/content/0/Vorlesung06-GierigeAlgorithmen-I.pdf
         ArrayList<Interval> result = new ArrayList<Interval>();
         int n = intervals.size();
-
         result.add(intervals.get(0));
-        Interval j = intervals.get(0);
+
         //s = startarray, f= finisharray
+        Interval j = intervals.get(0);
         for (int counter = 1; counter < n; counter++) {
             Interval i = intervals.get(counter);
             if (i.getStart() >= j.getEnd()) {
