@@ -14,10 +14,9 @@ public class CoinExchangeProblem {
                 {"Euro", "Alternative"}
         };
 
-        if (!InputValidation.validateArgs(args, acceptedStrings, 2, PROPER_USAGE_MESSAGE, true,
-                String.class, int.class)) {
+        if (!InputValidation.validateArgs(args, acceptedStrings, PROPER_USAGE_MESSAGE, true,
+            String.class, int.class))
             return;
-        }
 
         int[] format;
         if (args[0].equals("Euro")) {

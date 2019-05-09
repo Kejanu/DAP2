@@ -45,13 +45,12 @@ public class Anwendung {
     }
 
     public static void main(String[] args) {
-        String[][] acceptedStrings = new String[][] {
+        String[][] validStrs = new String[][] {
                 {"Interval", "Lateness"},
                 null
         };
 
-        if(!InputValidation.validateArgs(args, acceptedStrings, 2, PROPER_USAGE_MESSAGE,
-                false, String.class, String.class))
+        if (!InputValidation.validateArgs(args, validStrs, PROPER_USAGE_MESSAGE, String.class, String.class))
             return;
 
         String path = System.getProperty("user.dir") + "/src/Blatt06L/Vorlagen/" + args[1];
