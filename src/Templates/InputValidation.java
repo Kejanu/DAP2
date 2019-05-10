@@ -8,91 +8,69 @@ public class InputValidation {
     public static final String NOT_ENOUGH_ARGUMENTS = "You didn't provide enough arguments. Program aborting... ";
     public static final String TOO_MANY_ARGUMENTS = "You provided too many arguments. Program aborting... ";
 
-    /**
-     * @param args The Input arguments you typically receive by main
-     * @param PROPER_USAGE The message the user will receive, when validation failes
-     * @param classes The classes to check for e.g. String.class or int.class
-     * @return true, if the validaiton succeeded
-     */
-    public static boolean validateArgs(String[] args, final String PROPER_USAGE, Class... classes) {
-        return validateArgs(args, null, PROPER_USAGE, classes);
+    private Class[] pattern;
+    private String properUsage;
+    private boolean onlyPositiveNumbers;
+    private String[][] acceptedStrings;
+
+    public InputValidation(String properUsage) {
+        this.properUsage = properUsage;
     }
 
     /**
-     * @param args The Input arguments you typically receive by main
-     * @param validStrs The format the Strings in args have to follow
-     * @param PROPER_USAGE The message the user will receive, when validation failes
-     * @param classes The classes to check for e.g. String.class or int.class
-     * @return true, if the validaiton succeeded
+     * @param args Validates the given arguments based on the set variables
+     * @return Return true, if the validation succeeded
      */
-    public static boolean validateArgs(String[] args, String[][] validStrs, final String PROPER_USAGE, Class... classes) {
-        return validateArgs(args, validStrs, PROPER_USAGE, false, classes);
-    }
-
-    /**
-     * @param args The Input arguments you typically receive by main
-     * @param validStrs The format the Strings in args have to follow
-     * @param PROPER_USAGE The message the user will receive, when validation failes
-     * @param positiveNum Check if the provdided numbers are positiv
-     * @param classes The classes to check for e.g. String.class or int.class
-     * @return true, if the validaiton succeeded
-     */
-    public static boolean validateArgs(
-            String[] args,
-            String[][] validStrs,
-            final String PROPER_USAGE,
-            boolean positiveNum,
-            Class... classes) {
-
+    public boolean validate(String[] args) {
         int acceptedStringsUsed = 0;
 
         if (args.length <= 0) {
-            System.out.println(NO_ARGUMENTS + PROPER_USAGE);
+            System.out.println(NO_ARGUMENTS + properUsage);
             return false;
         }
 
-        if (args.length > classes.length) {
-            System.out.println(TOO_MANY_ARGUMENTS + PROPER_USAGE);
+        if (args.length > pattern.length) {
+            System.out.println(TOO_MANY_ARGUMENTS + properUsage);
             return false;
         }
 
-        if (args.length < classes.length) {
-            System.out.println(NOT_ENOUGH_ARGUMENTS + PROPER_USAGE);
+        if (args.length < pattern.length) {
+            System.out.println(NOT_ENOUGH_ARGUMENTS + properUsage);
             return false;
         }
 
-        for (int i = 0; i < classes.length; ++i) {
+        for (int i = 0; i < pattern.length; ++i) {
 
             // if cceptedString[acceptedStringsUsed] == null, all Strings accepted
-            if (classes[i] == String.class) {
-                if (validStrs != null && validStrs[acceptedStringsUsed] != null && validStrs[acceptedStringsUsed].length > 0) {
-                    if (!Arrays.stream(validStrs[acceptedStringsUsed]).anyMatch(args[i]::equals)) {
+            if (pattern[i] == String.class) {
+                if (acceptedStrings != null && acceptedStrings[acceptedStringsUsed] != null && acceptedStrings[acceptedStringsUsed].length > 0) {
+                    if (!Arrays.stream(acceptedStrings[acceptedStringsUsed]).anyMatch(args[i]::equals)) {
                         System.out.println("Your " + (i + 1) + ". argument is not the same as the possible arguments [" +
-                                Arrays.stream(validStrs[acceptedStringsUsed]).collect(Collectors.joining(", ")) + "] " + PROPER_USAGE);
+                                Arrays.stream(acceptedStrings[acceptedStringsUsed]).collect(Collectors.joining(", ")) + "] " + properUsage);
                         return false;
                     }
                 }
                 ++acceptedStringsUsed;
             }
 
-            if (classes[i] == int.class) {
+            if (pattern[i] == int.class) {
                 if (!parameterIsInteger(args[i])) {
-                    System.out.println("Your " + (i + 1) + ". argument is no Integer. " + PROPER_USAGE);
+                    System.out.println("Your " + (i + 1) + ". argument is no Integer. " + properUsage);
                     return false;
                 }
-                if (positiveNum && Integer.parseInt(args[i]) < 0) {
-                    System.out.println("Your " + (i + 1) + ". argument is no positive Integer. " + PROPER_USAGE);
+                if (onlyPositiveNumbers && Integer.parseInt(args[i]) < 0) {
+                    System.out.println("Your " + (i + 1) + ". argument is no positive Integer. " + properUsage);
                     return false;
                 }
             }
 
-            if (classes[i] == double.class) {
+            if (pattern[i] == double.class) {
                 if (!parameterIsDouble(args[i])) {
-                    System.out.println("Your " + (i + 1) + ". argument is no Double. " + PROPER_USAGE);
+                    System.out.println("Your " + (i + 1) + ". argument is no Double. " + properUsage);
                     return false;
                 }
-                if (positiveNum && Double.parseDouble(args[i]) < 0) {
-                    System.out.println("Your " + (i + 1) + ". argument is no positive Double. " + PROPER_USAGE);
+                if (onlyPositiveNumbers && Double.parseDouble(args[i]) < 0) {
+                    System.out.println("Your " + (i + 1) + ". argument is no positive Double. " + properUsage);
                     return false;
                 }
             }
@@ -114,4 +92,29 @@ public class InputValidation {
         try { Integer.parseInt(s); return true; }
         catch (NumberFormatException nfe) { return false; }
     }
+
+    public Class[] getPattern() {return pattern;}
+
+    /**
+     * @param pattern The pattern the validate method should follow e.g. String.class, int.class
+     */
+    public void setPattern(Class... pattern) {this.pattern = pattern;}
+
+    public String getProperUsage() {return properUsage;}
+
+    public void setProperUsage(String properUsage) {this.properUsage = properUsage;}
+
+    public boolean isOnlyPositiveNumbers() {return onlyPositiveNumbers;}
+
+    /**
+     * @param onlyPositiveNumbers If only positive numbers should be accepted. Default: false
+     */
+    public void setOnlyPositiveNumbers(boolean onlyPositiveNumbers) {this.onlyPositiveNumbers = onlyPositiveNumbers;}
+
+    public String[][] getAcceptedStrings() {return acceptedStrings;}
+
+    /**
+     * @param acceptedStrings The strings that should be accepted. if String[x] == null => all String accepted
+     */
+    public void setAcceptedStrings(String[][] acceptedStrings) {this.acceptedStrings = acceptedStrings;}
 }
