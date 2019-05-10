@@ -50,7 +50,11 @@ public class Anwendung {
                 null
         };
 
-        if (!InputValidation.validateArgs(args, validStrs, PROPER_USAGE_MESSAGE, String.class, String.class))
+        InputValidation validator = new InputValidation(PROPER_USAGE_MESSAGE);
+        validator.setAcceptedStrings(validStrs);
+        validator.setPattern(String.class, String.class);
+
+        if (!validator.validate(args))
             return;
 
         String path = System.getProperty("user.dir") + "/src/Blatt06L/Vorlagen/" + args[1];

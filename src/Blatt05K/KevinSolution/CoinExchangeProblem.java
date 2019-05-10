@@ -14,8 +14,12 @@ public class CoinExchangeProblem {
                 {"Euro", "Alternative"}
         };
 
-        if (!InputValidation.validateArgs(args, acceptedStrings, PROPER_USAGE_MESSAGE, true,
-            String.class, int.class))
+        InputValidation validator = new InputValidation(PROPER_USAGE_MESSAGE);
+        validator.setPattern(String.class, int.class);
+        validator.setAcceptedStrings(acceptedStrings);
+        validator.setOnlyPositiveNumbers(true);
+
+        if (!validator.validate(args))
             return;
 
         int[] format;
