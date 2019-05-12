@@ -27,7 +27,7 @@ public class Anwendung {
         String path = args[1];
         FileReader f;
 
-        if (!args[0].equals("Interval") && args[0].equals("Lateness")) {
+        if (!args[0].equals("Interval") && !args[0].equals("Lateness")) {
             System.out.println(MESSAGE);
             return;
         }
@@ -82,17 +82,19 @@ public class Anwendung {
             }
         }else{
             Collections.sort(jobs);
-            int[] lateness = latenessScheduling(jobs);
+            //Ausgabe: Startzeitpunkte der Aufgaben
+            int[] start = latenessScheduling(jobs);
             for (int i = 0; i < jobs.size(); ++i) {
-                System.out.println(jobs.get(i).toString() + ", Lateness: " + lateness[i] );
+                System.out.println(jobs.get(i).toString() + ", Started: " + start[i] );
             }
-            int maximumLateness = 0;
-            for (int i = 0; i < jobs.size(); ++i){
-                if(lateness[i] > maximumLateness){
-                    maximumLateness= lateness[i];
+            int maximumLateness = start[0] + jobs.get(0).getDuration() - jobs.get(0).getDeadline();
+            for (int i = 1; i < jobs.size(); ++i){
+                if(start[i] + jobs.get(i).getDuration() - jobs.get(i).getDeadline() > maximumLateness){
+                    maximumLateness= start[i] + jobs.get(i).getDuration() - jobs.get(i).getDeadline();
                 }
             }
             System.out.println("Maximal Lateness: " + maximumLateness);
+
         }
     }
 
