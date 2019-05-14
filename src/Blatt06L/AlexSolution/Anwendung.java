@@ -93,6 +93,9 @@ public class Anwendung {
                     maximumLateness= start[i] + jobs.get(i).getDuration() - jobs.get(i).getDeadline();
                 }
             }
+            if( maximumLateness < 0){
+                maximumLateness = 0;
+            }
             System.out.println("Maximal Lateness: " + maximumLateness);
 
         }
