@@ -6,7 +6,7 @@ public class Job implements Comparable<Job> {
 
     public Job(int duration, int deadline){
 
-        if(duration <= 0 || deadline < 0 || deadline < duration){
+        if(duration < 0 || deadline < 0 || deadline < duration){
             throw new IllegalArgumentException();
         }
 
@@ -24,15 +24,22 @@ public class Job implements Comparable<Job> {
 
     @Override
     public String toString(){
-        return "Duration: " + duration + ", Deadline: " + deadline;
+        //return "Duration: " + duration + ", Deadline: " + deadline;
+        return "[" + duration + ", " + deadline + "]";
     }
 
     @Override
     public int compareTo(Job other){
+
+        /*
         int result = deadline - other.getDeadline();
         if(result == 0){
             result = duration - other.getDuration();
         }
         return result;
+
+        */
+
+        return  deadline - other.deadline;
     }
 }
