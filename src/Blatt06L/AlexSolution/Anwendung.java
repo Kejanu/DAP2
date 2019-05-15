@@ -73,27 +73,69 @@ public class Anwendung {
         } while (zeile != null);
 
         //Ausgabe
+        int n = 0;
+        if(args[0].equals("Interval")){
+            n = intervals.size();
+        } else {
+            n = jobs.size();
+        }
+
+        System.out.println("Bearbeite Datei " + "'" + path + "'");
+        System.out.println(" ");
+        System.out.println("Es wurden " + n +  " Zeilen mit folgendem Inhalt gelesen:");
+        System.out.print("[");
+        if(args[0].equals("Interval")){
+            for (int i = 0; i < intervals.size(); ++i) {
+                System.out.print(intervals.get(i).toString() + ", ");
+            }
+        } else {
+            for (int i = 0; i < jobs.size(); ++i) {
+                System.out.print(jobs.get(i).toString() + ", ");
+            }
+        }
+        System.out.println("]");
+        System.out.println(" ");
+        System.out.println("Sortiert:");
+
 
         if (args[0].equals("Interval")) {
             Collections.sort(intervals);
-            ArrayList<Interval> result = intervalScheduling(intervals);
-            for (Interval i : result) {
-                System.out.println(i.toString());
+            System.out.print("[");
+            for (int i = 0; i < intervals.size(); ++i) {
+                System.out.print(intervals.get(i).toString() + ", ");
             }
+            System.out.println("]");
+            System.out.println(" ");
+            ArrayList<Interval> result = intervalScheduling(intervals);
+            System.out.println("Berechnetes IntervalScheduling: ");
+            System.out.print("[");
+            for (Interval i : result) {
+                System.out.print(i.toString() + ", ");
+            }
+            System.out.println("]");
         }else{
+            System.out.print("[");
             Collections.sort(jobs);
+            for (int i = 0; i < jobs.size(); ++i) {
+                System.out.print(jobs.get(i).toString() + ", ");
+            }
+            System.out.println("]");
+            System.out.println(" ");
             //Ausgabe: Startzeitpunkte der Aufgaben
             int[] start = latenessScheduling(jobs);
+            System.out.println("Berechnetes LatenessScheduling: ");
+            System.out.print("[");
             for (int i = 0; i < jobs.size(); ++i) {
-                System.out.println(jobs.get(i).toString() + ", Started: " + start[i] );
+                System.out.print(start[i] + ", ");
             }
+            System.out.println("]");
             int maximumLateness = start[0] + jobs.get(0).getDuration() - jobs.get(0).getDeadline();
             for (int i = 1; i < jobs.size(); ++i){
                 if(start[i] + jobs.get(i).getDuration() - jobs.get(i).getDeadline() > maximumLateness){
                     maximumLateness= start[i] + jobs.get(i).getDuration() - jobs.get(i).getDeadline();
                 }
             }
-            System.out.println("Maximal Lateness: " + maximumLateness);
+            System.out.println("Berechnete Maximale Verspätung: " + maximumLateness);
 
         }
     }
