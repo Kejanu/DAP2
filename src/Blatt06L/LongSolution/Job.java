@@ -18,7 +18,7 @@ public class Job implements Comparable {
     }
 
     public String toString() {
-        return "Lateness: [" + dauer + ";" + deadline + "]";
+        return "[" + dauer + "," + deadline + "]";
     }
 
     @Override

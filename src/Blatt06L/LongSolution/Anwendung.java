@@ -2,9 +2,7 @@ package Blatt06L.LongSolution;
 
 import Templates.InputValidation;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import java.io.BufferedReader;
@@ -19,6 +17,7 @@ public class Anwendung {
     public static void main(String[] args) {
         ArrayList<Interval> inputs = new ArrayList<Interval>();
         ArrayList<Job> inputsJ = new ArrayList<Job>();
+        int counter = 0;
         //Komische Kevin validierung
         String[][] validStrings = new String[][]{
                 {"Interval", "Lateness"},
@@ -33,7 +32,7 @@ public class Anwendung {
         if (!validation.validate(args)) {
             return;
         }
-        if(args[0] == "Interval"){
+        if(args[0].equals("Interval")){
             isInterval = true;
         }
         else{
@@ -43,6 +42,7 @@ public class Anwendung {
         try {
             //shitty textfiles https://stackoverflow.com/questions/15281428/java-relative-path-of-text-file-in-main
             String example = "src/Blatt06L/Vorlagen/datenBsp1.zahlen";
+            counter = 1;
 
             BufferedReader file = new BufferedReader(new FileReader(args[1]));
 
@@ -61,6 +61,7 @@ public class Anwendung {
                 }
 
                 zeile = file.readLine();
+                ++counter;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,20 +72,36 @@ public class Anwendung {
         //Eingabe nach Intervallendpunkten sortiert
 
         //calculation and output
-        if(args[0] == "Interval") {
-            System.out.println("Folgende Daten wurden eingefügt: " + inputs.toString());
+        if(isInterval) {
+            System.out.println();
+            System.out.println("Es wurden "+counter+" mit folgendem Inhalt gelesen:\n" + inputs.toString());
+            System.out.println();
             ArrayList<Interval> result;
             Collections.sort(inputs);
-            System.out.println("Folgende Daten wurden (hoffentlich) sortiert" + inputs.toString());
+            System.out.println("Sortiert:\n" + inputs.toString());
+            System.out.println();
             result = intervalScheduling(inputs);
-            System.out.println("Berechnetes IntervalScheduling: " + result.toString());
+            System.out.println("Berechnetes IntervalScheduling:\n" + result.toString());
         }
         else {
+            System.out.println();
+            System.out.println("Es wurden "+counter+" mit folgendem Inhalt gelesen:\n" + inputsJ.toString());
+            System.out.println();
             int[] resultJ;
-            System.out.println("Folgende Daten wurden eingefügt: " + inputsJ.toString());
             Collections.sort(inputsJ);
+            System.out.println("Sortiert:\n" + inputsJ.toString());
+            System.out.println();
             resultJ = latenessScheduling(inputsJ);
-            System.out.println("Berechnetes IntervalScheduling: " + Arrays.toString(resultJ));
+            System.out.println("Berechnetes LatenessScheduling:\n" + Arrays.toString(resultJ));
+
+            //maximum lateness
+            int maximumLateness = 0;
+            for(int i = 0; i < resultJ.length; ++i){
+                if(resultJ[i] - inputsJ.get(i).getDeadline()+inputsJ.get(i).getDauer() >maximumLateness){
+                    maximumLateness = resultJ[i] - inputsJ.get(i).getDeadline()+inputsJ.get(i).getDauer();
+                }
+            }
+            System.out.println("\nBerechnete maximale Verspätung: "+maximumLateness);
         }
     }
 

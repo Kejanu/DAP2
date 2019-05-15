@@ -18,7 +18,7 @@ public class Interval implements Comparable {
     }
 
     public String toString() {
-        return "Interval: [" + start + ";" + end + "]";
+        return "[" + start + "," + end + "]";
     }
 
     @Override
