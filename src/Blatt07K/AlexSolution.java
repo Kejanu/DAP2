@@ -16,33 +16,81 @@ public class AlexSolution {
         try {
             n = Integer.parseInt(args[0]);
         } catch (NumberFormatException e){
+            System.out.println("The value you provided is not a valid Integer. " + MESSAGE);
+            return;
+        }
+        if(n<0){
             System.out.println("Integer must be positive. " + MESSAGE);
             return;
         }
+
         Random random = new Random();
         String a = randStr(n, random);
         String b = randStr(n, random);
 
+        //String x = "BDCABA";
+        //String y = "ABCBDAB";
+
+        System.out.println("String 1: " + a + "\nString 2: " + b);
+
         longestCommonSubsequence(a, b);
+    }
 
+    public static void longestCommonSubsequence(String a, String b){
 
+        long tStart, tEnd;
 
+        System.gc();
+        tStart = System.currentTimeMillis();
+        int[][] chart = longestCommonSubsequenceChart(a,b);
+        tEnd = System.currentTimeMillis();
+
+        System.out.println("Longest Common Subsequence\nLength: " + chart[a.length()][b.length()]);
+
+        String subsquence = "";
+
+        int i = a.length();
+        int j = b.length();
+
+        while (i > 0 && j > 0){
+            if(a.charAt(i - 1) == b.charAt(j - 1)) {
+                subsquence = a.charAt(i - 1) + subsquence;
+                --i;
+                --j;
+            } else {
+                if(chart[i - 1][j] > chart[i][j - 1]){
+                    --i;
+                } else {
+                    --j;
+                }
+            }
+        }
+        System.out.println("Sequence: " + subsquence + "\nTime used: " + (tEnd - tStart) + " ms");
     }
 
 
-    public static String longestCommonSubsequence(String a, String b){
+    private static int[][] longestCommonSubsequenceChart(String a, String b){
 
-        int[][] chart = new int[a.length()][b.length()];
-        for (int i = 0; i < a.length(); i++) {
-            for (int j = 0; j < b.length(); j++) {
-                //todo
-                
+        int[][] chart = new int[a.length()+1][b.length()+1];
+        for (int i = 1; i <= a.length(); i++) {
+            for (int j = 1; j <= b.length(); j++) {
+                laengenberechnung(a, b, chart, i, j);
             }
-
         }
-        return "";
+        return chart;
+    }
 
+    private static void laengenberechnung(String a, String b, int[][] chart, int i, int j){
 
+        if(a.charAt(i - 1) == b.charAt(j - 1)){
+            chart[i][j] = chart[i-1][j-1] + 1;
+        } else {
+            if(chart[i-1][j] >= chart[i][j-1]){
+                chart[i][j] = chart[i-1][j];
+            } else {
+                chart[i][j] = chart[i][j-1];
+            }
+        }
     }
 
     public static String randStr(int n, Random r) {
@@ -56,4 +104,6 @@ public class AlexSolution {
         return res.toString();
     }
 
+    //todo "Implementieren Sie diesen Algorithmus und stellen Sie die Entwicklung der Laufzeit Ihrer Implementierung
+    // für zwei Zufallsfolgen der Länge n in Abhängigkeit von n grafisch dar." ???
 }
