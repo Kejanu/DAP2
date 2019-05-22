@@ -2,6 +2,7 @@ package Blatt06L.KevinSolution;
 
 import Templates.InputValidation;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
@@ -125,36 +126,24 @@ public class Anwendung {
             return Files.lines(Paths.get(path))
                         .map(e -> e.split(","))
                         .map(e -> new int[]{Integer.parseInt(e[0]), Integer.parseInt(e[1])})
+                        .filter(e -> e[0] >= 0 && e[1] >= 0)
                         .map(e -> returnInstance(e[0], e[1], clazz))
                         .collect(Collectors.toCollection(ArrayList::new));
 
-        } catch (IOException | NumberFormatException e) {
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Your given path doesnt belong to a file");
+        }
+        catch (IOException e) {
             System.out.println("Your specified path doesnt't belong to a file. Program aborting... " + PROPER_USAGE_MESSAGE);
         }
+        catch (NumberFormatException e) {
+            System.out.println("Your specified file contains strings at unexpected positions. Program aborting... " + PROPER_USAGE_MESSAGE);
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Your given file contains errors. Please follow this format: Integer,Integer");
+        }
         return null;
-    }
-
-    private static boolean basicInputValidationSuccess(String[] args) {
-        if (args.length <= 0) {
-            System.out.println(InputValidation.NO_ARGUMENTS + PROPER_USAGE_MESSAGE);
-            return false;
-        }
-
-        if (args.length == 1) {
-            System.out.println(InputValidation.NOT_ENOUGH_ARGUMENTS + PROPER_USAGE_MESSAGE);
-            return false;
-        }
-
-        if (args.length > 2) {
-            System.out.println(InputValidation.TOO_MANY_ARGUMENTS + PROPER_USAGE_MESSAGE);
-            return false;
-        }
-
-        if (!(args[0].equals("Interval") || args[0].equals("Lateness"))) {
-            System.out.println("Your first argument isn't equivalent to Interval nor to Lateness. Program aborting... " + PROPER_USAGE_MESSAGE);
-            return false;
-        }
-        return true;
     }
 
     private static <T> T returnInstance(int i, int j, Class<T> clazz) {

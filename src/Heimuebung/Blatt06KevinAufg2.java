@@ -5,13 +5,9 @@ import java.util.Arrays;
 public class Blatt06KevinAufg2 {
     public static void main(String[] args) {
 
-        int[] chocolateWeights = {2, 1, 3, 10};
+        int[] chocolateWeights = {7, 10, 8, 2, 5, 1, 8, 16, 6};
 
-//        ArrayHelper.printIntArray(getIndizesOfBestChoice());
-//        System.out.println(findMaxSum(chocolateWeights));
-//        System.out.println(findMaxSumRec(chocolateWeights, chocolateWeights.length - 1));
-
-        maxSum(chocolateWeights);
+        System.out.println(findMaxSumMemoization(chocolateWeights));
     }
 
     public static void maxSum(int[] arr) {
@@ -55,40 +51,22 @@ public class Blatt06KevinAufg2 {
         }
     }
 
-//    private static ArrayList<Integer> findMaxSumMemoization(int[] arr) {
-//        int[] sums = new int[arr.length];
-//        ArrayList<Integer> indices = new ArrayList<>();
-//
-//        for (int i = 0; i < arr.length; ++i) {
-//            if (i == 0) {
-//                sums[0] = arr[0];
-//            }
-//            else if (i == 1) {
-//                //sums[1] = Math.max(sums[0], arr[1]);
-//                if (sums[0] > arr[1]) {
-//                    sums[1] = sums[0];
-//                    indices.add(0);
-//                }
-//                else {
-//                    sums[1] = arr[1];
-//                    indices.add(1);
-//                }
-//            }
-//            else {
-//                //sums[i] = Math.max(sums[i - 2] + arr[i], sums[i - 1]);
-//                if (sums[i - 2] + arr[i] > sums[i - 1]) {
-//                    sums[i] = sums[i - 2] + arr[i];
-//                    indices.add(i);
-//                }
-//                else {
-//                    sums[i] = sums[i - 1];
-//                }
-//            }
-//        }
-//        System.out.println("Biggest Sum: " + sums[arr.length - 1]);
-//        ArrayHelper.printIntArray(sums);
-//        return indices;
-//    }
+    private static int findMaxSumMemoization(int[] arr) {
+        int[] sums = new int[arr.length];
+
+        for (int i = 0; i < arr.length; ++i) {
+            if (i == 0) {
+                sums[0] = arr[0];
+            }
+            else if (i == 1) {
+                sums[1] = Math.max(sums[0], arr[1]);
+            }
+            else {
+                sums[i] = Math.max(sums[i - 2] + arr[i], sums[i - 1]);
+            }
+        }
+        return sums[arr.length - 1];
+    }
 //
 //
 //    private static int findMaxSumRec(int[] arr, int i) {
