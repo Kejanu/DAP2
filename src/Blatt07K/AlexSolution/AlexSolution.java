@@ -1,4 +1,4 @@
-package Blatt07K;
+package Blatt07K.AlexSolution;
 
 import java.util.Random;
 
@@ -31,7 +31,7 @@ public class AlexSolution {
         //String x = "BDCABA";
         //String y = "ABCBDAB";
 
-        System.out.println("String 1: " + a + "\nString 2: " + b);
+        System.out.println("\nString 1: " + a + "\nString 2: " + b);
 
         longestCommonSubsequence(a, b);
     }
@@ -43,9 +43,6 @@ public class AlexSolution {
         System.gc();
         tStart = System.currentTimeMillis();
         int[][] chart = longestCommonSubsequenceChart(a,b);
-        tEnd = System.currentTimeMillis();
-
-        System.out.println("Longest Common Subsequence\nLength: " + chart[a.length()][b.length()]);
 
         String subsquence = "";
 
@@ -65,7 +62,10 @@ public class AlexSolution {
                 }
             }
         }
-        System.out.println("Sequence: " + subsquence + "\nTime used: " + (tEnd - tStart) + " ms");
+        tEnd = System.currentTimeMillis();
+
+        System.out.println("\nLongest Common Subsequence:\nLength: " + chart[a.length()][b.length()]);
+        System.out.println("Sequence: " + subsquence + "\nTime: " + (tEnd - tStart) + " ms");
     }
 
 
