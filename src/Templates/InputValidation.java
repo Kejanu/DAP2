@@ -1,20 +1,25 @@
 package Templates;
 
+import java.lang.ref.PhantomReference;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class InputValidation {
-    public static final String NO_ARGUMENTS = "You provided no arguments. Program aborting... ";
-    public static final String NOT_ENOUGH_ARGUMENTS = "You didn't provide enough arguments. Program aborting... ";
-    public static final String TOO_MANY_ARGUMENTS = "You provided too many arguments. Program aborting... ";
+    private static final String NO_ARGUMENTS = "You provided no arguments. Program aborting... ";
+    private static final String NOT_ENOUGH_ARGUMENTS = "You didn't provide enough arguments. Program aborting... ";
+    private static final String TOO_MANY_ARGUMENTS = "You provided too many arguments. Program aborting... ";
 
     private Class[] pattern;
     private String properUsage;
     private boolean onlyPositiveNumbers;
+    private boolean noneNegativeNumbers;
     private String[][] acceptedStrings;
+    private int acceptedStringsUsed;
+
+    private String errorMessage;
 
     public InputValidation(String properUsage) {
-        this.properUsage = properUsage;
+        this.properUsage = "\n" + properUsage;
     }
 
     /**
@@ -22,8 +27,8 @@ public class InputValidation {
      * @return Return true, if the validation succeeded
      */
     public boolean validate(String[] args) {
-        int acceptedStringsUsed = 0;
-
+        acceptedStringsUsed = 0;
+        System.out.println("Your Input: " + Arrays.toString(args));
         if (args.length <= 0) {
             System.out.println(NO_ARGUMENTS + properUsage);
             return false;
@@ -40,42 +45,97 @@ public class InputValidation {
         }
 
         for (int i = 0; i < pattern.length; ++i) {
-
-            // if cceptedString[acceptedStringsUsed] == null, all Strings accepted
             if (pattern[i] == String.class) {
-                if (acceptedStrings != null && acceptedStrings[acceptedStringsUsed] != null && acceptedStrings[acceptedStringsUsed].length > 0) {
-                    if (!Arrays.stream(acceptedStrings[acceptedStringsUsed]).anyMatch(args[i]::equals)) {
-                        System.out.println("Your " + (i + 1) + ". argument is not the same as the possible arguments [" +
-                                Arrays.stream(acceptedStrings[acceptedStringsUsed]).collect(Collectors.joining(", ")) + "] " + properUsage);
-                        return false;
-                    }
+                if(!checkStringCase(args[i], i)) {
+                    System.out.println(errorMessage + properUsage);
+                    return false;
                 }
-                ++acceptedStringsUsed;
             }
 
             if (pattern[i] == int.class) {
-                if (!parameterIsInteger(args[i])) {
-                    System.out.println("Your " + (i + 1) + ". argument is no Integer. " + properUsage);
-                    return false;
-                }
-                if (onlyPositiveNumbers && Integer.parseInt(args[i]) < 0) {
-                    System.out.println("Your " + (i + 1) + ". argument is no positive Integer. " + properUsage);
+                if(!checkIntCase(args[i], i)) {
+                    System.out.println(errorMessage + properUsage);
                     return false;
                 }
             }
 
             if (pattern[i] == double.class) {
-                if (!parameterIsDouble(args[i])) {
-                    System.out.println("Your " + (i + 1) + ". argument is no Double. " + properUsage);
-                    return false;
-                }
-                if (onlyPositiveNumbers && Double.parseDouble(args[i]) < 0) {
-                    System.out.println("Your " + (i + 1) + ". argument is no positive Double. " + properUsage);
+                if(!checkDoubleCase(args[i], i)) {
+                    System.out.println(errorMessage + properUsage);
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    private boolean checkStringCase(String s, int index) {
+        if (acceptedStrings != null && acceptedStrings[acceptedStringsUsed] != null && acceptedStrings[acceptedStringsUsed].length > 0) {
+            // Check "normal" Strings
+            if (Arrays.stream(acceptedStrings[acceptedStringsUsed]).noneMatch(s::equals)) {
+                // Not one matching String was found
+
+                // So check for possible int Values, if "$int" is provided in the acceptedStrings
+                if (Arrays.stream(acceptedStrings[acceptedStringsUsed]).anyMatch("$int"::equals)) {
+                    if (!checkIntCase(s, index))
+                        return false;
+                }
+                else {
+                    String replacement = "anyInteger";
+                    if (isOnlyPositiveNumbers())
+                        replacement = "positive Integer";
+
+                    if (isNoneNegativeNumbers())
+                        replacement = "non negative Integer";
+
+                    errorMessage = "Your " + (index + 1) + ". argument is not the same as the possible arguments [" +
+                            Arrays.stream(acceptedStrings[acceptedStringsUsed])
+                                    .collect(Collectors.joining(", "))
+                                    .replace("$int", replacement) + "] ";
+                    return false;
+                }
+            }
+        }
+        ++acceptedStringsUsed;
+        return true;
+    }
+
+    private boolean checkIntCase(String s, int index) {
+        if (!parameterIsInteger(s)) {
+            errorMessage = "Your " + (index + 1) + ". argument is no Integer ";
+            return false;
+        }
+        if (onlyPositiveNumbers && !parameterIsPositiveInteger(s)) {
+            errorMessage = "Your " + (index + 1) + ". argument is no positive Integer ";
+            return false;
+        }
+        if (noneNegativeNumbers && !parameterIsNonNegativeInteger(s)) {
+            errorMessage = "Your " + (index + 1) + ". argument is a negative Integer. Only none negative Integers allowed ";
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkDoubleCase(String s, int index) {
+        if (!parameterIsDouble(s)) {
+            errorMessage = "Your " + (index + 1) + ". argument is no Double ";
+            return false;
+        }
+        if (onlyPositiveNumbers && Double.parseDouble(s) < 0) {
+            errorMessage = "Your " + (index + 1) + ". argument is no positive Double ";
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean parameterIsPositiveInteger(String s) {
+        try { int i = Integer.parseInt(s); return i > 0; }
+        catch (NumberFormatException nfe) { return false; }
+    }
+
+    private static boolean parameterIsNonNegativeInteger(String s) {
+        try { int i = Integer.parseInt(s); return i > -1; }
+        catch (NumberFormatException nfe) { return false; }
     }
 
     public static boolean parameterIsFloat(String s) {
@@ -117,4 +177,11 @@ public class InputValidation {
      * @param acceptedStrings The strings that should be accepted. if String[x] == null => all String accepted
      */
     public void setAcceptedStrings(String[][] acceptedStrings) {this.acceptedStrings = acceptedStrings;}
+
+    public boolean isNoneNegativeNumbers() {return noneNegativeNumbers;}
+
+    /**
+     * @param noneNegativeNumbers If the numbers should be greater than -1. Default: false
+     */
+    public void setNoneNegativeNumbers(boolean noneNegativeNumbers) {this.noneNegativeNumbers = noneNegativeNumbers;}
 }
