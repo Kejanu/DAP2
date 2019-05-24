@@ -2,33 +2,61 @@ package Blatt07K;
 
 import Templates.InputValidation;
 import Templates.RandomGenerator;
+import org.knowm.xchart.QuickChart;
+import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XYChart;
 
 public class KevinSolution {
 
-    private static final String PROPER_USAGE = "One positive Integer";
+    private static final String PROPER_USAGE = "Proper Usage: One none negative Integer or graph";
 
     public static void main(String[] args) {
 
         InputValidation val = new InputValidation(PROPER_USAGE);
-        val.setOnlyPositiveNumbers(true);
-        val.setPattern(int.class);
+        val.setPattern(String.class);
+        val.setAcceptedStrings(new String[][]{{"graph", "$int"}});
+        val.setNoneNegativeNumbers(true);
+        if(!val.validate(args))
+            return;
 
-        int stringLength = Integer.parseInt("20");
+        int stringLength = 1;
+        if (args[0].equals("graph")) {
+            int Iterations = 13;
+            double[] xValues = new double[Iterations];
+            double[] yValues = new double[Iterations];
+
+            for (int i = 0; i < Iterations; ++i) {
+                System.out.println("StringLength: " + stringLength);
+                xValues[i] = stringLength;
+                yValues[i] = getTimeForAlgo(stringLength);
+                stringLength *= 2;
+            }
+
+            XYChart chart = QuickChart.getChart("Algo Time", "StringLength", "Time", "Time(StringLength)", xValues, yValues);
+            new SwingWrapper(chart).displayChart();
+        }
+        else {
+            System.out.println("The calculation took: " + getTimeForAlgo(Integer.parseInt(args[0])) + " Milliseconds");
+        }
+    }
+
+    private static long getTimeForAlgo(int stringLength) {
         String randomA = RandomGenerator.generateString(stringLength);
         String randomB = RandomGenerator.generateString(stringLength);
 
-        System.out.println("A: " + randomA + "\tB: " + randomB);
+//        System.out.println("A: " + randomA + "\tB: " + randomB);
 
         long tStart, tEnd;
+        System.gc();
         tStart = System.currentTimeMillis();
         int[][] memo = longestCommonSubsequence(randomA, randomB);
         tEnd = System.currentTimeMillis();
 
-        System.out.println("The calculation took: " + (tEnd - tStart) + " Milliseconds");
-
         System.out.println("Longest Subsequence int: " + memo[memo.length - 1][memo.length - 1]);
         String subStr = longestCommonSubsequenceString(memo, randomA, randomB);
         System.out.println("Longest Subsequence String: " + subStr);
+
+        return tEnd - tStart;
     }
 
     private static String longestCommonSubsequenceString(int[][] memo, String a, String b) {
