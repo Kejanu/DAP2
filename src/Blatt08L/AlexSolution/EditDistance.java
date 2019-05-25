@@ -164,6 +164,11 @@ public class EditDistance {
 
         }*/
 
+
+
+
+
+
         if (output) {
             int i = 1;
             int j = 1;
@@ -175,11 +180,12 @@ public class EditDistance {
             StringBuilder tempString = new StringBuilder(new String(a));
 
 
-            while ( i < a.length() + 1|| j < b.length() + 1) {
+            while ( //i < a.length() + 1|| j < b.length() + 1) {
+                    position <= a.length()) {
 
                 System.out.println("i = " + i + ", j = " + j);
 
-                if(i == a.length() && j == b.length()){
+                if (i == a.length() && j == b.length()) {
                     break;
                 }
 
@@ -194,34 +200,37 @@ public class EditDistance {
                 }
 
 
-                if(j < b.length()) {
+                if (j < b.length()) {
                     value3 = chart[i][j + 1];
                 } else {
                     value3 = Integer.MAX_VALUE;
                 }
 
-                if(i < a.length()) {
+                if (i < a.length()) {
                     value4 = chart[i + 1][j];
                 } else {
                     value4 = Integer.MAX_VALUE;
                 }
 
 
-                int value = Math.min( value1 , Math.min(value3, value4));
-                /*
+                int value = Math.min(value1, Math.min(value3, value4));
+
+
                 System.out.println("min "+ value);
                 System.out.println("value " + value);
                 System.out.println("value4 " + value4 );
                 System.out.println("value3 " + value3 );
-                 */
+                System.out.println("value1 " + value1 );
 
 
 
-                char oldChar = a.charAt(i - 1);
-                char newChar = b.charAt(j - 1);
+
+
+
 
                 if (value == value1 && b.charAt(j - 1) == a.charAt(i - 1)) {
 
+                    char oldChar = a.charAt(i - 1);
 
 
                     o = o + count + ") Kosten 0: " + oldChar + " an Position " + position + " --> " + tempString + "\n";
@@ -230,12 +239,13 @@ public class EditDistance {
                     ++i;
                     ++position;
 
-                }else if( value == value1 && b.charAt(j - 1) != a.charAt(i - 1) ) {
+                } else if (value == value1 && b.charAt(j - 1) != a.charAt(i - 1)) {
+
+                    char oldChar = a.charAt(i - 1);
+                    char newChar = b.charAt(j - 1);
 
 
-
-
-                    tempString.setCharAt(i, newChar);
+                    tempString.setCharAt(i - 1, newChar);
                     o = o + count + ") Kosten 1: Ersetze " + oldChar + " durch " + newChar + " an Position " + position
                             + " --> " + tempString + "\n";
 
@@ -245,7 +255,7 @@ public class EditDistance {
 
                 } else if (value == value3) {
 
-
+                    char newChar = b.charAt(j - 1);
 
                     tempString.insert(i - 1, newChar);
                     o = o + count + ") Kosten 1: Fuege " + newChar + " an Position " + position + "  ein --> " + tempString
@@ -255,8 +265,9 @@ public class EditDistance {
                     ++position;
 
 
-
                 } else {
+
+                    char oldChar = a.charAt(i - 1);
 
 
 
@@ -273,11 +284,146 @@ public class EditDistance {
 
 
             System.out.println(o);
+        }
+
+
+
+
+
+        /*
+
+
+        if (output) {
+            int i = a.length();
+            int j = b.length();
+            int count = a.length() + 1;
+            String o = "";
+            StringBuilder tempString = new StringBuilder(new String(b));
+            int position = a.length();
+
+
+            while (i >= 1 || j >= 1) {
+
+                if (i <= 0 && j <= 0) {
+                    break;
+                }
+
+                System.out.println("i = " + i + ", j = " + j);
+
+                int value1 = 0;
+                //int value2 = 0;
+                int value3 = 0;
+                int value4 = 0;
+
+                if (i > 0 && j > 0) {
+                    value1 = chart[i - 1][j - 1];
+                } else {
+                    value1 = Integer.MAX_VALUE;
+                }
+
+
+               /* if(i > 0 && j > 0) {
+                    value2 = chart[i - 1][j - 1];
+                } else {
+                    value2 = Integer.MAX_VALUE;
+                }
+
+
+
+                if (j > 0) {
+                    value3 = chart[i][j - 1];
+                } else {
+                    value3 = Integer.MAX_VALUE;
+                }
+
+                if (i > 0) {
+                    value4 = chart[i - 1][j];
+                } else {
+                    value4 = Integer.MAX_VALUE;
+                }
+
+
+
+
+                int value = Math.min(value1, Math.min(value3, value4));
+
+
+                System.out.println("min "+ value);
+                System.out.println("value " + value);
+                System.out.println("value4 " + value4 );
+                System.out.println("value3 " + value3 );
+                System.out.println("value1 " + value1 );
+
+
+                if (value == value1 && b.charAt(j - 1) == a.charAt(i - 1)) {
+
+                    System.out.println("HEY LISTEN");
+
+                    char oldChar = a.charAt(i - 1);
+
+                    o = count + ") Kosten 0: " + oldChar + " an Position " + position + " --> " + tempString + "\n" + o;
+
+                    --j;
+                    --i;
+                    --position;
+
+                } else if (value == value1 && b.charAt(j - 1) != a.charAt(i - 1)) {
+
+                    char oldChar = a.charAt(i - 1);
+                    char newChar = b.charAt(j - 1);
+
+
+                    o = count + ") Kosten 1: Ersetze " + oldChar + " durch " + newChar + " an Position " + position
+                            + " --> " + tempString + "\n" + o;
+
+                    tempString.setCharAt(i - 1, oldChar);
+                    --j;
+                    --i;
+                    --position;
+
+
+                } else if (value == value4) {
+
+                    char oldChar = a.charAt(i - 1);
+
+
+                    o = count + ") Kosten 1: Loesche " + oldChar + " an Position " + i + " --> " + tempString
+                            + "\n" + o;
+                    tempString.insert(i - 1, oldChar);
+                    --i;
+                    --position;
+
+
+                } else if (value == value3) {
+
+                    char newChar = b.charAt(j - 1);
+                    o = count + ") Kosten 1: Fuege " + newChar + " an Position " + i + "  ein --> " + tempString
+                            + "\n" + o;
+
+                    tempString.deleteCharAt(i - 1);
+                    --j;
+
+                }
+                --count;
+            }
+
+
+            o = "Loesung fuer " + a + " --> " + b + " mit Gesamtkosten " + chart[a.length()][b.length()] +
+                    ":\n" + "=====================================================\n" + o;
+
+
+            System.out.println(o);
 
         }
+        */
+
 
         return chart[a.length()][b.length()];
     }
 }
+
+
+
+
 
 
