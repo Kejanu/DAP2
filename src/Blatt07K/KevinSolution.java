@@ -6,6 +6,8 @@ import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 
+import java.util.Arrays;
+
 public class KevinSolution {
 
     private static final String PROPER_USAGE = "Proper Usage: One none negative Integer or graph";
@@ -21,14 +23,14 @@ public class KevinSolution {
 
         int stringLength = 1;
         if (args[0].equals("graph")) {
-            int Iterations = 13;
+            int Iterations = 15;
             double[] xValues = new double[Iterations];
             double[] yValues = new double[Iterations];
 
             for (int i = 0; i < Iterations; ++i) {
                 System.out.println("StringLength: " + stringLength);
                 xValues[i] = stringLength;
-                yValues[i] = getTimeForAlgo(stringLength);
+                yValues[i] = getTimeForAlgo(stringLength, false);
                 stringLength *= 2;
             }
 
@@ -36,21 +38,32 @@ public class KevinSolution {
             new SwingWrapper(chart).displayChart();
         }
         else {
-            System.out.println("The calculation took: " + getTimeForAlgo(Integer.parseInt(args[0])) + " Milliseconds");
+            long time = getTimeForAlgo(Integer.parseInt(args[0]), true);
+            if (time == -1)
+                return;
+            System.out.println("The calculation took: " + time + " Milliseconds");
         }
     }
 
-    private static long getTimeForAlgo(int stringLength) {
+    private static long getTimeForAlgo(int stringLength, boolean printString) {
         String randomA = RandomGenerator.generateString(stringLength);
         String randomB = RandomGenerator.generateString(stringLength);
 
-//        System.out.println("A: " + randomA + "\tB: " + randomB);
+        if (printString)
+            System.out.println("A: " + randomA + "\nB: " + randomB);
 
         long tStart, tEnd;
         System.gc();
         tStart = System.currentTimeMillis();
         int[][] memo = longestCommonSubsequence(randomA, randomB);
         tEnd = System.currentTimeMillis();
+
+        if (memo == null)
+            return -1;
+
+//        for (int i = 0; i < memo.length; ++i) {
+//            System.out.println(Arrays.toString(memo[i]));
+//        }
 
         System.out.println("Longest Subsequence int: " + memo[memo.length - 1][memo.length - 1]);
         String subStr = longestCommonSubsequenceString(memo, randomA, randomB);
@@ -84,23 +97,32 @@ public class KevinSolution {
         int lengthA = a.length();
         int lengthB = b.length();
 
-        int[][] memo = new int[lengthA][lengthB];
+        try {
+            int[][] memo = new int[lengthA][lengthB];
 
-        // First row and coloumn 0
-        for (int i = 0; i < lengthA; ++i)
-            memo[i][0] = 0;
-        for (int j = 0; j < lengthB; ++j)
-            memo[0][j] = 0;
+            // First row and coloumn 0
+            for (int i = 0; i < lengthA; ++i)
+                memo[i][0] = 0;
+            for (int j = 0; j < lengthB; ++j)
+                memo[0][j] = 0;
 
-        for (int i = 1; i < lengthA; ++i) {
-            for (int j = 1; j < lengthB; ++j) {
-                if (a.charAt(i) == b.charAt(j)) {
-                    memo[i][j] = memo[i - 1][j - 1] + 1;
-                } else {
-                    memo[i][j] = Math.max(memo[i][j - 1], memo[i - 1][j]);
+            for (int i = 1; i < lengthA; ++i) {
+                for (int j = 1; j < lengthB; ++j) {
+                    if (a.charAt(i) == b.charAt(j)) {
+                        memo[i][j] = memo[i - 1][j - 1] + 1;
+                    } else {
+                        memo[i][j] = Math.max(memo[i][j - 1], memo[i - 1][j]);
+                    }
                 }
             }
+            return memo;
         }
-        return memo;
+        catch (OutOfMemoryError e) {
+            System.out.println(
+                    "Your provided Integer is too large for the System to handle.\n" +
+                    "Please consider using a smaller one. Program arborting..."
+            );
+            return null;
+        }
     }
 }

@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class InputValidation {
-    private static final String NO_ARGUMENTS = "You provided no arguments. Program aborting... ";
-    private static final String NOT_ENOUGH_ARGUMENTS = "You didn't provide enough arguments. Program aborting... ";
-    private static final String TOO_MANY_ARGUMENTS = "You provided too many arguments. Program aborting... ";
+    public static final String NO_ARGUMENTS = "You provided no arguments. Program aborting... ";
+    public static final String NOT_ENOUGH_ARGUMENTS = "You didn't provide enough arguments. Program aborting... ";
+    public static final String TOO_MANY_ARGUMENTS = "You provided too many arguments. Program aborting... ";
 
     private Class[] pattern;
     private String properUsage;
