@@ -74,6 +74,7 @@ public class EditDistance {
 
 
         }
+        return operations;
     }
 
     private static int[][] getMemo(String a, String b) {
