@@ -14,6 +14,13 @@ public class EditDistance {
             return;
         }
 
+        /*
+        if(args.length == 2 && args[1].equals("-o")){
+            System.out.println(MESSAGE);
+            return;
+        }
+         */
+
         if (args.length == 3 && args[2].equals("-o")) {
             String output = "";
             int d = distance(args[0], args[1], true);
