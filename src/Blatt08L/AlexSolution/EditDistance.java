@@ -116,9 +116,9 @@ public class EditDistance {
 
         } else {
 
-            int value1 = 0;
-            int value2 = 0;
-            int value3 = 0;
+            int value1;
+            int value2;
+            int value3;
             if(i > 0 && j > 0){
                 value1 = chart[i - 1][j - 1];
             } else {
