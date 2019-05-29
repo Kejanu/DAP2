@@ -31,7 +31,7 @@ public class EditDistance {
 
         } else {
             int d = distance(args[0], args[1], false);
-            System.out.println("Gesamtkosten: " + d);
+            System.out.println("Eingabe: " + args[0] + ", " + args[1] + "\nGesamtkosten: " + d);
         }
     }
 
@@ -64,12 +64,14 @@ public class EditDistance {
                 chart[i][j] = Math.min(Math.min(value1, value2), Math.min(value3, value4));
             }
         }
-        /*
+
         for (int i = 0; i < chart.length; i++) {
             System.out.println(Arrays.toString(chart[i]));
         }
 
-         */
+        System.out.print("\n");
+
+
 
         if(output){
             System.out.println(output(chart, a, b));
