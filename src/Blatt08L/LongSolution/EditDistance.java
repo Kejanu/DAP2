@@ -52,14 +52,32 @@ public class EditDistance {
         //vertikal = löschen
         System.out.println("Loesung fuer '"+a+"' --> '"+b+"' mit Gesamtkosten "+D[a.length()][b.length()]+":");
 
-        int i = a.length() - 1;
-        int j = b.length() - 1;
+        int i = a.length();
+        int j = b.length();
         int maxSize = b.length();
-        char[] result = new char[maxSize];
-        System.out.println("ich stell nicht vor.");
-        System.out.println("Dap tiltet mich");
-        System.out.println("möchte schlafen..");
-        System.out.println(new String(result));
+        while(i >0&&j>0){
+            int minValue = Integer.min(D[i - 1][j - 1],Integer.min(D[i][j - 1], D[i - 1][j]));
+            if(minValue == D[i - 1][j - 1] && a.charAt(i-1) == b.charAt(j-1)){
+                System.out.println("Tue nichts. Kosten 0");
+                i--;
+                j--;
+            }
+            else if(minValue == D[i - 1][j - 1] && a.charAt(i-1) != b.charAt(j-1)){
+                System.out.println("Ersetze. Kosten 1");
+                i--;
+                j--;
+            }
+            else if(minValue == D[i][j - 1]){
+                System.out.println("Füge ein. kosten 1");
+                j--;
+            }
+            else{
+                System.out.println("Lösche kosten 1");
+                i--;
+            }
+        }
+
+        //System.out.println(new String(result));
        // return new String(result);
 
 
