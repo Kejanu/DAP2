@@ -105,6 +105,8 @@ public class EditDistance {
             }
         }
 
+        steps = "";
+
         return t;
     }
 
