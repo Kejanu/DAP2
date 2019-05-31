@@ -54,10 +54,8 @@ public class SearchTree {
                 value = n;
             } else {
                 if (n <= this.value) {
-                    System.out.println("HEY LISTEN " + value + ">=" + n);
                     this.lc = new SearchTree(n);
                 } else {
-                    System.out.println("HEY LISTEN " + value + "<" + n);
                     this.rc = new SearchTree(n);
                 }
             }
@@ -79,37 +77,6 @@ public class SearchTree {
                 }
             }
         }
-
-         /*
-
-        if(this.isEmpty()){
-            value = n;
-        } else {
-            SearchTree last = null;
-            SearchTree current = this;
-
-            while (current != null) {
-                if (current.value >= n) {
-                    last = current;
-                    current = current.lc;
-                } else {
-                    last = current;
-                    current = current.rc;
-                }
-            }
-
-            if(last.value >= n){
-                last.lc = new SearchTree(n);
-            } else {
-                last.rc = new SearchTree(n);
-            }
-        }
-
-
-         */
-
-
-
     }
 
     public boolean isLeaf(){
@@ -163,9 +130,5 @@ public class SearchTree {
         }
         System.out.print(this.getValue() + " ");
     }
-
-
-
-
 }
 
