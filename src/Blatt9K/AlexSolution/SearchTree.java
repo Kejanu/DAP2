@@ -2,6 +2,8 @@ package Blatt9K.AlexSolution;
 
 public class SearchTree {
 
+    //todo Comments, Input
+
     public static void main(String[] args){
 
         SearchTree[] tree = new SearchTree[5];

@@ -24,4 +24,8 @@ public class Article {
     public void setWeight(int weight) {
         this.weight = weight;
     }
+
+    public String toString(){
+        return "Article: weight " + weight + ", value " + value + "\n";
+    }
 }

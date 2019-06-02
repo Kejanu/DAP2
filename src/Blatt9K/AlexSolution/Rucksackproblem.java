@@ -7,6 +7,8 @@ import java.util.Random;
 
 public class Rucksackproblem {
 
+    //todo Comments
+
     public static final String MESSAGE = " ";
 
     public static void main(String[] args){
@@ -48,6 +50,30 @@ public class Rucksackproblem {
             }
             articles[i] = new Article( weight, random.nextInt(900) + 100);
         }
+
+        long startDynamic, startGreedy, endDynamic, endGreedy;
+
+        System.out.println("Articles:\n");
+        for (int i = 0; i < articles.length; i++) {
+            System.out.print(i +") " + articles[i].toString());
+        }
+
+        System.out.println("\nDynamic\n");
+
+        System.gc();
+        startDynamic = System.currentTimeMillis();
+        dynamic(articles, w);
+        endDynamic = System.currentTimeMillis();
+
+        System.out.println("\n--------------------------------------------------------------\n\nGreedy:\n");
+
+        startGreedy = System.currentTimeMillis();
+        greedy(articles, w);
+        endGreedy = System.currentTimeMillis();
+
+        System.out.println("\n--------------------------------------------------------------\n\nLaufzeit:\nDynamic: "
+        + (endDynamic - startDynamic) + " ms\nGreedy: " + (endGreedy - startGreedy) + " ms");
+
     }
 
 
@@ -79,7 +105,7 @@ public class Rucksackproblem {
 
         if(i == 0){
             return 0;
-        } else if (j < articles[i].getWeight()){
+        } else if (j < articles[i - 1].getWeight()){
             return opt[i - 1][j];
         } else {
             return Math.max(opt[i - 1][j] , articles[i - 1].getValue() + opt[i - 1][j - articles[i - 1].getWeight()]);
@@ -87,31 +113,35 @@ public class Rucksackproblem {
     }
 
     public static String recursiveOutput(int[][] opt, Article[] articles){
-        String output = recursiveOutput(opt,opt.length - 1, opt[1].length - 1, articles );
-        output = "\nOptimaler Wert: " + opt[opt.length - 1][opt[1].length - 1] + "\nIndizes:\n";
-        return output;
+        ArrayList<Integer> r = new ArrayList<>();
+        recursiveOutput(opt,opt.length - 1, opt[1].length - 1, articles, r);
+        Collections.sort(r);
+        return  "\nOptimaler Wert: " + opt[opt.length - 1][opt[1].length - 1] + "\nIndizes:\n" + r.toString();
     }
 
-    private static String recursiveOutput(int[][] opt, int i, int j, Article[] articles){
+    private static void recursiveOutput(int[][] opt, int i, int j, Article[] articles, ArrayList<Integer> list){
 
         if(i == 0){
-            return "";
+            return;
         } else if(articles[i - 1].getWeight() > j){
-            return recursiveOutput(opt, i - 1, j, articles);
+            recursiveOutput(opt, i - 1, j, articles, list);
         } else if(opt[i][j] == articles[i - 1].getValue() + opt[i - 1][j - articles[i - 1].getWeight()]){
-            return (i - 1) + " " + recursiveOutput(opt, i - 1, j - articles[i - 1].getWeight(), articles);
+            list.add(i - 1);
+            recursiveOutput(opt, i - 1, j - articles[i - 1].getWeight(), articles, list);
         } else {
-            return  recursiveOutput(opt, i - 1, j, articles);
+            recursiveOutput(opt, i - 1, j, articles, list);
         }
     }
 
     public static void greedy(Article[] articles, int weight){
 
-        class RatioPair implements Comparable<RatioPair>{
-            double ratio;
-            int index;
+        //noch nicht optimal
 
-            public RatioPair(double r, int i){
+        class RatioPair implements Comparable<RatioPair>{
+            private double ratio;
+            private int index;
+
+            private RatioPair(double r, int i){
                 ratio = r;
                 index = i;
             }
@@ -124,13 +154,13 @@ public class Rucksackproblem {
             }
 
             public int compareTo(RatioPair other){
-                if(ratio > other.ratio){
-                    return 1;
-                } else if (ratio < other.ratio){
-                    return -1;
-                } else {
+
+                if(ratio == other.ratio){
                     return 0;
-                }
+                } else if(ratio > other.ratio){
+                    return 1;
+                } else
+                    return -1;
             }
         }
 
@@ -143,20 +173,22 @@ public class Rucksackproblem {
         Collections.sort(ratio);
 
         int sumWeight = 0;
-        int i = 0;
-        String result = "";
+        int sumValue = 0;
+        int i = articles.length - 1;
+        ArrayList<Integer> r= new ArrayList<>();
         while (sumWeight <= weight){
             sumWeight = sumWeight + articles[ratio.get(i).getIndex()].getWeight();
             if(sumWeight > weight){
                 break;
             }
+            sumValue = sumValue + articles[ratio.get(i).getIndex()].getValue();
 
-            result = result + ratio.get(i).getIndex() + " ";
-
-            //todo Output
-
-
+            r.add(ratio.get(i).getIndex());
+            --i;
         }
+
+        Collections.sort(r);
+        System.out.println("Optimaler Wert: " + sumValue + "\nIndizes:\n" + r.toString());
     }
 
 }
