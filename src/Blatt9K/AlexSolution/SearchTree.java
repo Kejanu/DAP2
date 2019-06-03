@@ -2,10 +2,11 @@ package Blatt9K.AlexSolution;
 
 public class SearchTree {
 
-    //todo Comments, Input
+    //todo Comments
 
     public static void main(String[] args){
 
+        /*
         SearchTree[] tree = new SearchTree[5];
         tree[0] = new SearchTree(null);
         tree[1] = new SearchTree( 1);
@@ -16,6 +17,21 @@ public class SearchTree {
         int[] b = {1,3,2,5,7,6,9,8};
         tree[3] = new SearchTree(b);
         tree[4] = new SearchTree();
+         */
+
+        int[] arr = new int[args.length];
+
+        for (int i = 0; i < args.length ; i++) {
+            try {
+                arr[i] = Integer.parseInt(args[i]);
+            } catch (NumberFormatException e){
+                System.out.println("Your input was invalid. Please provide Integers to add to the tree.");
+                return;
+            }
+
+        }
+
+        SearchTree tree = new SearchTree(arr);
     }
 
     private SearchTree lc, rc;
