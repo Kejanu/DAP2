@@ -9,9 +9,12 @@ public class Rucksackproblem {
 
     //todo Comments
 
-    public static final String MESSAGE = " ";
+    public static final String MESSAGE = "Correct Usage : [ [ number of acticles ] [ boundary ] [ weight constant] ]";
 
     public static void main(String[] args){
+
+        //Bearbeitung Eingabeparameter
+
         if(args.length != 3){
             System.out.println("Too few or many arguments. " + MESSAGE);
             return;
@@ -36,6 +39,7 @@ public class Rucksackproblem {
         double upper = 1.25 * p;
         double lower = 0.8 * p;
 
+        //Artikelerstellung
 
         for (int i = 0; i < articles.length ; i++) {
             double randomValue = lower + (upper - lower) * random.nextDouble();
@@ -50,6 +54,8 @@ public class Rucksackproblem {
             }
             articles[i] = new Article( weight, random.nextInt(900) + 100);
         }
+
+        //Ausagabe
 
         long startDynamic, startGreedy, endDynamic, endGreedy;
 
@@ -78,6 +84,9 @@ public class Rucksackproblem {
 
 
     public static void dynamic(Article[] articles, int weight) {
+
+        //Tabelle
+
         int[][] opt = new int[articles.length + 1][weight + 1];
 
         /*
@@ -95,6 +104,8 @@ public class Rucksackproblem {
         for (int i = 0; i < opt.length; i++) {
             System.out.println(Arrays.toString(opt[i]));
         }
+
+        //Ausgabe
 
         System.out.println(recursiveOutput(opt, articles));
 
@@ -134,8 +145,9 @@ public class Rucksackproblem {
     }
 
     public static void greedy(Article[] articles, int weight){
+        //nicht optimal
 
-        //noch nicht optimal
+        //Klasse RatioPair zum Verwalten der Verhältnisse der Waren
 
         class RatioPair implements Comparable<RatioPair>{
             private double ratio;
@@ -164,11 +176,15 @@ public class Rucksackproblem {
             }
         }
 
+        //Erstellen der Verhältnisse
+
         ArrayList<RatioPair> ratio = new ArrayList<RatioPair>();
 
         for (int i = 0; i < articles.length ; i++) {
             ratio.add(new RatioPair(articles[i].getValue() / articles[i].getWeight(), i));
         }
+
+        //Auswahl der Elemente
 
         Collections.sort(ratio);
 
@@ -186,6 +202,8 @@ public class Rucksackproblem {
             r.add(ratio.get(i).getIndex());
             --i;
         }
+
+        //Ausgabe
 
         Collections.sort(r);
         System.out.println("Optimaler Wert: " + sumValue + "\nIndizes:\n" + r.toString());

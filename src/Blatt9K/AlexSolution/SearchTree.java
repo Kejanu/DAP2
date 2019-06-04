@@ -2,8 +2,6 @@ package Blatt9K.AlexSolution;
 
 public class SearchTree {
 
-    //todo Comments
-
     public static void main(String[] args){
 
         /*
@@ -19,6 +17,8 @@ public class SearchTree {
         tree[4] = new SearchTree();
          */
 
+        //Eingabe in Array zum Einfügen parsen
+
         int[] arr = new int[args.length];
 
         for (int i = 0; i < args.length ; i++) {
@@ -32,6 +32,16 @@ public class SearchTree {
         }
 
         SearchTree tree = new SearchTree(arr);
+
+        //Ausgabe
+
+        System.out.println("\nPreOrder:");
+        tree.preOrder();
+        System.out.println("\nInOrder");
+        tree.inOrder();
+        System.out.println("\nPostOrder");
+        tree.postOrder();
+        System.out.println("\n");
     }
 
     private SearchTree lc, rc;
@@ -39,6 +49,7 @@ public class SearchTree {
 
     public SearchTree(int[] values){
 
+        //nur ein komplett leerer Baum kann null enthalten
         if(values != null){
             if(values.length != 0){
                 for (int i = 0; i < values.length; ++i){
@@ -46,32 +57,25 @@ public class SearchTree {
                 }
             }
         }
-        System.out.println("\nPreOrder:");
-        preOrder();
-        System.out.println("\nInOrder");
-        inOrder();
-        System.out.println("\nPostOrder");
-        postOrder();
-        System.out.println("\n");
-
     }
 
     private SearchTree(int value){
+        //null kann nicht übergeben werden, da Typ int
         this.value = value;
-    }
-
-    private SearchTree(){
     }
 
     public void add(int n){
 
+        //null kann nicht als Argument übergeben werden, da Typ int
 
         if(isLeaf()){
 
-            if(isEmpty()){
+            if(isEmpty()){  //nur ein komplett leerer Baum kann null enthalten
                 value = n;
             } else {
-                if (n <= this.value) {
+                if(n == this.value) { //Falls Wert schon vorhanden, nicht einfügen, da sonst kein Suchbaum
+                    return;
+                } else if (n < this.value) {
                     this.lc = new SearchTree(n);
                 } else {
                     this.rc = new SearchTree(n);
@@ -80,7 +84,9 @@ public class SearchTree {
 
         } else {
 
-            if(n <= this.value){
+            if(n == this.value){ //s.o,
+                return;
+            } else if(n < this.value){
                 if(this.lc == null) {
                     this.lc = new SearchTree(n);
                 } else {
@@ -105,15 +111,8 @@ public class SearchTree {
         return this.value == null;
     }
 
-    public  Integer getValue(){
+    public Integer getValue(){
         return this.value;
-    }
-
-    public void setValue(Integer n){
-        if(n == null && (this.lc != null || this.rc != null)){
-            throw new IllegalArgumentException();
-        }
-        this.value = n;
     }
 
     public void preOrder(){
