@@ -26,13 +26,17 @@ public class Article implements Comparable{
     }
 
     @Override
-    public int compareTo(Object o) {
-        if (((Article) o).weight > this.weight) {
+    public int compareTo(Object o) { //absteigend sortieren nach verhältnis
+        if (((((Article) o).getValue())/((Article) o).getWeight()) < (((this.getValue())/(this.getWeight())))){
             return -1;
-        } else if (((Article) o).weight < this.weight) {
+        } else if (((((Article) o).getValue())/((Article) o).getWeight()) > (((this.getValue())/(this.getWeight())))) {
             return 1;
         } else {
             return 0;
         }
+    }
+    @Override
+    public String toString() {
+        return "Article: [Value: "+this.value+", Weight: "+this.weight+"]";
     }
 }
