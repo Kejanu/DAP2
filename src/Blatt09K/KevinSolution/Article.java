@@ -10,6 +10,19 @@ public class Article {
         this.weight = weight;
     }
 
+    @Override
+    public String toString() {
+        return "Article{" +
+                " val = " + value +
+                ", weight = " + weight +
+                ", ratio = " + getRatio() +
+                " }\n";
+    }
+
+    public double getRatio() {
+        return (double) value / weight;
+    }
+
     public int getValue() {
         return value;
     }
