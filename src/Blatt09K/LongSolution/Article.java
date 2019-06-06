@@ -1,4 +1,4 @@
-package Blatt9K.LongSolution;
+package Blatt09K.LongSolution;
 
 public class Article implements Comparable{
     int weight;

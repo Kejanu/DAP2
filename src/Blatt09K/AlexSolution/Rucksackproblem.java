@@ -1,4 +1,4 @@
-package Blatt9K.AlexSolution;
+package Blatt09K.AlexSolution;
 
 import java.util.ArrayList;
 import java.util.Arrays;

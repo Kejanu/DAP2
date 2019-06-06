@@ -1,4 +1,4 @@
-package Blatt9K.LongSolution;
+package Blatt09K.LongSolution;
 
 import java.util.ArrayList;
 import java.util.Arrays;
