@@ -1,4 +1,4 @@
-package Blatt09K.Blatt10L.AlexSolution;
+package Blatt10L.AlexSolution;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -8,7 +8,7 @@ public class MaximumSubarray {
     public static void main(String[] args){
         int[] input;
 
-        if((args[0].equals("rand") || args[0].equals("randPos") || args[0].equals("randNeg")) && args.length == 2){
+        if(args.length == 2 &&(args[0].equals("rand") || args[0].equals("randPos") || args[0].equals("randNeg"))){
             int length;
             try {
                 length = Integer.parseInt(args[1]);
@@ -20,7 +20,7 @@ public class MaximumSubarray {
             input = new int[length];
             Random r = new Random();
 
-            for (int i = 1; i < input.length; ++i){
+            for (int i = 0; i < input.length; ++i){
                 if(args[0].equals("rand")){
                     input[i] = rand(r, true, true);
                 } else if(args[0].equals("randPos")){
@@ -87,21 +87,30 @@ public class MaximumSubarray {
             int sum = 0;
             for(int j = i; j < arr.length; ++j){
                 sum = sum + arr[j];
-                if(sum > maxSum){
+                if(sum >= maxSum){
                     maxSum = sum;
                     lower = i;
                     upper = j;
                 }
             }
         }
+        int[] result;
 
-        int[] result = new int[upper - lower + 1];
-        int count = 0;
+        if(maxSum == 0 && lower == 0 && upper == 0 && arr[lower] < 0){
+                result = new int[0];
+        } else {
+            result = new int[upper - lower + 1];
 
-        for(int i = lower; i <= upper; ++i){
-            result[count] = arr[i];
-            ++count;
+            int count = 0;
+
+
+            for (int i = lower; i <= upper; ++i) {
+                result[count] = arr[i];
+                ++count;
+            }
         }
+
+        System.out.println("Sum: " + maxSum);
 
         return result;
     }
@@ -121,6 +130,11 @@ public class MaximumSubarray {
         }
 
         if(onlyPositive){
+            int maxSum = 0;
+            for (int i = 0; i < arr.length; i++) {
+                maxSum = maxSum + arr[i];
+            }
+            System.out.println("Sum: " + maxSum);
             return arr;
         }
 
@@ -142,11 +156,9 @@ public class MaximumSubarray {
 
         //dynamisches Befüllen
 
-        //todo lower fehlerhaft, irgendwie anders berechnen!
         for (int i = 1; i < dynamicValues.length; ++i){
             if(dynamicValues[i - 1] + arr[i] < 0){
                 dynamicValues[i] = 0;
-                lower = i + 1;
             } else {
                 dynamicValues[i] = dynamicValues[i - 1] + arr[i];
                 if(dynamicValues[i] > maxSum){
@@ -160,13 +172,21 @@ public class MaximumSubarray {
         //obere Grenze festlegen
 
 
-        if(maxSum == 0){
-            upper = 0;
-        } else {
-            for (int i = lower; i < dynamicValues.length; ++i) {
+        if(maxSum != 0){
+            for (int i = 0; i < dynamicValues.length; ++i) {
                 if(dynamicValues[i] == maxSum){
                     upper = i;
                 }
+            }
+        }
+
+        //untere Grenze festlegen
+
+        if(maxSum < 0){
+            lower = upper + 1;
+        } else {
+            for(int i = upper; i >= 0 && dynamicValues[i] > 0 ; --i ){
+                lower = i;
             }
         }
 
@@ -175,7 +195,6 @@ public class MaximumSubarray {
         int[] result;
 
         if(lower > upper){
-            System.out.println("Hey Listen");
             result = new int[0];
         } else {
             result = new int[upper - lower + 1];
@@ -188,11 +207,11 @@ public class MaximumSubarray {
 
         }
 
-        System.out.println(Arrays.toString(dynamicValues));
-        System.out.println(result.length);
-        System.out.println(lower);
-        System.out.println(upper);
-        System.out.println(maxSum);
+        //System.out.println(Arrays.toString(dynamicValues));
+        //System.out.println(result.length);
+        //System.out.println(lower);
+        //System.out.println(upper);
+        System.out.println("Sum: " + maxSum);
 
         return result;
 
