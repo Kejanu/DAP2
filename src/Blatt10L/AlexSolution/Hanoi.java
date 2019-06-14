@@ -22,7 +22,7 @@ public class Hanoi {
             return;
         }
 
-        System.out.println("Steps:\n");
+        System.out.println("\nSchritte:\n");
         move(n, 'A', 'B', 'C');
     }
 

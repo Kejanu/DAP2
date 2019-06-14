@@ -69,7 +69,7 @@ public class MaximumSubarray {
         System.out.println(Arrays.toString(dynamicSolution(input)));
         dynamicEnd = System.currentTimeMillis();
 
-        System.out.println("\nTime needed:\n\nEasy Solution: " + (easyEnd - easyStart) + " ms\nDynamicSolution: " + (dynamicEnd - dynamicStart) + " ms");
+        System.out.println("\nTime:\n\nEasy Solution: " + (easyEnd - easyStart) + " ms\nDynamicSolution: " + (dynamicEnd - dynamicStart) + " ms");
 
 
     }
@@ -207,7 +207,7 @@ public class MaximumSubarray {
 
         }
 
-        //System.out.println(Arrays.toString(dynamicValues));
+        System.out.println("Dynamic Values: " + Arrays.toString(dynamicValues) + "\n");
         //System.out.println(result.length);
         //System.out.println(lower);
         //System.out.println(upper);
