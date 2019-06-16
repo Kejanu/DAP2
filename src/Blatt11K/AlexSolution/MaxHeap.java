@@ -1,55 +1,46 @@
 package Blatt11K.AlexSolution;
 
-public class Heap {
+public class MaxHeap {
 
     private int[] values;
+    private int maxSize;
     private int heapSize;
-    private int lastElement;
 
-    public Heap(int n){
+    public MaxHeap(int n){
 
         if(n < 0){
             throw new IllegalArgumentException();
         }
 
-        heapSize = n;
+        maxSize = n;
         values = new int[n + 1];
-        lastElement = 0;
+        heapSize = 0;
     }
 
-
-    public int left(int i){
-        if(i > 0 && i <= heapSize/2){
-            return 2 * i;
-        } else {
-            throw new IllegalArgumentException();
-        }
+    public int getHeapSize(){
+        return heapSize;
     }
 
-    public int right(int i){
-        if(i > 0 && i <= heapSize/2 && 2 * i + 1 <= heapSize){
-            return 2 * i + 1;
-        } else {
-            throw new IllegalArgumentException();
-        }
+    private int left(int i){
+        return 2 * i;
     }
 
-    public int parent(int i){
-        if(i > 1 && i <= heapSize){
-            return i/2;
-        } else {
-            throw new IllegalArgumentException();
-        }
+    private int right(int i){
+        return 2 * i + 1;
     }
 
-    public void heapify(int i){
+    private int parent(int i){
+        return i/2;
+    }
+
+    private void heapify(int i){
         int left = left(i);
         int right = right(i);
         int largest = i;
-        if(left <= heapSize && values[left] > values[largest]){
+        if(left <= maxSize && values[left] > values[largest]){
             largest = left;
         }
-        if(right <= heapSize && values[right] > values[largest]){
+        if(right <= maxSize && values[right] > values[largest]){
             largest = right;
         }
         if(largest != i) {
@@ -66,9 +57,9 @@ public class Heap {
     }
 
     public boolean insertKey(int key){
-        if(lastElement < heapSize){
-            ++lastElement;
-            int i = lastElement;
+        if(heapSize < maxSize){
+            ++heapSize;
+            int i = heapSize;
             while (i > 1 && values[parent(i)] < key) {
                 values[i] = values[parent(i)];
                 i = parent(i);
@@ -81,12 +72,12 @@ public class Heap {
     }
 
     public int extractMax(){
-        if(lastElement < 1){
+        if(heapSize < 1){
             throw new IllegalStateException();
         } else {
             int max = values[1];
-            values[1] = values[lastElement];
-            --lastElement;
+            values[1] = values[heapSize];
+            --heapSize;
             heapify(1);
             return max;
         }
@@ -96,13 +87,13 @@ public class Heap {
         String output = "";
         int bound = 1;
         int current =1;
-        while (current <= lastElement){
-            while (current <= bound && current <= lastElement){
+        while (current <= heapSize){
+            while (current <= bound && current <= heapSize){
                 output = output + values[current] + " ";
                 current++;
             }
             output = output + "\n";
-            bound = bound * 2;
+            bound = bound * 2 + 1;
         }
         System.out.println(output);
     }
