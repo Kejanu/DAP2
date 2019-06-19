@@ -13,7 +13,7 @@ public class MaxHeap {
         }
 
         maxSize = n;
-        values = new int[n + 1];
+        values = new int[maxSize + 1]; //Weil ab 0
         heapSize = 0;
     }
 
@@ -86,14 +86,14 @@ public class MaxHeap {
     public void printHeap(){
         String output = "";
         int bound = 1;
-        int current =1;
+        int current = 1;
         while (current <= heapSize){
             while (current <= bound && current <= heapSize){
                 output = output + values[current] + " ";
                 current++;
             }
             output = output + "\n";
-            bound = bound * 2 + 1;
+            bound = bound * 2 + 1; //Anzahl der Knoten auf jeder Ebene verdoppelt sich, da 2 Kinder
         }
         System.out.println(output);
     }

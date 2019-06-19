@@ -57,7 +57,7 @@ public class PriorityQueue {
                 if(queue.getQueueSize() >= 1) {
                     System.out.println("Next Job: " + queue.remove());
                 } else {
-                    System.out.println("Idle");
+                    System.out.println("No elements left to remove");
                 }
             }
         }
