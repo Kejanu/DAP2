@@ -1,4 +1,4 @@
 package SWTTest;
 
-public class Person implements Mitarbeiter {
+public abstract class Person extends Mensch implements Mitarbeiter, Aufgabe {
 }
